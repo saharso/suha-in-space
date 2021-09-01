@@ -1,8 +1,8 @@
 import Node from './node';
 export default class Tree {
     root: Node;
-    flat = new Map();
-    leafs = new Map();
+    flat: Map<string, Node> = new Map();
+    leafs: Map<string, Node> = new Map();
 
     constructor() {
         this.initRoot();
@@ -13,7 +13,7 @@ export default class Tree {
         this.root.id = '0';
         this.flat = new Map();
         this.flat.set(this.root.id, this.root);
-        this.leafs = new Map();        
+        this.leafs = new Map();
     }
 
     appendTo(parent, child) {
