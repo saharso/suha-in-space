@@ -10,6 +10,12 @@ class Children {
     size(){
         return this.childMap.size
     }
+    chop(){
+        this.childMap.forEach((value, key)=>{
+            delete this[key];
+        })
+        this.childMap.clear();
+    }    
 }
 
 export default class Node {
