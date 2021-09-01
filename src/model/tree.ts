@@ -16,7 +16,7 @@ export default class Tree {
         this.leafs = new Map();
     }
 
-    appendTo(parent, child) {
+    grow(parent, child) {
         if(!parent) return console.warn('no parent');
         updateChild(child, parent);
         parent.children.push(child);
