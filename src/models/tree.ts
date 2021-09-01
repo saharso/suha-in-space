@@ -16,8 +16,10 @@ export default class Tree {
         this.leafs = new Map();
     }
 
-    grow(parent, child) {
+    grow(parentId, data: any) {
+        const parent = this.getNodeById(parentId);
         if(!parent) return console.warn('no parent');
+        const child = new Node(data);
         updateChild(child, parent);
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
