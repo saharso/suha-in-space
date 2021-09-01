@@ -1,41 +1,5 @@
-function idMaker(parent){
-    return parent.id + '_' + parent.children.size();
-}
-function updateLeafMap(leafMap, node){
-    leafMap.set(node.id, node);
-    leafMap.delete(node.parent.id);
-}
-function updateChild(child, parent){
-    child.id = idMaker(parent);
-    child.parent = parent;    
-}
-
-class Node {
-    id: string;
-    children: Children;
-    data: any;
-    parent: Node;
-    constructor(data?){
-        this.data = data;
-        this.children = new Children();
-    }
-}
-
-class Children {
-    childMap: Map<string, Node>;
-    constructor(){
-        this.childMap = new Map();
-    }
-    push(childNode){
-        this.childMap.set(childNode.id, childNode)
-        this[childNode.id] = childNode;
-    }
-    size(){
-        return this.childMap.size
-    }
-}
-
-class Tree {
+import Node from './node';
+export default class Tree {
     root: Node;
     flat = new Map();
     leafs = new Map();
@@ -56,7 +20,7 @@ class Tree {
         if(!parent) return console.warn('no parent');
         updateChild(child, parent);
         parent.children.push(child);
-        updateLeafMap(this.leafs, child);
+        _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
     }
 
@@ -96,7 +60,17 @@ class Tree {
     chop() {
         this.initRoot();
     }
-    
+
 }
 
-export default Tree;
+function _idMaker(parent){
+    return parent.id + '_' + parent.children.size();
+}
+function _updateLeafMap(leafMap, node){
+    leafMap.set(node.id, node);
+    leafMap.delete(node.parent.id);
+}
+function updateChild(child, parent){
+    child.id = _idMaker(parent);
+    child.parent = parent;    
+}
