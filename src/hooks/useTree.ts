@@ -9,8 +9,8 @@ function useTree(): any {
     useEffect(()=>{
         setTree(state.tree);
         console.log('useTree')
-    })
-    return tree;
+    }, [state])
+    return {tree};
 }
 
 export default useTree;

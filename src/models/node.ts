@@ -1,22 +1,4 @@
-export class Children {
-    childMap: Map<string, Node>;
-    constructor(){
-        this.childMap = new Map();
-    }
-    push(childNode){
-        this.childMap.set(childNode.id, childNode)
-        this[childNode.id] = childNode;
-    }
-    size(){
-        return this.childMap.size
-    }
-    chop(){
-        this.childMap.forEach((value, key)=>{
-            delete this[key];
-        })
-        this.childMap.clear();
-    }    
-}
+import Children from './children';
 
 export default class Node {
     id: string;

@@ -1,16 +1,15 @@
 
 import React, {/*useState, useContext, */useEffect} from 'react';
-import Node, {Children} from '../../models/node';
+import Node from '../../models/node';
+
 
 export type INodeDisplayProps = {
     node: Node;
 }
-function mapToArray(children: Children) {
-    return Object.values(children);
-}
-const TreeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node}) => {
-    const childList = mapToArray(node.children);
-    console.log(childList);
+
+const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node}) => {
+
+
     return <>
         <li id={node.id}>
             {node.data}
@@ -22,4 +21,4 @@ const TreeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node}) => {
     </>
 }
 
-export default TreeDisplay;
+export default NodeDisplay;
