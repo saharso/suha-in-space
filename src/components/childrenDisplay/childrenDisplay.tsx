@@ -1,6 +1,5 @@
 
-import React, {useState, /*useContext, */useEffect} from 'react';
-import useTree from '../../hooks/useTree';
+import React from 'react';
 import Node from '../../models/node';
 import Children from '../../models/children';
 import NodeDisplay from '../NodeDisplay/NodeDisplay';

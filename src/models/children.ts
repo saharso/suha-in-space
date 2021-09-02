@@ -1,5 +1,3 @@
-import { convertToObject } from "typescript";
-
 export default class Children {
     childMap: Map<string, Node>;
     constructor(){

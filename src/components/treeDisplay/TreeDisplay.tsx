@@ -1,20 +1,16 @@
 
-import React, {useState, /*useContext, */useEffect} from 'react';
-import useTree from '../../hooks/useTree';
+import React, {useState, useContext, useEffect} from 'react';
 import Node from '../../models/node';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
+import { AppContext } from '../../models/appContext';
 
-export type ITreeDisplayProps = {
-    
-}
-let count = 0;
-const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = () => {
-    const tree = useTree();
+const TreeDisplay: React.FunctionComponent = () => {
+    const { state } = useContext(AppContext);
     const [root, setRoot] = useState<any>(new Node())
     useEffect(()=>{
-        console.log(tree);
-        setRoot(tree.tree.root)
-    }, [tree])
+        console.log(state);
+        setRoot(state.tree.root)
+    }, [state])
     return <>
         <ChildrenDisplay node={root} />
     </>
