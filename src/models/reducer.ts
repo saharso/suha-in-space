@@ -9,6 +9,7 @@ function grow(state: IStore, action: IAction){
 }
 function chop(state: IStore, action: IAction){
     state.tree.chop();
+    state.selectedNodes = new Map();
     return {...state};
 }
 function editSelectedNodes(state: IStore, action: IAction<NodeSelection>) {
