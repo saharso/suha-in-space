@@ -4,23 +4,23 @@ export default class Tree {
     flat: Map<string, Node> = new Map();
     leafs: Map<string, Node> = new Map();
 
-    constructor() {
-        this.initRoot();
+    constructor(trunk?: Tree) {
+        this.initRoot(trunk);
     }
 
-    private initRoot(){
-        this.root = new Node();
+    private initRoot(trunk?: Tree){
+        this.root = trunk?.root || new Node();
         this.root.id = '0';
-        this.flat = new Map();
+        this.flat = trunk?.flat || new Map();
         this.flat.set(this.root.id, this.root);
-        this.leafs = new Map();
+        this.leafs = trunk?.leafs || new Map();
     }
 
     grow(parentId, data: any) {
         const parent = this.getNodeById(parentId);
         if(!parent) return console.warn('no parent');
         const child = new Node(data);
-        updateChild(child, parent);
+        _updateChild(child, parent);
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
@@ -72,7 +72,7 @@ function _updateLeafMap(leafMap, node){
     leafMap.set(node.id, node);
     leafMap.delete(node.parent.id);
 }
-function updateChild(child, parent){
+function _updateChild(child, parent){
     child.id = _idMaker(parent);
     child.parent = parent;    
 }

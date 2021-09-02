@@ -1,17 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState, useReducer} from 'react';
 import Tree from '../models/tree';
+import reducer from '../models/reducer';
+import store from '../models/store';
 
-let _tree: Tree;
-
-export function initTree(tree: Tree): void {
-    _tree = tree;
-    console.log('yo')
-}
-function useTree(tree: Tree): any {
+function useTree(): any {
+    const [state/*, dispatch*/] = useReducer(reducer, store);
     const [treeState, setTree] = useState<Tree>();
     useEffect(()=>{
-        setTree(tree);
-    },[tree])
+        setTree(state.tree);
+    },[state])
     return {treeState};
 }
 
