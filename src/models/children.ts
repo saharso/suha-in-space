@@ -8,6 +8,7 @@ export default class Children {
     push(childNode){
         this.childMap.set(childNode.id, childNode)
         this[childNode.id] = childNode;
+        console.log(this);
     }
     size(){
         return this.childMap.size
@@ -20,13 +21,11 @@ export default class Children {
     }    
     static toArray(children: Children) {
         const arr = [];
-        console.log(children);
         for(const key in children) {
             if(children[key].constructor.name === 'Node') {
                 arr.push(children[key]);
             }
         }
-        console.log(arr);
         return arr;
     }
     

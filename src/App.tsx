@@ -10,11 +10,18 @@ function App() {
 
   return (
     <div className="App">
-      <button
-        onClick={()=>{
-          dispatch({type: ActionsEnum.GROW, payload: {id: '0', data: 'foo'}});
-        }}
-      >grow</button>
+      <header>
+        <button
+          onClick={()=>{
+            dispatch({type: ActionsEnum.GROW, payload: {id: '0', data: 'foo'}});
+          }}
+        >grow</button>
+        <button
+          onClick={()=>{
+            dispatch({type: ActionsEnum.CHOP});
+          }}
+        >Chop</button>
+      </header>
       <TreeDisplay/>
     </div>
   );

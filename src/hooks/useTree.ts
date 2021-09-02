@@ -8,7 +8,6 @@ function useTree(): any {
     const [tree, setTree] = useState<Tree>(new Tree());
     useEffect(()=>{
         setTree(state.tree);
-        console.log('useTree')
     }, [state])
     return {tree};
 }
