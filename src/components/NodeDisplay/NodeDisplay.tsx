@@ -8,8 +8,6 @@ export type INodeDisplayProps = {
 }
 
 const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node}) => {
-
-
     return <>
         <li id={node.id}>
             <input type="checkbox"/>
@@ -18,7 +16,6 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node}) => {
                 <ChildrenDisplay node={node} />
             </ul>
         </li>
-
     </>
 }
 
