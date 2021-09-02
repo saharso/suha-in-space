@@ -4,13 +4,11 @@ import {IStore} from './store';
 import Tree from './tree';
 
 function grow(state: IStore, action: IAction){
-    let tree: Tree = state.tree;
-    tree.grow(action.payload.id, action.payload.data);
+    state.tree.grow(action.payload.id, action.payload.data);
     return {...state};
 }
 function chop(state: IStore, action: IAction){
-    let tree: Tree = state.tree;
-    tree.chop();
+    state.tree.chop();
     return {...state};
 }
 function reducer(state: IStore, action: IAction): IStore {
