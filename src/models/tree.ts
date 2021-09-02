@@ -8,7 +8,7 @@ export default class Tree {
         this.initRoot(trunk);
     }
 
-    private initRoot(trunk?: Tree){
+    private initRoot(trunk?: Tree) {
         this.root = trunk?.root || new Node();
         this.root.id = '0';
         this.flat = trunk?.flat || new Map();
@@ -24,6 +24,7 @@ export default class Tree {
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
+        console.log('grow!')
     }
 
     getNodeById(nodeId) {

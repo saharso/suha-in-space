@@ -1,4 +1,4 @@
-class Children {
+export class Children {
     childMap: Map<string, Node>;
     constructor(){
         this.childMap = new Map();

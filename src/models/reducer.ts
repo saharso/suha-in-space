@@ -5,9 +5,8 @@ import Tree from './tree';
 
 function grow(state: IStore, action: IAction){
     let tree: Tree = state.tree;
-    tree.grow(action.payload.id, action.payload.data);
     tree = new Tree(tree);
-    console.log(state.tree);
+    tree.grow(action.payload.id, action.payload.data);
     return {...state};
 }
 function reducer(state: IStore, action: IAction): IStore {
