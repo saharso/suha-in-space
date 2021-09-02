@@ -6,7 +6,6 @@ export default class Children {
     push(childNode){
         this.childMap.set(childNode.id, childNode)
         this[childNode.id] = childNode;
-        console.log(this);
     }
     size(){
         return this.childMap.size

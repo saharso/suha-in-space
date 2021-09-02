@@ -1,6 +1,6 @@
 import ActionsEnum from '../actions.enum';
 
-export default interface IAction {
+export default interface IAction<T = {}> {
     type: ActionsEnum,
-    payload?: any,
+    payload?: any | T;
 }
