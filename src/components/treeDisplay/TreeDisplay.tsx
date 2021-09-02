@@ -7,13 +7,12 @@ import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 export type ITreeDisplayProps = {
     
 }
-
+let count = 0;
 const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = () => {
     const tree = useTree();
-    // const children = [];
     const [root, setRoot] = useState<any>(new Node())
-    const [foo, setFoo] = useState('');
     useEffect(()=>{
+        console.log(tree);
         setRoot(tree.tree.root)
     }, [tree])
     return <>
