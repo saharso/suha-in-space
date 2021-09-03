@@ -10,12 +10,12 @@ export interface ITreeDisplayProps {
 }
 
 const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({onNodeSelectionEdit, tree}) => {
-    console.log(tree);
+    
     return <>
         <ChildrenDisplay 
             node={tree.root}
-            onNodeSelectionEdit={(e: NodeMap) =>{
-                onNodeSelectionEdit && onNodeSelectionEdit(e);
+            onNodeSelectionEdit={(selectedNodes: NodeMap) => {
+                selectedNodes && onNodeSelectionEdit && onNodeSelectionEdit(selectedNodes);
             }}
          />
     </>
