@@ -1,23 +1,19 @@
 
-import React, {useState, useContext, useEffect} from 'react';
-import Node from '../../models/node';
+import React from 'react';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
-import { AppContext } from '../../models/appContext';
 import NodeMap from '../../models/type/nodeMap';
+import Tree from '../../models/tree';
 
 export interface ITreeDisplayProps {
-    onNodeSelectionEdit?: (nodeSelection: NodeMap) => void
+    onNodeSelectionEdit?: (nodeSelection: NodeMap) => void;
+    tree: Tree;
 }
 
-const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({onNodeSelectionEdit}) => {
-    const { state } = useContext(AppContext);
-    const [root, setRoot] = useState<any>(new Node())
-    useEffect(()=>{
-        setRoot(state.tree.root)
-    }, [state])
+const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({onNodeSelectionEdit, tree}) => {
+    console.log(tree);
     return <>
         <ChildrenDisplay 
-            node={root}
+            node={tree.root}
             onNodeSelectionEdit={(e: NodeMap) =>{
                 onNodeSelectionEdit && onNodeSelectionEdit(e);
             }}
