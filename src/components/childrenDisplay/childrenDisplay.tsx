@@ -20,7 +20,7 @@ function updateSelectionMap(prev: NodeMap, nodeSelection){
     return map;    
 }
 
-const TreeDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeSelectionEdit}) => {
+const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeSelectionEdit}) => {
     const [selected, setSelected] = useState<NodeMap>(new Map());
     
     useEffect(()=>{
@@ -42,4 +42,4 @@ const TreeDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeSelec
     </>
 }
 
-export default TreeDisplay;
+export default ChildrenDisplay;
