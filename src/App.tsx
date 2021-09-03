@@ -11,8 +11,8 @@ function App() {
   const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
   const [count, setCount] = useState(0);
 
-  const updateSelectedNodes = (selectedNodes: NodeMap)=>{
-    setSelectedNodes(Array.from(selectedNodes.values()));
+  const updateSelectedNodes = (selectedNodes: Node[])=>{
+    setSelectedNodes(selectedNodes);
     console.log(selectedNodes);
   }
 
@@ -33,6 +33,7 @@ function App() {
           <button
             onClick={()=>{
               setTree(new Tree());
+              setSelectedNodes([]);
             }}
           >Chop</button>
           <h2>Selected nodes</h2>

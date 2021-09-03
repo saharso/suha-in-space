@@ -3,9 +3,10 @@ import React from 'react';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 import NodeMap from '../../models/type/nodeMap';
 import Tree from '../../models/tree';
+import Node from '../../models/node';
 
 export interface ITreeDisplayProps {
-    onNodeSelectionEdit?: (nodeSelection: NodeMap) => void;
+    onNodeSelectionEdit?: (nodeSelection: Node[]) => void;
     tree: Tree;
 }
 
@@ -14,8 +15,8 @@ const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({onNodeSelectio
     return <>
         <ChildrenDisplay 
             node={tree.root}
-            onNodeSelectionEdit={(selectedNodes: NodeMap) => {
-                selectedNodes && onNodeSelectionEdit && onNodeSelectionEdit(selectedNodes);
+            onNodeSelectionEdit={(nodeMap: Node[]) => {
+                nodeMap && onNodeSelectionEdit && onNodeSelectionEdit(nodeMap);
             }}
          />
     </>

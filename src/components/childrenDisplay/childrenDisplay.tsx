@@ -8,7 +8,7 @@ import NodeSelection from '../../models/interface/nodeSelection';
 
 export type IChildrenProps = {
     node: Node;
-    onNodeSelectionEdit?: (nodeMap: NodeMap) => void;
+    onNodeSelectionEdit?: (selectedNodes: Node[]) => void;
 }
 
 const updateSelectedNodes = (prev, selected) => {
@@ -30,7 +30,7 @@ const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeS
     }, [selected]);
 
     useEffect(() => {
-        selectedNodesList && console.log(Array.from(selectedNodesList.values()));
+        selectedNodesList && onNodeSelectionEdit(Array.from(selectedNodesList.values()))
     }, [selectedNodesList]);
 
     // kill em all
