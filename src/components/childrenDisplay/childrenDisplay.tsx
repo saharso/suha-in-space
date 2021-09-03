@@ -22,9 +22,11 @@ function updateSelectionMap(prev: NodeMap, nodeSelection){
 
 const TreeDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeSelectionEdit}) => {
     const [selected, setSelected] = useState<NodeMap>(new Map());
+    
     useEffect(()=>{
         onNodeSelectionEdit && onNodeSelectionEdit(selected);
     }, [selected, onNodeSelectionEdit])
+    
     return <>
         <ul id={`childrenDisplayOfNode_${node.id}`}>
             {Children.toArray(node.children).map((child)=>(
