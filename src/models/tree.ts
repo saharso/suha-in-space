@@ -24,7 +24,6 @@ export default class Tree {
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
-        // debugger;
     }
 
     getNodeById(nodeId) {
