@@ -15,6 +15,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
         <li id={node.id}>
             <label>
                 <input type="checkbox"
+                    defaultChecked={node.data.selected}
                     onChange={(e)=>{
                         const selected = e.target.checked;
                         onChange && onChange({selected, node});
