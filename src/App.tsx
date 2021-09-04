@@ -22,35 +22,45 @@ function App() {
   const [tree, setTree] = useState<Tree>(new Tree());
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
+  const [sindgleSelectedNode, setSingleSelectedNode] = useState<Node>(tree.root);
 
   useEffect(()=>{
     setSelectedNodes(new Map())
   }, []);
+
   useEffect(()=>{
     setSelectedNodesList(Array.from(selectedNodes.values()));
   }, [selectedNodes]);
+
   useEffect(()=>{
-    console.log(selectedNodesList);
-  }, [selectedNodesList]);
+    console.log(sindgleSelectedNode);
+  }, [sindgleSelectedNode]);
 
   return (
       <div className="App">
         <header>
           <button
             onClick={()=>{
-              tree.grow('0', {});
+              tree.grow(sindgleSelectedNode.id, {});
               setTree(new Tree(tree));
             }}
-          >grow</button>
+          >grow {sindgleSelectedNode.id}</button>
+
           <button
             onClick={()=>{
               setTree(new Tree());
               setSelectedNodes(new Map())
             }}
           >Chop</button>
+          
           <h2>Selected nodes</h2>
           {selectedNodesList.map((node) => {
-            return <button key={node.id}>{node.id}</button>
+            return <button
+              key={node.id}
+              onClick={()=>{
+                setSingleSelectedNode(node)
+              }}
+            >{node.id}</button>
           })}
         </header>
 
