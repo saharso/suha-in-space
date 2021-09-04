@@ -26,7 +26,8 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
             <ul>
                 <ChildrenDisplay 
                     node={node} 
-                    onNodeSelectionEdit={(e)=>{
+                    onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
+                        onChange && onChange(nodeSelection);
                     }}
                 />
             </ul>

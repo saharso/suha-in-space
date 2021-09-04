@@ -43,6 +43,7 @@ function App() {
             onClick={()=>{
               tree.grow(sindgleSelectedNode.id, {});
               setTree(new Tree(tree));
+              setSingleSelectedNode(tree.root);
             }}
           >grow {sindgleSelectedNode.id}</button>
 
