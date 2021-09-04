@@ -1,25 +1,37 @@
 import {useEffect, useState} from 'react';
 import './App.scss';
-import TreeDisplay from './components/treeDisplay/TreeDisplay';
-import Children from './models/children';
 import Node from './models/node';
 import Tree from './models/tree';
+import ChildrenDisplay from './components/childrenDisplay/childrenDisplay';
+import NodeSelection from './models/interface/nodeSelection';
 import NodeMap from './models/type/nodeMap';
+
+const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
+  const map = new Map(prev);
+  console.log(selected.selected, selected.node.id)
+  if(selected.selected){
+      map.set(selected.node.id, selected.node);
+  } else {
+      map.delete(selected.node.id)
+  }
+  return map;
+}
+
 
 function App() {
   const [tree, setTree] = useState<Tree>(new Tree());
-  const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
-  const [count, setCount] = useState(0);
+  const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
+  const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
 
-  const updateSelectedNodes = (selectedNodes: Node[])=>{
-    setSelectedNodes(selectedNodes);
-    console.log(selectedNodes);
-  }
-
-  useEffect(() => {
-    // setTree(new Tree());
-    console.log(count);
-  }, [count])
+  useEffect(()=>{
+    setSelectedNodes(new Map())
+  }, []);
+  useEffect(()=>{
+    setSelectedNodesList(Array.from(selectedNodes.values()));
+  }, [selectedNodes]);
+  useEffect(()=>{
+    console.log(selectedNodesList);
+  }, [selectedNodesList]);
 
   return (
       <div className="App">
@@ -33,17 +45,20 @@ function App() {
           <button
             onClick={()=>{
               setTree(new Tree());
-              setSelectedNodes([]);
+              setSelectedNodes(new Map())
             }}
           >Chop</button>
           <h2>Selected nodes</h2>
-          {selectedNodes.map((node) => {
+          {selectedNodesList.map((node) => {
             return <button key={node.id}>{node.id}</button>
           })}
         </header>
-        <TreeDisplay
-          tree={tree}
-          onNodeSelectionEdit={updateSelectedNodes}
+
+        <ChildrenDisplay 
+            node={tree.root}
+            onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
+              setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
+            }}
         />
       </div>
 

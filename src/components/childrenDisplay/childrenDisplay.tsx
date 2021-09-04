@@ -8,38 +8,12 @@ import NodeSelection from '../../models/interface/nodeSelection';
 
 export type IChildrenProps = {
     node: Node;
-    onNodeSelectionEdit?: (selectedNodes: Node[]) => void;
+    onNodeSelectionEdit?: (selectedNodes: NodeSelection) => void;
 }
 
-const updateSelectedNodes = (prev, selected) => {
-    const map = new Map(prev);
-    if(selected.selected){
-        map.set(selected.node.id, selected.node);
-    } else {
-        map.delete(selected.node.id)
-    }
-    return map;
-}
+
 
 const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeSelectionEdit}) => {
-    const [selected, setSelected] = useState<NodeSelection>(null);
-    const [selectedNodesList, setSelectedNodesList] = useState<any>(null);
-    
-    useEffect(() => {
-        selected && setSelectedNodesList(prev => updateSelectedNodes(prev, selected));
-    }, [selected]);
-
-    useEffect(() => {
-        selectedNodesList && onNodeSelectionEdit(Array.from(selectedNodesList.values()))
-    }, [selectedNodesList]);
-
-    // kill em all
-    useEffect(() => {
-        return () => {
-            setSelected(null);
-            setSelectedNodesList(null);
-        }
-    }, []);
     
     return <>
         <ul id={`childrenDisplayOfNode_${node.id}`}>
@@ -48,7 +22,7 @@ const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeS
                     node={child}
                     key={child.id}
                     onChange={(nodeSelection: NodeSelection) => {
-                        setSelected(nodeSelection);
+                        onNodeSelectionEdit(nodeSelection);
                     }}
                 />
             ))}
