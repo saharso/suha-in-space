@@ -33,7 +33,6 @@ function App() {
   }, [selectedNodes]);
 
   useEffect(()=>{
-    console.log(sindgleSelectedNode);
   }, [sindgleSelectedNode]);
 
   return (
@@ -44,6 +43,7 @@ function App() {
               tree.grow(sindgleSelectedNode.id, {});
               setTree(new Tree(tree));
               setSingleSelectedNode(tree.root);
+              console.log(JSON.stringify(tree.root));
             }}
           >grow {sindgleSelectedNode.id}</button>
 

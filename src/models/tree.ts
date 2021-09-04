@@ -1,4 +1,6 @@
+
 import Node from './node';
+import Children from './children';
 export default class Tree {
     root: Node;
     flat: Map<string, Node> = new Map();
@@ -20,7 +22,11 @@ export default class Tree {
         const parent = this.getNodeById(parentId);
         if(!parent) return console.warn('no parent');
         const child = new Node(data);
-        _updateChild(child, parent);
+        if(!parent.children) {
+            parent.children = new Children();
+        }
+        child.parentId = parent.id;
+        child.id = _idMaker(parent);
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
@@ -36,7 +42,7 @@ export default class Tree {
         let parent = node;
         while(parent) {
             branch.set(parent.id, parent);
-            parent = parent.parent;
+            parent = this.getNodeById(parent.parentId);
         }
         return branch;
     }
@@ -53,7 +59,6 @@ export default class Tree {
     prune(nodeId) {
         let node = this.getNodeById(nodeId);
         node.children.chop();
-        delete node.parent.children[node.id];
         node = undefined;
         this.flat.delete(nodeId);
         this.leafs.delete(nodeId);
@@ -70,9 +75,5 @@ function _idMaker(parent){
 }
 function _updateLeafMap(leafMap, node){
     leafMap.set(node.id, node);
-    leafMap.delete(node.parent.id);
-}
-function _updateChild(child, parent){
-    child.id = _idMaker(parent);
-    child.parent = parent;    
+    leafMap.delete(node.parentId);
 }

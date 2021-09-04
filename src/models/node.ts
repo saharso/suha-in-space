@@ -5,9 +5,9 @@ export default class Node {
     id: string;
     children: Children;
     data: NodeData;
-    parent: Node;
+    parentId: string;
     constructor(data?){
         this.data = data;
-        this.children = new Children();
+        // this.children = new Children();
     }
 }
