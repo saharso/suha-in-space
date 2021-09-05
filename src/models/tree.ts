@@ -63,7 +63,6 @@ export default class Tree {
         delete parent.children[node.id];
         this.flat.delete(nodeId);
         this.leafs.delete(nodeId);
-        console.log(this.root)
     }
 
     chop() {

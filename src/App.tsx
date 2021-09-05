@@ -8,7 +8,6 @@ import NodeMap from './models/type/nodeMap';
 
 const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
   const map = new Map(prev);
-  console.log(selected.selected, selected.node.id)
   if(selected.selected){
       map.set(selected.node.id, selected.node);
   } else {
@@ -31,10 +30,6 @@ function App() {
   useEffect(()=>{
     setSelectedNodesList(Array.from(selectedNodes.values()));
   }, [selectedNodes]);
-
-  useEffect(()=>{
-    // console.log(sindgleSelectedNode);
-  }, [sindgleSelectedNode]);
 
   return (
       <div className="App">
