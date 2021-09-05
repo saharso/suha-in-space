@@ -5,6 +5,7 @@ import Tree from './components/treeDisplay/models/tree';
 import NodeSelection from './components/treeDisplay/models/interface/nodeSelection';
 import NodeMap from './components/treeDisplay/models/types/nodeMap';
 import TreeDisplay from './components/treeDisplay/TreeDisplay';
+import TreeController from './components/treeController/TreeController';
 
 const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
   const map = new Map(prev);
@@ -52,24 +53,12 @@ function App() {
       <div className="App">
         <header>
 
-          <button
-            onClick={grow}
-          >
-            grow {selectedNode.id}
-          </button>
-          
-          <button
-            onClick={prune}
-          >
-            prune {selectedNode.id}
-          </button>
-          
-          <button
-            onClick={chop}
-          >
-            Chop
-          </button>
-
+          <TreeController
+            selectedNode={selectedNode}
+            onRequest={{
+              grow, prune, chop
+            }}
+          />
           
           <h2>Selected nodes</h2>
           {selectedNodesList.map((node) => {

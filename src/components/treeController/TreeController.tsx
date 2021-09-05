@@ -9,8 +9,8 @@ export interface ITreeControllerRequests {
 }
 
 export type ITreeControllerProps = {
-    selectedNode: Node;
-    onRequest: ITreeControllerRequests;
+    selectedNode?: Node;
+    onRequest?: ITreeControllerRequests;
 }
 
 const TreeDisplay: React.FunctionComponent<ITreeControllerProps> = ({selectedNode, onRequest}) => {
