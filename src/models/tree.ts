@@ -58,10 +58,12 @@ export default class Tree {
 
     prune(nodeId) {
         let node = this.getNodeById(nodeId);
-        node.children.chop();
-        node = undefined;
+        node.children?.chop();
+        const parent = this.getNodeById(node.parentId);
+        delete parent.children[node.id];
         this.flat.delete(nodeId);
         this.leafs.delete(nodeId);
+        console.log(this.root)
     }
 
     chop() {
