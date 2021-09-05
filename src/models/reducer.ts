@@ -1,6 +1,6 @@
 import ActionsEnum from './actions.enum';
 import IAction from './interface/actions';
-import NodeSelection from './interface/nodeSelection';
+import NodeSelection from '../components/treeDisplay/models/interface/nodeSelection';
 import {IStore} from './store';
 
 function grow(state: IStore, action: IAction){

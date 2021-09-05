@@ -1,5 +1,5 @@
-import Tree from './tree';
-import NodeMap from './type/nodeMap';
+import Tree from '../components/treeDisplay/models/tree';
+import NodeMap from '../components/treeDisplay/models/types/nodeMap';
 export interface IStore {
     tree: Tree;
     selectedNodes: NodeMap;

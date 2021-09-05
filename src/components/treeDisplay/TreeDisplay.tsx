@@ -1,9 +1,8 @@
 
 import React from 'react';
-import NodeSelection from '../../models/interface/nodeSelection';
-import Node from '../../models/node';
-import Tree from '../../models/tree';
-import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
+import NodeSelection from './models/interface/nodeSelection';
+import Tree from './models/tree';
+import ChildrenDisplay from './components/childrenDisplay/childrenDisplay';
 
 export type ITreeDisplayProps = {
     onTreeUpdate?: (tree: Tree) => void;

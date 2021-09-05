@@ -1,10 +1,9 @@
 import {useEffect, useState} from 'react';
 import './App.scss';
-import Node from './models/node';
-import Tree from './models/tree';
-import ChildrenDisplay from './components/childrenDisplay/childrenDisplay';
-import NodeSelection from './models/interface/nodeSelection';
-import NodeMap from './models/type/nodeMap';
+import Node from './components/treeDisplay/models/node';
+import Tree from './components/treeDisplay/models/tree';
+import NodeSelection from './components/treeDisplay/models/interface/nodeSelection';
+import NodeMap from './components/treeDisplay/models/types/nodeMap';
 import TreeDisplay from './components/treeDisplay/TreeDisplay';
 
 const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {

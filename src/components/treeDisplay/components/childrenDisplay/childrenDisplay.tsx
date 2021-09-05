@@ -1,9 +1,8 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Node from '../../models/node';
 import Children from '../../models/children';
 import NodeDisplay from '../NodeDisplay/NodeDisplay';
-import NodeMap from '../../models/type/nodeMap';
 import NodeSelection from '../../models/interface/nodeSelection';
 
 export type IChildrenProps = {
