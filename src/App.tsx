@@ -26,18 +26,20 @@ function App() {
     tree.grow(selectedNode.id, {});
     setTree(new Tree(tree));
   }
-  const prune = ()=>{
-    tree.prune(selectedNode.id);
+  const prune = () => {
     setSelectedNodes(prev => updateSelectedNodes(prev, {selected: false, node: selectedNode}));
+    tree.prune(selectedNode.id);
     setTree(new Tree(tree));
     setSelectedNode(tree.root);
   }
 
   const chop = ()=> {
-    setTree(new Tree());
+    tree.chop()
+    setTree(new Tree(tree));
     setSelectedNodes(new Map());
     setSelectedNode(tree.root);
   }
+
   useEffect(()=>{
     setSelectedNodes(new Map())
   }, []);
