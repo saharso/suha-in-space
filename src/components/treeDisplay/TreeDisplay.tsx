@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NodeSelection from './models/interface/nodeSelection';
 import Tree from './models/tree';
