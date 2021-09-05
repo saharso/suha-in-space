@@ -5,6 +5,7 @@ import Tree from './models/tree';
 import ChildrenDisplay from './components/childrenDisplay/childrenDisplay';
 import NodeSelection from './models/interface/nodeSelection';
 import NodeMap from './models/type/nodeMap';
+import TreeDisplay from './components/treeDisplay/TreeDisplay';
 
 const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
   const map = new Map(prev);
@@ -81,6 +82,8 @@ function App() {
             >{node.id}</button>
           })}
         </header>
+
+        <TreeDisplay/>
 
         <ChildrenDisplay 
             node={tree.root}
