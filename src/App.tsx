@@ -83,14 +83,12 @@ function App() {
           })}
         </header>
 
-        <TreeDisplay/>
-
-        <ChildrenDisplay 
-            node={tree.root}
-            onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
-              setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
-              nodeSelection.selected && setSelectedNode(nodeSelection.node)
-            }}
+        <TreeDisplay 
+          tree={tree}
+          onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
+            setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
+            nodeSelection.selected && setSelectedNode(nodeSelection.node)
+          }}
         />
       </div>
 
