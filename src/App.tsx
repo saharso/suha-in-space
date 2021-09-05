@@ -16,13 +16,28 @@ const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap =>
   return map;
 }
 
-
 function App() {
   const [tree, setTree] = useState<Tree>(new Tree());
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
-  const [sindgleSelectedNode, setSingleSelectedNode] = useState<Node>(tree.root);
+  const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
+  const grow = () => {
+    tree.grow(selectedNode.id, {});
+    setTree(new Tree(tree));
+  }
+  const prune = ()=>{
+    tree.prune(selectedNode.id);
+    setSelectedNodes(prev => updateSelectedNodes(prev, {selected: false, node: selectedNode}));
+    setTree(new Tree(tree));
+    setSelectedNode(tree.root);
+  }
+
+  const chop = ()=> {
+    setTree(new Tree());
+    setSelectedNodes(new Map());
+    setSelectedNode(tree.root);
+  }
   useEffect(()=>{
     setSelectedNodes(new Map())
   }, []);
@@ -36,24 +51,22 @@ function App() {
         <header>
 
           <button
-            onClick={()=>{
-              tree.grow(sindgleSelectedNode.id, {});
-              setTree(new Tree(tree));
-            }}
-          >grow {sindgleSelectedNode.id}</button>
+            onClick={grow}
+          >
+            grow {selectedNode.id}
+          </button>
+          
           <button
-            onClick={()=>{
-              tree.prune(sindgleSelectedNode.id);
-              setTree(new Tree(tree));
-            }}
-          >prune {sindgleSelectedNode.id}</button>
+            onClick={prune}
+          >
+            prune {selectedNode.id}
+          </button>
+          
           <button
-            onClick={()=>{
-              setTree(new Tree());
-              setSelectedNodes(new Map());
-              setSingleSelectedNode(tree.root);
-            }}
-          >Chop</button>
+            onClick={chop}
+          >
+            Chop
+          </button>
 
           
           <h2>Selected nodes</h2>
@@ -61,7 +74,7 @@ function App() {
             return <button
               key={node.id}
               onClick={()=>{
-                setSingleSelectedNode(node);
+                setSelectedNode(node);
               }}
             >{node.id}</button>
           })}
@@ -71,7 +84,7 @@ function App() {
             node={tree.root}
             onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
               setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
-              nodeSelection.selected && setSingleSelectedNode(nodeSelection.node)
+              nodeSelection.selected && setSelectedNode(nodeSelection.node)
             }}
         />
       </div>

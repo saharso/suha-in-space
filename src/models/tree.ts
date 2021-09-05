@@ -60,9 +60,11 @@ export default class Tree {
         let node = this.getNodeById(nodeId);
         node.children?.chop();
         const parent = this.getNodeById(node.parentId);
-        delete parent.children[node.id];
-        this.flat.delete(nodeId);
-        this.leafs.delete(nodeId);
+        if (parent) {  
+            delete parent.children[node.id];
+            this.flat.delete(nodeId);
+            this.leafs.delete(nodeId);
+        }
     }
 
     chop() {
