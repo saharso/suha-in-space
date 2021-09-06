@@ -29,9 +29,7 @@ function App() {
 
       <div className="App">
         <header>
-          <TreeController
-            selectedNode={treeApi.selectedNode}
-          />
+          <TreeController/>
           
           <h2>Selected nodes</h2>
           {selectedNodesList.map((node) => {
