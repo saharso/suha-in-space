@@ -71,6 +71,10 @@ export default class Tree {
         this.initRoot();
     }
 
+    clone(nodeId) {
+        const cutting = this.getNodeById(nodeId);
+        console.log(cutting)
+    }
 }
 
 function _idMaker(parent){

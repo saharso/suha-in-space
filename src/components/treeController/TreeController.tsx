@@ -23,6 +23,11 @@ const TreeDisplay: React.FunctionComponent = () => {
           >
             Chop
           </button>
+          <button
+            onClick={()=>appContext.actions.clone()}
+          >
+            Clone
+          </button>
 
     </section>
 }

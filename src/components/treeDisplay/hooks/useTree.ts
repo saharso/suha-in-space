@@ -22,6 +22,7 @@ export interface IUseTreeApi {
         prune: Function;
         chop: Function;
         selectNodes: Function;
+        clone: Function;
     }
 }
 export default function useTree (treeParam): IUseTreeApi {
@@ -45,6 +46,11 @@ export default function useTree (treeParam): IUseTreeApi {
         setTree(new Tree(tree));
         setSelectedNode(tree.root);
     }, [tree]);
+
+    const clone = useCallback(function () {
+        tree.clone(selectedNode.id)
+        setTree(new Tree(tree));
+    }, [selectedNode]);
     
     const selectNodes = useCallback(function (nodeSelection: NodeSelection) {
         setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
@@ -55,5 +61,5 @@ export default function useTree (treeParam): IUseTreeApi {
         // console.log(tree)
     }, [tree, selectedNodes])
 
-    return {tree, selectedNode, actions: {grow, prune, chop, selectNodes}};
+    return {tree, selectedNode, actions: {grow, prune, chop, selectNodes, clone}};
 }
