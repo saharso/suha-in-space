@@ -25,24 +25,25 @@ export interface IUseTreeApi {
     }
 }
 export default function useTree (treeParam): IUseTreeApi {
-    const [tree, setTree] = useState<Tree>(treeParam || new Tree());
+    const [tree, setTree] = useState<Tree>(treeParam);
     const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
     const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
     const grow = useCallback(function(data) {
         tree.grow(selectedNode.id, data);
         setTree(new Tree(tree));
-    }, [selectedNode]);
+    }, [tree, selectedNode]);
 
     const prune = useCallback(function () {
         tree.prune(selectedNode.id);
         setTree(new Tree(tree));
         setSelectedNode(tree.root);
-    }, [selectedNode]);
+    }, [tree, selectedNode]);
 
     const chop = useCallback(function () {
         tree.chop()
         setTree(new Tree(tree));
+        setSelectedNode(tree.root);
     }, [tree]);
     
     const selectNodes = useCallback(function (nodeSelection: NodeSelection) {
