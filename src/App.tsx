@@ -8,36 +8,22 @@ import TreeDisplay from './components/treeDisplay/TreeDisplay';
 import TreeController from './components/treeController/TreeController';
 import useTree from './components/treeDisplay/hooks/useTree';
 
-const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
-  const map = new Map(prev);
-  if(selected.selected){
-      map.set(selected.node.id, selected.node);
-  } else {
-      map.delete(selected.node.id)
-  }
-  return map;
-}
-
 function App() {
+  const appTree = new Tree();
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
-  const [tree, requestGrow, requestPrune, requestChop] = useTree(new Tree());
-  const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
+  const treeApi = useTree(appTree);
 
   const grow = () => {
-    requestGrow(selectedNode, {});
+    treeApi.actions.grow({});
   }
 
   const prune = () => {
-    requestPrune(selectedNode);
-    setSelectedNodes(prev => updateSelectedNodes(prev, {selected: false, node: selectedNode}));
-    setSelectedNode(tree.root);
+    treeApi.actions.prune();
   }
 
   const chop = ()=> {
-    requestChop();
-    setSelectedNodes(new Map());
-    setSelectedNode(tree.root);
+    treeApi.actions.chop();
   }
 
   useEffect(()=>{
@@ -52,7 +38,7 @@ function App() {
       <div className="App">
         <header>
           <TreeController
-            selectedNode={selectedNode}
+            selectedNode={treeApi.selectedNode}
             onRequest={{grow, prune, chop}}
           />
           
@@ -61,17 +47,16 @@ function App() {
             return <button
               key={node.id}
               onClick={()=>{
-                setSelectedNode(node);
+                treeApi.actions.selectNodes({selected: true, node})
               }}
             >{node.id}</button>
           })}
         </header>
 
         <TreeDisplay 
-          tree={tree}
+          tree={treeApi.tree}
           onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
-            setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
-            nodeSelection.selected && setSelectedNode(nodeSelection.node)
+            treeApi.actions.selectNodes(nodeSelection)
           }}
         />
       </div>

@@ -14,28 +14,45 @@ const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap =>
     return map;
   }
 
-export default function useTree (treeParam): any {
+export interface IUseTreeApi {
+    tree: Tree;
+    selectedNode: Node;
+    actions: {
+        grow: Function;
+        prune: Function;
+        chop: Function;
+        selectNodes: Function;
+    }
+}
+export default function useTree (treeParam): IUseTreeApi {
     const [tree, setTree] = useState<Tree>(treeParam || new Tree());
     const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
     const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
-    const requestGrow = useCallback(function(selectedNode: Node, data) {
+    const grow = useCallback(function(data) {
         tree.grow(selectedNode.id, data);
         setTree(new Tree(tree));
-    }, []);
+    }, [selectedNode]);
 
-    const prune = useCallback(function (selectedNode) {
+    const prune = useCallback(function () {
         tree.prune(selectedNode.id);
         setTree(new Tree(tree));
-    }, [])
+        setSelectedNode(tree.root);
+    }, [selectedNode]);
+
     const chop = useCallback(function () {
         tree.chop()
         setTree(new Tree(tree));
-    }, [])
+    }, [tree]);
+    
+    const selectNodes = useCallback(function (nodeSelection: NodeSelection) {
+        setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
+        nodeSelection.selected && setSelectedNode(nodeSelection.node)
+    }, []);
 
     useEffect(()=>{
         // console.log(tree)
-    }, [tree])
+    }, [tree, selectedNodes])
 
-    return [tree, requestGrow, prune, chop];
+    return {tree, selectedNode, actions: {grow, prune, chop, selectNodes}};
 }
