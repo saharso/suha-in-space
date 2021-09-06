@@ -52,12 +52,9 @@ function App() {
   return (
       <div className="App">
         <header>
-
           <TreeController
             selectedNode={selectedNode}
-            onRequest={{
-              grow, prune, chop
-            }}
+            onRequest={{grow, prune, chop}}
           />
           
           <h2>Selected nodes</h2>

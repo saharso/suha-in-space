@@ -2,13 +2,13 @@
 import React from 'react';
 import Node from '../treeDisplay/models/node';
 
-export interface ITreeControllerRequests {
+interface ITreeControllerRequests {
     grow?: ()=> void;
     prune?: ()=> void;
     chop?: ()=> void;
 }
 
-export type ITreeControllerProps = {
+type ITreeControllerProps = {
     selectedNode?: Node;
     onRequest?: ITreeControllerRequests;
 }
