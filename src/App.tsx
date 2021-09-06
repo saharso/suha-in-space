@@ -6,6 +6,7 @@ import NodeSelection from './components/treeDisplay/models/interface/nodeSelecti
 import NodeMap from './components/treeDisplay/models/types/nodeMap';
 import TreeDisplay from './components/treeDisplay/TreeDisplay';
 import TreeController from './components/treeController/TreeController';
+import useTree from './components/treeDisplay/hooks/useTree';
 
 const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
   const map = new Map(prev);
@@ -18,31 +19,29 @@ const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap =>
 }
 
 function App() {
-  const [tree, setTree] = useState<Tree>(new Tree());
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
+  const [tree, requestGrow, requestPrune, requestChop] = useTree(new Tree());
   const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
   const grow = () => {
-    tree.grow(selectedNode.id, {});
-    setTree(new Tree(tree));
+    requestGrow(selectedNode, {});
   }
+
   const prune = () => {
+    requestPrune(selectedNode);
     setSelectedNodes(prev => updateSelectedNodes(prev, {selected: false, node: selectedNode}));
-    tree.prune(selectedNode.id);
-    setTree(new Tree(tree));
     setSelectedNode(tree.root);
   }
 
   const chop = ()=> {
-    tree.chop()
-    setTree(new Tree(tree));
+    requestChop();
     setSelectedNodes(new Map());
     setSelectedNode(tree.root);
   }
 
   useEffect(()=>{
-    setSelectedNodes(new Map())
+    setSelectedNodes(new Map());
   }, []);
 
   useEffect(()=>{
