@@ -23,14 +23,12 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 />
                 {node.id}
             </label>
-            <ul>
-                <ChildrenDisplay 
-                    node={node} 
-                    onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
-                        onChange && onChange(nodeSelection);
-                    }}
-                />
-            </ul>
+            <ChildrenDisplay 
+                node={node} 
+                onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
+                    onChange && onChange(nodeSelection);
+                }}
+            />
         </li>
     </>
 }
