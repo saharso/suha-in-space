@@ -25,7 +25,7 @@ export default class Tree {
     private sproutFromNode(trunk?: Node) {
         if(!trunk) return this.sproutFromTree();
         this.clone(trunk, this);
-        console.log(this.root);
+        console.log(this);
     }
 
     grow(nodeId, data: any) {
@@ -109,30 +109,37 @@ function _updateLeafMap(leafMap, node){
     leafMap.set(node.id, node);
     leafMap.delete(node.parentId);
 }
+function _getAllChildren(node: Node) {
+    // take a node and traverse its children.
+    let children = Object.values(node.children);
+    let childrenBank = children;
+    let whatToTraverse = children;
+    if(!children) return;
+    function rec(){
+        let _whatToTraverse = [];
+        for(const child of whatToTraverse) {
+            if(!child.children) continue;
+            // store all children in a bank. This should keep growing.
+            childrenBank = childrenBank.concat(Object.values(child.children));
+            // this should store only the children to be subsequently traversed.
+            _whatToTraverse = _whatToTraverse.concat(Object.values(child.children));
+        }
+        whatToTraverse = _whatToTraverse;
+        if(whatToTraverse.length) rec();
+    }   
+    rec();
+    return childrenBank;
+}
 function _handleNodeChildren(node: Node) {
     const flat = new Map();
     const leafs = new Map();
-    if(!node.children) return {flat, leafs};
-    let children = Object.values(node.children);
-    let totalChildIds = children;
-    const rec = (children) => {
-        let currentChildIds = [];
-        for(const child of children) {
-            if(!child.children) continue;
-            children = Object.values(child.children);
-            currentChildIds = currentChildIds.concat(children);
-            totalChildIds = totalChildIds.concat(children);
-            child.children = Children.construct(children);
-        }
-        if(currentChildIds.length) rec(children);
-    }
-    rec(children);
-    node.children = Children.construct(children);
-    for(const child of totalChildIds) {
+    const allChildren = _getAllChildren(node)
+    for(const child of allChildren) {
         if(!child.children) {
             leafs.set(child.id, child)
         }
         flat.set(child.id, child);
+        child.children = Children.construct(child.children);   
     }
         
     return {flat, leafs};

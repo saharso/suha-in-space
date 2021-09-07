@@ -1,3 +1,5 @@
+import IPojo from "../../../models/interface/pojo";
+
 export default class Children {
     #childMap;
     constructor(){
@@ -29,10 +31,16 @@ export default class Children {
         }
         return arr;
     }
-    static construct(rawChildren: Node[]) {
+    static construct(rawChildren: Node[] | IPojo<Node>) {
         const wrapper = new Children();
-        for(const child of rawChildren) {
-            wrapper.push(child);
+        if(Array.isArray(rawChildren)) {
+            for(const child of rawChildren) {
+                wrapper.push(child);
+            }
+        } else {
+            for(const key in rawChildren) {
+                wrapper.push(rawChildren[key]);
+            }
         }
         return wrapper;
     }
