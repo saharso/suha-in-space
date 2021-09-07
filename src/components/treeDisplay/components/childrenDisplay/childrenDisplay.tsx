@@ -13,7 +13,7 @@ export type IChildrenProps = {
 
 
 const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeSelectionEdit}) => {
-    console.log(node);
+
     return <>
         <ul id={`childrenDisplayOfNode_${node.id}`}>
             {Children.toArray(node.children).map((child)=>(

@@ -16,7 +16,7 @@ function App() {
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
   const treeApi = useTree(appTree);
-  console.log(treeApi);
+
   useEffect(()=>{
     setSelectedNodes(new Map());
   }, []);

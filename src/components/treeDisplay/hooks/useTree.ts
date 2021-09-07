@@ -31,8 +31,6 @@ export default function useTree (treeParam): IUseTreeApi {
     const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
     const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
-    console.log(tree);
-
     const grow = useCallback(function(data) {
         tree.grow(selectedNode.id, data);
         setTree(new Tree(tree));

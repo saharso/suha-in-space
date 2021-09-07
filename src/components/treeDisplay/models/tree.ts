@@ -25,10 +25,11 @@ export default class Tree {
     private sproutFromNode(trunk?: Node) {
         if(!trunk) return this.sproutFromTree();
         this.clone(trunk, this);
+        console.log(this.root);
     }
 
-    grow(parentId, data: any) {
-        const parent = this.getNodeById(parentId);
+    grow(nodeId, data: any) {
+        const parent = this.getNodeById(nodeId);
         if(!parent) return console.warn('no parent');
         const child = new Node(data);
         if(!parent.children) {
@@ -84,7 +85,7 @@ export default class Tree {
         const cutting: Node = nodeData instanceof String ? this.getNodeById(nodeData) : nodeData as Node;
         const sapling = tree || new Tree();
         sapling.root = cutting;
-        const saplingMetaData = _flattenNodeChildren(cutting);
+        const saplingMetaData = _handleNodeChildren(cutting);
         sapling.flat = saplingMetaData.flat;
         sapling.leafs = saplingMetaData.leafs;
         return sapling;
@@ -108,7 +109,7 @@ function _updateLeafMap(leafMap, node){
     leafMap.set(node.id, node);
     leafMap.delete(node.parentId);
 }
-function _flattenNodeChildren(node: Node) {
+function _handleNodeChildren(node: Node) {
     const flat = new Map();
     const leafs = new Map();
     if(!node.children) return {flat, leafs};
@@ -121,10 +122,12 @@ function _flattenNodeChildren(node: Node) {
             children = Object.values(child.children);
             currentChildIds = currentChildIds.concat(children);
             totalChildIds = totalChildIds.concat(children);
+            child.children = Children.construct(children);
         }
         if(currentChildIds.length) rec(children);
     }
     rec(children);
+    node.children = Children.construct(children);
     for(const child of totalChildIds) {
         if(!child.children) {
             leafs.set(child.id, child)

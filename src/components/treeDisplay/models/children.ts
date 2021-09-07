@@ -10,7 +10,6 @@ export default class Children {
     delete(nodeId){
         delete this[nodeId];
         this.#childMap.delete(nodeId);
-        console.log(nodeId, this);
     }
     size(){
         return this.#childMap.size
@@ -24,8 +23,17 @@ export default class Children {
     static toArray(children: Children) {
         const arr = [];
         for(const key in children) {
-            arr.push(children[key]);
+            if(children.hasOwnProperty(key)) {
+                arr.push(children[key]);
+            }
         }
         return arr;
+    }
+    static construct(rawChildren: Node[]) {
+        const wrapper = new Children();
+        for(const child of rawChildren) {
+            wrapper.push(child);
+        }
+        return wrapper;
     }
 }
