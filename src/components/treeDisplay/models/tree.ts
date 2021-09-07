@@ -78,7 +78,6 @@ export default class Tree {
         sapling.root = cutting;
         sapling.flat = saplingMetaData.flat;
         sapling.leafs = saplingMetaData.leafs;
-        console.log(sapling);
         return sapling;
     }
 }
