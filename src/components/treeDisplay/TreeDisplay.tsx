@@ -10,7 +10,6 @@ export type ITreeDisplayProps = {
 }
 
 const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({tree, onTreeUpdate, onNodeSelectionEdit}) => {
-
     return <section className="b-tree">
         <ChildrenDisplay 
             node={tree.root}

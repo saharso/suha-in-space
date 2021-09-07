@@ -8,13 +8,15 @@ import TreeDisplay from './components/treeDisplay/TreeDisplay';
 import TreeController from './components/treeController/TreeController';
 import useTree from './components/treeDisplay/hooks/useTree';
 import AppContext from './models/context';
+import * as tree1 from './components/treeDisplay/mocks/tree1.json'
 
 function App() {
-  const appTree = new Tree();
+  const treeMock = tree1 as any;
+  const appTree = new Tree(treeMock.default);
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
   const treeApi = useTree(appTree);
-
+  console.log(treeApi);
   useEffect(()=>{
     setSelectedNodes(new Map());
   }, []);

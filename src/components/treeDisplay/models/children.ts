@@ -24,9 +24,7 @@ export default class Children {
     static toArray(children: Children) {
         const arr = [];
         for(const key in children) {
-            if(children[key].constructor.name === 'Node') {
-                arr.push(children[key]);
-            }
+            arr.push(children[key]);
         }
         return arr;
     }

@@ -39,7 +39,6 @@ export default class Tree {
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
-        console.log(this.root);
     }
 
     getNodeById(nodeId) {
@@ -82,7 +81,7 @@ export default class Tree {
     }
 
     clone(nodeData: string | Node, tree? : Tree): Tree {
-        const cutting = nodeData instanceof Node ? nodeData : this.getNodeById(nodeData);
+        const cutting: Node = nodeData instanceof String ? this.getNodeById(nodeData) : nodeData as Node;
         const sapling = tree || new Tree();
         sapling.root = cutting;
         const saplingMetaData = _flattenNodeChildren(cutting);
