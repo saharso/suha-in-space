@@ -71,26 +71,15 @@ export default class Tree {
         this.initRoot();
     }
 
-    clone(nodeId) {
+    clone(nodeId): Tree {
         const cutting = this.getNodeById(nodeId);
-        const tree = new Tree();
-        if(!cutting.children) return;
-        let children = Object.keys(cutting.children);
-        let totalChildIds = children;
-        const rec = (children) => {
-            let currentChildIds = [];
-            for(const childId of children) {
-                const node = this.getNodeById(childId);
-                if(!node.children) continue;
-                children = Object.keys(node.children);
-                currentChildIds = currentChildIds.concat(children);
-                totalChildIds = totalChildIds.concat(children);
-            }
-            if(currentChildIds.length) rec(children);
-        }
-        rec(children);
-            
-        console.log(totalChildIds)
+        const sapling = new Tree();
+        const saplingMetaData = _flattenNodeChildren.call(this, cutting);
+        sapling.root = cutting;
+        sapling.flat = saplingMetaData.flat;
+        sapling.leafs = saplingMetaData.leafs;
+        console.log(sapling);
+        return sapling;
     }
 }
 
@@ -100,4 +89,30 @@ function _idMaker(parent){
 function _updateLeafMap(leafMap, node){
     leafMap.set(node.id, node);
     leafMap.delete(node.parentId);
+}
+function _flattenNodeChildren(node: Node) {
+    if(!node.children) return;
+    let children = Object.values(node.children);
+    let totalChildIds = children;
+    const flat = new Map();
+    const leafs = new Map();
+    const rec = (children) => {
+        let currentChildIds = [];
+        for(const child of children) {
+            if(!child.children) continue;
+            children = Object.values(child.children);
+            currentChildIds = currentChildIds.concat(children);
+            totalChildIds = totalChildIds.concat(children);
+        }
+        if(currentChildIds.length) rec(children);
+    }
+    rec(children);
+    for(const child of totalChildIds) {
+        if(!child.children) {
+            leafs.set(child.id, child)
+        }
+        flat.set(child.id, child);
+    }
+        
+    return {flat, leafs};
 }
