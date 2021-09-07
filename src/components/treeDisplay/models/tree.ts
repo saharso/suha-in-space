@@ -8,13 +8,13 @@ export default class Tree {
 
     constructor(trunk?: Tree | Node) {
         if(trunk instanceof Tree) {
-            this.initFromTree(trunk);
+            this.sproutFromTree(trunk);
         } else {
-            this.initFromNode(trunk)
+            this.sproutFromNode(trunk)
         }
     }
 
-    private initFromTree(trunk?: Tree) {
+    private sproutFromTree(trunk?: Tree) {
         this.root = trunk?.root || new Node();
         this.root.id = '0';
         this.flat = trunk?.flat || new Map();
@@ -22,8 +22,9 @@ export default class Tree {
         this.leafs = trunk?.leafs || new Map();
     }
 
-    private initFromNode(trunk: Node) {
-        
+    private sproutFromNode(trunk?: Node) {
+        if(!trunk) return this.sproutFromTree();
+        this.clone(trunk, this);
     }
 
     grow(parentId, data: any) {
@@ -38,6 +39,7 @@ export default class Tree {
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
+        console.log(this.root);
     }
 
     getNodeById(nodeId) {
@@ -76,14 +78,14 @@ export default class Tree {
     }
 
     chop() {
-        this.initFromTree();
+        this.sproutFromTree();
     }
 
-    clone(nodeId): Tree {
-        const cutting = this.getNodeById(nodeId);
-        const sapling = new Tree();
-        const saplingMetaData = _flattenNodeChildren(cutting);
+    clone(nodeData: string | Node, tree? : Tree): Tree {
+        const cutting = nodeData instanceof Node ? nodeData : this.getNodeById(nodeData);
+        const sapling = tree || new Tree();
         sapling.root = cutting;
+        const saplingMetaData = _flattenNodeChildren(cutting);
         sapling.flat = saplingMetaData.flat;
         sapling.leafs = saplingMetaData.leafs;
         return sapling;
