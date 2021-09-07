@@ -24,9 +24,9 @@ const TreeDisplay: React.FunctionComponent = () => {
             Chop
           </button>
           <button
-            onClick={()=>appContext.actions.clone()}
+            onClick={()=>appContext.actions.graft(appContext.selectedNode.id)}
           >
-            Clone
+            Graft
           </button>
 
     </section>

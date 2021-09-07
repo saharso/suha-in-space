@@ -6,16 +6,24 @@ export default class Tree {
     flat: Map<string, Node> = new Map();
     leafs: Map<string, Node> = new Map();
 
-    constructor(trunk?: Tree) {
-        this.initRoot(trunk);
+    constructor(trunk?: Tree | Node) {
+        if(trunk instanceof Tree) {
+            this.initFromTree(trunk);
+        } else {
+            this.initFromNode(trunk)
+        }
     }
 
-    private initRoot(trunk?: Tree) {
+    private initFromTree(trunk?: Tree) {
         this.root = trunk?.root || new Node();
         this.root.id = '0';
         this.flat = trunk?.flat || new Map();
         this.flat.set(this.root.id, this.root);
         this.leafs = trunk?.leafs || new Map();
+    }
+
+    private initFromNode(trunk: Node) {
+        
     }
 
     grow(parentId, data: any) {
@@ -68,7 +76,7 @@ export default class Tree {
     }
 
     chop() {
-        this.initRoot();
+        this.initFromTree();
     }
 
     clone(nodeId): Tree {
@@ -80,6 +88,16 @@ export default class Tree {
         sapling.leafs = saplingMetaData.leafs;
         return sapling;
     }
+
+    graft(graftFromId: string, graftToId: string) {
+        const graftFrom = this.getNodeById(graftFromId);
+        const graftTo = this.getNodeById(graftToId);
+        const branch = this.clone(graftFromId);
+        graftTo.parentId = graftFrom.id;
+        if(!graftTo.children) graftTo.children = new Children();
+        graftTo.children.push(branch.root);
+        this.getNodeById(graftFrom.parentId).children.delete(graftFrom.id);
+    }
 }
 
 function _idMaker(parent){
@@ -90,11 +108,11 @@ function _updateLeafMap(leafMap, node){
     leafMap.delete(node.parentId);
 }
 function _flattenNodeChildren(node: Node) {
-    if(!node.children) return;
-    let children = Object.values(node.children);
-    let totalChildIds = children;
     const flat = new Map();
     const leafs = new Map();
+    if(!node.children) return {flat, leafs};
+    let children = Object.values(node.children);
+    let totalChildIds = children;
     const rec = (children) => {
         let currentChildIds = [];
         for(const child of children) {

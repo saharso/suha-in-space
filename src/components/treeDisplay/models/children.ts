@@ -7,6 +7,11 @@ export default class Children {
         this.#childMap.set(childNode.id, childNode)
         this[childNode.id] = childNode;
     }
+    delete(nodeId){
+        delete this[nodeId];
+        this.#childMap.delete(nodeId);
+        console.log(nodeId, this);
+    }
     size(){
         return this.#childMap.size
     }
