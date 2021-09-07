@@ -110,11 +110,10 @@ function _updateLeafMap(leafMap, node){
     leafMap.delete(node.parentId);
 }
 function _getAllChildren(node: Node) {
-    // take a node and traverse its children.
     let children = Object.values(node.children);
+    if(!children) return;
     let childrenBank = children;
     let whatToTraverse = children;
-    if(!children) return;
     function rec(){
         let _whatToTraverse = [];
         for(const child of whatToTraverse) {
