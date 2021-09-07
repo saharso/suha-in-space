@@ -73,7 +73,24 @@ export default class Tree {
 
     clone(nodeId) {
         const cutting = this.getNodeById(nodeId);
-        console.log(cutting)
+        const tree = new Tree();
+        if(!cutting.children) return;
+        let children = Object.keys(cutting.children);
+        let totalChildIds = children;
+        const rec = (children) => {
+            let currentChildIds = [];
+            for(const childId of children) {
+                const node = this.getNodeById(childId);
+                if(!node.children) continue;
+                children = Object.keys(node.children);
+                currentChildIds = currentChildIds.concat(children);
+                totalChildIds = totalChildIds.concat(children);
+            }
+            if(currentChildIds.length) rec(children);
+        }
+        rec(children);
+            
+        console.log(totalChildIds)
     }
 }
 
