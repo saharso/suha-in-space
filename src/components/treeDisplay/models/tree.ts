@@ -74,7 +74,7 @@ export default class Tree {
     clone(nodeId): Tree {
         const cutting = this.getNodeById(nodeId);
         const sapling = new Tree();
-        const saplingMetaData = _flattenNodeChildren.call(this, cutting);
+        const saplingMetaData = _flattenNodeChildren(cutting);
         sapling.root = cutting;
         sapling.flat = saplingMetaData.flat;
         sapling.leafs = saplingMetaData.leafs;
