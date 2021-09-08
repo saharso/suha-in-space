@@ -10,10 +10,11 @@ import useTree from './components/treeDisplay/hooks/useTree';
 import AppContext from './models/context';
 import * as tree1 from './mocks/tree1.json';
 import * as list1 from './mocks/list1.json';
+import recipeToTree from './pipes/recipieToTree';
 
 function App() {
   const treeMock = tree1 as any;
-  const listMock = list1['default'] as any;
+  const listMock = Tree.treeFromSchema(list1['default'], {data: 'label', children: 'items'}) as any;
   const appTree = new Tree(treeMock.default);
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);

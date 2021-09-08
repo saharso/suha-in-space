@@ -1,6 +1,7 @@
 
 import Node from './node';
 import Children from './children';
+import INodeSchema from './interface/nodeSchema';
 export default class Tree {
     root: Node;
     flat: Map<string, Node> = new Map();
@@ -25,7 +26,6 @@ export default class Tree {
     private sproutFromNode(trunk?: Node) {
         if(!trunk) return this.sproutFromTree();
         this.clone(trunk, this);
-        console.log(this);
     }
 
     grow(nodeId, data: any) {
@@ -100,6 +100,13 @@ export default class Tree {
         graftTo.children.push(branch.root);
         this.getNodeById(graftFrom.parentId).children.delete(graftFrom.id);
     }
+
+    static treeFromSchema(data: any, schema: INodeSchema ) {
+        const tree = new Tree();
+        console.log(data);
+        console.log(schema);
+        return tree;
+    }
 }
 
 function _idMaker(parent){
@@ -125,7 +132,7 @@ function _getAllChildren(node: Node) {
         }
         whatToTraverse = _whatToTraverse;
         if(whatToTraverse.length) rec();
-    }   
+    }
     rec();
     return childrenBank;
 }

@@ -65,7 +65,6 @@ export default function useTree (treeParam): IUseTreeApi {
 
     useEffect(()=>{
         setTree(new Tree(tree));
-        console.log('useTree');
     }, [])
 
     return {tree, selectedNode, actions: {grow, prune, chop, selectNodes, clone, graft}};
