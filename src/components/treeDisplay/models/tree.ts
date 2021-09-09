@@ -2,7 +2,6 @@
 import Node from './node';
 import Children from './children';
 import INodeSchema from './interface/nodeSchema';
-import { chdir } from 'process';
 export default class Tree {
     root: Node;
     flat: Map<string, Node> = new Map();
