@@ -2,10 +2,12 @@
 import Node from './node';
 import Children from './children';
 import INodeSchema from './interface/nodeSchema';
+import { chdir } from 'process';
 export default class Tree {
     root: Node;
     flat: Map<string, Node> = new Map();
     leafs: Map<string, Node> = new Map();
+    #latest: Node;
 
     constructor(trunk?: Tree | Node) {
         if(trunk instanceof Tree) {
@@ -35,11 +37,16 @@ export default class Tree {
         if(!parent.children) {
             parent.children = new Children();
         }
-        child.parentId = parent.id;
         child.id = _idMaker(parent);
         parent.children.push(child);
         _updateLeafMap(this.leafs, child);
         this.flat.set(child.id, child);
+
+        this.#latest = child;
+    }
+
+    getLatestLeaf(): Node {
+        return this.#latest;
     }
 
     getNodeById(nodeId) {
@@ -95,36 +102,29 @@ export default class Tree {
         const graftFrom = this.getNodeById(graftFromId);
         const graftTo = this.getNodeById(graftToId);
         const branch = this.clone(graftFromId);
-        graftTo.parentId = graftFrom.id;
         if(!graftTo.children) graftTo.children = new Children();
         graftTo.children.push(branch.root);
         this.getNodeById(graftFrom.parentId).children.delete(graftFrom.id);
     }
 
     static treeFromSchema(data: any, schema: INodeSchema ) {
+        console.log({'raw': data})
         const tree = new Tree();
-        let isInit = true;
+        tree.root.data = data[schema.data];
 
-        const handleRoot = (node) => {
-            if(!isInit) return;
-            tree.root = node;
-            node.id = '0';
-            isInit = false;
-        };
-
-        function rec(rawNode){
-            const node = new Node(rawNode[schema.data]);
-            handleRoot(node);
-            const rawChildren = rawNode[schema.children];
-            console.log(rawChildren);
+        function rec(data: Node, id){
+            const rawChildren = data[schema.children];
             if(!rawChildren) return;
+            const children = [];
             for(const child of rawChildren) {
-                rec(child);
+                tree.grow(id, child[schema.data]);
+                children.push(child);
+                rec(child, tree.getLatestLeaf().id);
             }
-
         }
-        rec(data);
+        rec(data, '0');
         console.log(tree);
+        
         return tree;
     }
 }
