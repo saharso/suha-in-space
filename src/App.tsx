@@ -12,9 +12,9 @@ import * as tree1 from './mocks/tree1.json';
 import * as list1 from './mocks/list1.json';
 import recipeToTree from './pipes/recipieToTree';
 
+const listMock = Tree.treeFromSchema(list1['default'], {data: 'label', children: 'items'}) as any;
 function App() {
   const treeMock = tree1 as any;
-  const listMock = Tree.treeFromSchema(list1['default'], {data: 'label', children: 'items'}) as any;
   const appTree = new Tree(treeMock.default);
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);

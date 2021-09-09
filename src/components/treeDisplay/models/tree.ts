@@ -105,6 +105,13 @@ export default class Tree {
         const tree = new Tree();
         console.log(data);
         console.log(schema);
+        function rec(rawNode){
+            const node = new Node(schema.data);
+            const rawChildren = rawNode[schema.children];
+            console.log(rawChildren);
+
+        }
+        rec(data);
         return tree;
     }
 }
