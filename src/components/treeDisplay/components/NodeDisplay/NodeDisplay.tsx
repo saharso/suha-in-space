@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
@@ -7,10 +7,10 @@ import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 export type INodeDisplayProps = {
     node: Node;
     onChange?: (p: NodeSelection) => void;
+    requestNodeGrowth?: (p: Node) => void;
 }
 
-const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange}) => {
-
+const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, requestNodeGrowth}) => {
     return <>
         <li id={node.id}>
             <label>
@@ -28,6 +28,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onChange && onChange(nodeSelection);
                 }}
+                requestNodeGrowth={(node)=>{requestNodeGrowth && requestNodeGrowth(node)}}
             />
         </li>
     </>

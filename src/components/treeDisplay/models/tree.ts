@@ -107,7 +107,6 @@ export default class Tree {
     }
 
     static treeFromSchema(data: any, schema: INodeSchema ) {
-        console.log({'raw': data})
         const tree = new Tree();
         tree.root.data = data[schema.data];
 
@@ -122,7 +121,6 @@ export default class Tree {
             }
         }
         rec(data, '0');
-        console.log(tree);
         
         return tree;
     }
