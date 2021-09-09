@@ -103,10 +103,18 @@ export default class Tree {
 
     static treeFromSchema(data: any, schema: INodeSchema ) {
         const tree = new Tree();
-        console.log(data);
-        console.log(schema);
+        let isInit = true;
+
+        const handleRoot = (node) => {
+            if(!isInit) return;
+            tree.root = node;
+            node.id = '0';
+            isInit = false;
+        };
+
         function rec(rawNode){
-            const node = new Node(schema.data);
+            const node = new Node(rawNode[schema.data]);
+            handleRoot(node);
             const rawChildren = rawNode[schema.children];
             console.log(rawChildren);
             if(!rawChildren) return;
@@ -116,6 +124,7 @@ export default class Tree {
 
         }
         rec(data);
+        console.log(tree);
         return tree;
     }
 }
