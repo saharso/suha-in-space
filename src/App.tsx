@@ -10,7 +10,6 @@ import useTree from './components/treeDisplay/hooks/useTree';
 import AppContext from './models/context';
 import * as tree1 from './mocks/tree1.json';
 import * as list1 from './mocks/list1.json';
-import recipeToTree from './pipes/recipieToTree';
 
 const listMock = Tree.treeFromSchema(list1['default'], {data: 'label', children: 'items'}) as any;
 function App() {

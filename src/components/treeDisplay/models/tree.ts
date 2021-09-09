@@ -109,6 +109,10 @@ export default class Tree {
             const node = new Node(schema.data);
             const rawChildren = rawNode[schema.children];
             console.log(rawChildren);
+            if(!rawChildren) return;
+            for(const child of rawChildren) {
+                rec(child);
+            }
 
         }
         rec(data);
