@@ -14,7 +14,7 @@ import * as list1 from './mocks/list1.json';
 const listMock = Tree.treeFromSchema(list1['default'], {data: 'label', children: 'items'}) as any;
 function App() {
   const treeMock = tree1 as any;
-  const appTree = new Tree(treeMock.default);
+  const appTree = new Tree(listMock);
   const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
   const [selectedNodesList, setSelectedNodesList] = useState<Node[]>([]);
   const treeApi = useTree(appTree);
