@@ -31,10 +31,12 @@ export default function useTree (treeParam): IUseTreeApi {
     const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
     const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
-    const grow = useCallback(function(data) {
-        tree.grow(selectedNode.id, data);
+    const grow = useCallback(function(node , data) {
+        tree.grow(node.id, data);
+        console.log(node);
+        console.log(tree.flat.get(node.id));
         setTree(new Tree(tree));
-    }, [tree, selectedNode]);
+    }, [tree]);
 
     const prune = useCallback(function () {
         tree.prune(selectedNode.id);

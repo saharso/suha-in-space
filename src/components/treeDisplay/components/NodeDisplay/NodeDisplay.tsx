@@ -2,6 +2,7 @@
 import React from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
+import AddItem from '../addItem/addItem';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 
 export type INodeDisplayProps = {
@@ -31,6 +32,9 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 }}
                 requestNodeGrowth={(node, value)=>{requestNodeGrowth && requestNodeGrowth(node, value);}}
             />
+            <AddItem
+                onAddItem={(nodeValue)=>{requestNodeGrowth && requestNodeGrowth(node, nodeValue)}}
+            />            
         </li>
     </>
 }

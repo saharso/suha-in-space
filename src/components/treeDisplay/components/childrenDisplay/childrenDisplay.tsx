@@ -4,7 +4,6 @@ import Node from '../../models/node';
 import Children from '../../models/children';
 import NodeDisplay from '../NodeDisplay/NodeDisplay';
 import NodeSelection from '../../models/interface/nodeSelection';
-import AddItem from '../addItem/addItem';
 
 export type IChildrenProps = {
     node: Node;
@@ -23,13 +22,12 @@ const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeS
                     onChange={(nodeSelection: NodeSelection) => {
                         onNodeSelectionEdit(nodeSelection);
                     }}
-                    requestNodeGrowth={(node, nodeValue)=>{requestNodeGrowth && requestNodeGrowth(node, nodeValue)}}
+                    requestNodeGrowth={(node, nodeValue)=>{
+                        requestNodeGrowth && requestNodeGrowth(node, nodeValue)
+                    }}
                 />
             ))}
         </ul>
-        <AddItem
-            onAddItem={(nodeValue)=>{requestNodeGrowth && requestNodeGrowth(node, nodeValue)}}
-        />
     </>
 }
 

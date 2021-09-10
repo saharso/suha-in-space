@@ -50,8 +50,7 @@ function App() {
             treeApi.actions.selectNodes(nodeSelection)
           }}
           requestNodeGrowth={(node, value)=>{
-            console.log(node, value);
-            console.log('should be once')
+            treeApi.actions.grow(node, value);
           }}
 
         ></TreeDisplay>
