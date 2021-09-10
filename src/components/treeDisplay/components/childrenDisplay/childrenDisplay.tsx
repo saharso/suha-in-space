@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Node from '../../models/node';
 import Children from '../../models/children';
 import NodeDisplay from '../NodeDisplay/NodeDisplay';

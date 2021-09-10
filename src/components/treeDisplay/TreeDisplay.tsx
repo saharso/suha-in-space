@@ -2,7 +2,6 @@ import React from 'react';
 import NodeSelection from './models/interface/nodeSelection';
 import Tree from './models/tree';
 import ChildrenDisplay from './components/childrenDisplay/childrenDisplay';
-import Node from './models/node';
 
 export type ITreeDisplayProps = {
     onNodeSelectionEdit?: (nodeSelection: NodeSelection) => void;
