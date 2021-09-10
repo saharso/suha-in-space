@@ -26,7 +26,6 @@ function App() {
     setSelectedNodesList(Array.from(selectedNodes.values()));
   }, [selectedNodes]);
   
-
   return (
     <AppContext.Provider value={treeApi}>
 
@@ -51,7 +50,8 @@ function App() {
             treeApi.actions.selectNodes(nodeSelection)
           }}
           requestNodeGrowth={(node, value)=>{
-            console.log(node, value)
+            console.log(node, value);
+            console.log('should be once')
           }}
 
         ></TreeDisplay>

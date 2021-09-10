@@ -14,7 +14,8 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
     const [value, setValue] = useState('');
     useEffect(()=>{
         requestNodeGrowth && requestNodeGrowth(node, value);
-    }, [value, requestNodeGrowth, node])
+    }, [value]);
+    
     return <>
         <li id={node.id}>
             <label>
