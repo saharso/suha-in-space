@@ -7,10 +7,14 @@ import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 export type INodeDisplayProps = {
     node: Node;
     onChange?: (p: NodeSelection) => void;
-    requestNodeGrowth?: (p: Node) => void;
+    requestNodeGrowth?: (p: Node, value: string) => void;
 }
 
 const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, requestNodeGrowth}) => {
+    const [value, setValue] = useState('');
+    useEffect(()=>{
+        requestNodeGrowth && requestNodeGrowth(node, value);
+    }, [value, requestNodeGrowth, node])
     return <>
         <li id={node.id}>
             <label>
@@ -28,7 +32,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onChange && onChange(nodeSelection);
                 }}
-                requestNodeGrowth={(node)=>{requestNodeGrowth && requestNodeGrowth(node)}}
+                requestNodeGrowth={(node, value)=>{setValue(value);}}
             />
         </li>
     </>
