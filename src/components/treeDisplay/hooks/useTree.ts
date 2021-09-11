@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Tree from "../models/tree";
 import Node from "../models/node";
 import NodeSelection from '../models/interface/nodeSelection';
@@ -38,20 +38,17 @@ export default function useTree (treeParam): IUseTreeApi {
     const clone = useCallback(function () {
         tree.clone(selectedNode.id)
         setTree(new Tree(tree));
-    }, [selectedNode]);
+    }, [tree, selectedNode]);
 
     const graft = useCallback(function () {
         tree.graft('0_1_0', selectedNode.id)
         setTree(new Tree(tree));
-    }, [selectedNode]);
+    }, [tree, selectedNode]);
     
     const selectNodes = useCallback(function (nodeSelection: NodeSelection) {
         nodeSelection.selected && setSelectedNode(nodeSelection.node)
     }, []);
 
-    useEffect(()=>{
-        setTree(new Tree(tree));
-    }, [])
 
     return {tree, selectedNode, actions: {grow, prune, chop, selectNodes, clone, graft}};
 }
