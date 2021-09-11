@@ -1,5 +1,5 @@
 
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
 import AddItem from '../ui/addItem/addItem';
@@ -8,13 +8,13 @@ import useIntermediateCheckbox from '../../hooks/useIntermediateCheckbox';
 
 export type INodeDisplayProps = {
     node: Node;
-    onChange?: (nodeSelection: NodeSelection) => void;
+    onNodeSelectionEdit?: (nodeSelection: NodeSelection) => void;
     onRequestNodeGrowth?: (node: Node, value: string) => void;
     onRequestNodeRemove?: (node: Node) => void;
 }
 
 
-const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, onRequestNodeGrowth, onRequestNodeRemove}) => {
+const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onNodeSelectionEdit, onRequestNodeGrowth, onRequestNodeRemove}) => {
     const checkbox = useRef(null);
 
     const setIntermediate = useIntermediateCheckbox(checkbox);
@@ -27,7 +27,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                     ref={checkbox}
                     onChange={(e)=>{
                         const selected = e.target.checked;
-                        onChange && onChange({selected, node});
+                        onNodeSelectionEdit && onNodeSelectionEdit({selected, node});
                     }}
                 />
                 {node.id}
@@ -40,7 +40,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
             <ChildrenDisplay 
                 node={node} 
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
-                    onChange && onChange(nodeSelection);
+                    onNodeSelectionEdit && onNodeSelectionEdit(nodeSelection);
                     setIntermediate(nodeSelection);
                 }}
                 onRequestNodeGrowth={(node, value)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, value);}}

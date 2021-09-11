@@ -20,7 +20,7 @@ const ChildrenDisplay: React.FunctionComponent<IChildrenProps> = ({node, onNodeS
                 <NodeDisplay 
                     node={child}
                     key={child.id}
-                    onChange={(nodeSelection: NodeSelection) => {
+                    onNodeSelectionEdit={(nodeSelection: NodeSelection) => {
                         onNodeSelectionEdit(nodeSelection);
                     }}
                     onRequestNodeGrowth={(node, nodeValue)=>{
