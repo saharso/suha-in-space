@@ -1,19 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Tree from "../models/tree";
 import Node from "../models/node";
-import NodeMap from '../models/types/nodeMap';
 import NodeSelection from '../models/interface/nodeSelection';
-
-const updateSelectedNodes = (prev: NodeMap, selected: NodeSelection): NodeMap => {
-    const map = new Map(prev);
-    if(selected.selected){
-        map.set(selected.node.id, selected.node);
-    } else {
-        map.delete(selected.node.id)
-    }
-    return map;
-  }
-
 export interface IUseTreeApi {
     tree: Tree;
     selectedNode: Node;
@@ -28,13 +16,10 @@ export interface IUseTreeApi {
 }
 export default function useTree (treeParam): IUseTreeApi {
     const [tree, setTree] = useState<Tree>(treeParam);
-    const [selectedNodes, setSelectedNodes] = useState<NodeMap>(new Map());
     const [selectedNode, setSelectedNode] = useState<Node>(tree.root);
 
     const grow = useCallback(function(node , data) {
         tree.grow(node.id, data);
-        console.log(node);
-        console.log(tree.flat.get(node.id));
         setTree(new Tree(tree));
     }, [tree]);
 
@@ -61,7 +46,6 @@ export default function useTree (treeParam): IUseTreeApi {
     }, [selectedNode]);
     
     const selectNodes = useCallback(function (nodeSelection: NodeSelection) {
-        setSelectedNodes(prev => updateSelectedNodes(prev, nodeSelection));
         nodeSelection.selected && setSelectedNode(nodeSelection.node)
     }, []);
 
