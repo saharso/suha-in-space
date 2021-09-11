@@ -2,7 +2,7 @@
 import React from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
-import AddItem from '../addItem/addItem';
+import AddItem from '../ui/addItem/addItem';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 
 export type INodeDisplayProps = {
