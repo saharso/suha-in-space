@@ -23,11 +23,13 @@ export default function useTree (treeParam): IUseTreeApi {
         setTree(new Tree(tree));
     }, [tree]);
 
-    const prune = useCallback(function () {
-        tree.prune(selectedNode.id);
+    const prune = useCallback(function (node) {
+        if(!node) return console.warn('No node found for pruning');
+        console.log(node)
+        tree.prune(node.id);
         setTree(new Tree(tree));
         setSelectedNode(tree.root);
-    }, [tree, selectedNode]);
+    }, [tree]);
 
     const chop = useCallback(function () {
         tree.chop()

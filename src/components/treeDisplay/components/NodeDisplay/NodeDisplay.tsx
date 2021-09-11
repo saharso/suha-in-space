@@ -28,14 +28,16 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
             </label>
             <button 
                 className="b-tree__removeItem"
-                onClick={()=>{onRequestNodeRemove(node)}}
+                onClick={()=>{onRequestNodeRemove && onRequestNodeRemove(node)}}
             >X</button>
+
             <ChildrenDisplay 
                 node={node} 
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onChange && onChange(nodeSelection);
                 }}
                 onRequestNodeGrowth={(node, value)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, value);}}
+                onRequestNodeRemove={(node)=>onRequestNodeRemove && onRequestNodeRemove(node)}
             />
             <AddItem
                 onAddItem={(nodeValue)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, nodeValue)}}
