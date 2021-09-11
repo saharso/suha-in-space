@@ -17,9 +17,7 @@ export type INodeDisplayProps = {
 const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, onRequestNodeGrowth, onRequestNodeRemove}) => {
     const checkbox = useRef(null);
 
-    const [childrenSelected, setChildrenSelected] = useState<Set<string>>(new Set());
-
-    useIntermediateCheckbox(checkbox, childrenSelected);
+    const setIntermediate = useIntermediateCheckbox(checkbox);
 
     return <>
         <li id={node.id}>
@@ -43,12 +41,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 node={node} 
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onChange && onChange(nodeSelection);
-                    if(nodeSelection.selected) {
-                        childrenSelected.add(nodeSelection.node.id);
-                    } else {
-                        childrenSelected.delete(nodeSelection.node.id);
-                    }
-                    setChildrenSelected(new Set(childrenSelected));
+                    setIntermediate(nodeSelection);
                 }}
                 onRequestNodeGrowth={(node, value)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, value);}}
                 onRequestNodeRemove={(node)=>onRequestNodeRemove && onRequestNodeRemove(node)}

@@ -1,10 +1,23 @@
-import {useEffect}  from 'react';
+import {useEffect, useState}  from 'react';
+import NodeSelection from '../models/interface/nodeSelection';
 
-function useIntermediateCheckbox(checkbox, childrenSelected){
-    useEffect(()=>{
+function useIntermediateCheckbox(checkbox){
+
+    const [childrenSelected, setChildrenSelected] = useState<Set<string>>(new Set());
+
+    useEffect(()=>{    
         const checkboxEl = checkbox.current;
         checkboxEl.indeterminate = !!childrenSelected.size;
-    }, [childrenSelected, checkbox])
+    }, [childrenSelected, checkbox]);
+
+    return function(nodeSelection: NodeSelection) {
+        if(nodeSelection.selected) {
+            childrenSelected.add(nodeSelection.node.id);
+        } else {
+            childrenSelected.delete(nodeSelection.node.id);
+        }
+        setChildrenSelected(new Set(childrenSelected));
+    };
 }
 
 export default useIntermediateCheckbox;
