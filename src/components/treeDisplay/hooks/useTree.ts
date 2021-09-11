@@ -25,7 +25,6 @@ export default function useTree (treeParam): IUseTreeApi {
 
     const prune = useCallback(function (node) {
         if(!node) return console.warn('No node found for pruning');
-        console.log(node)
         tree.prune(node.id);
         setTree(new Tree(tree));
         setSelectedNode(tree.root);
