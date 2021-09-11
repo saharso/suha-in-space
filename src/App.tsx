@@ -25,7 +25,6 @@ function App() {
         <TreeDisplay 
           tree={appTree}
           onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
-            console.log(nodeSelection);
           }}
           onTreeUpdate={(tree)=>{
             console.log(tree);

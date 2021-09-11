@@ -24,7 +24,7 @@ const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({tree, onNodeSe
                 onNodeSelectionEdit && onNodeSelectionEdit(nodeSelection);
             }}
             onRequestNodeGrowth={(node, value)=>{treeApi.actions.grow(node, value)}}
-            onRequestNodeRemove={(node)=>{treeApi.actions.prune(node); console.log(node)}}
+            onRequestNodeRemove={(node)=>{treeApi.actions.prune(node)}}
         />
     </section>
 }
