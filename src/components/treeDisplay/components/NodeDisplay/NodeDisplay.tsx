@@ -1,9 +1,10 @@
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
 import AddItem from '../ui/addItem/addItem';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
+import useIntermediateCheckbox from '../../hooks/useIntermediateCheckbox';
 
 export type INodeDisplayProps = {
     node: Node;
@@ -12,14 +13,13 @@ export type INodeDisplayProps = {
     onRequestNodeRemove?: (node: Node) => void;
 }
 
+
 const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, onRequestNodeGrowth, onRequestNodeRemove}) => {
     const checkbox = useRef(null);
+
     const [childrenSelected, setChildrenSelected] = useState<Set<string>>(new Set());
 
-    useEffect(()=>{
-        const checkboxEl = checkbox.current;
-        checkboxEl.indeterminate = !!childrenSelected.size;
-    }, [childrenSelected])
+    useIntermediateCheckbox(checkbox, childrenSelected);
 
     return <>
         <li id={node.id}>
