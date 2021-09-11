@@ -7,11 +7,12 @@ import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 
 export type INodeDisplayProps = {
     node: Node;
-    onChange?: (p: NodeSelection) => void;
-    requestNodeGrowth?: (p: Node, value: string) => void;
+    onChange?: (nodeSelection: NodeSelection) => void;
+    onRequestNodeGrowth?: (node: Node, value: string) => void;
+    onRequestNodeRemove?: (node: Node) => void;
 }
 
-const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, requestNodeGrowth}) => {
+const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, onRequestNodeGrowth, onRequestNodeRemove}) => {
     
     return <>
         <li id={node.id}>
@@ -25,15 +26,19 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 />
                 {node.id}
             </label>
+            <button 
+                className="b-tree__removeItem"
+                onClick={()=>{onRequestNodeRemove(node)}}
+            >X</button>
             <ChildrenDisplay 
                 node={node} 
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onChange && onChange(nodeSelection);
                 }}
-                requestNodeGrowth={(node, value)=>{requestNodeGrowth && requestNodeGrowth(node, value);}}
+                onRequestNodeGrowth={(node, value)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, value);}}
             />
             <AddItem
-                onAddItem={(nodeValue)=>{requestNodeGrowth && requestNodeGrowth(node, nodeValue)}}
+                onAddItem={(nodeValue)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, nodeValue)}}
             />            
         </li>
     </>

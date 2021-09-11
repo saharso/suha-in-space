@@ -7,11 +7,10 @@ import useTree from './hooks/useTree';
 export type ITreeDisplayProps = {
     onNodeSelectionEdit?: (nodeSelection: NodeSelection) => void;
     tree: Tree;
-    requestNodeGrowth?: Function;
     onTreeUpdate?: Function;
 }
 
-const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({tree, onNodeSelectionEdit, requestNodeGrowth, onTreeUpdate}) => {
+const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({tree, onNodeSelectionEdit, onTreeUpdate}) => {
     const treeApi = useTree(tree);
     
     useEffect(()=>{
@@ -24,7 +23,8 @@ const TreeDisplay: React.FunctionComponent<ITreeDisplayProps> = ({tree, onNodeSe
             onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                 onNodeSelectionEdit && onNodeSelectionEdit(nodeSelection);
             }}
-            requestNodeGrowth={(node, value)=>{treeApi.actions.grow(node, value)}}
+            onRequestNodeGrowth={(node, value)=>{treeApi.actions.grow(node, value)}}
+            onRequestNodeRemove={(node)=>{console.log(node)}}
         />
     </section>
 }
