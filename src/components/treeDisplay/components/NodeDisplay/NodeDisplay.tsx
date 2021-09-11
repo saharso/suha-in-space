@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
 import AddItem from '../ui/addItem/addItem';
@@ -13,12 +13,20 @@ export type INodeDisplayProps = {
 }
 
 const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange, onRequestNodeGrowth, onRequestNodeRemove}) => {
-    
+    const checkbox = useRef(null);
+    const [childrenSelected, setChildrenSelected] = useState<Set<string>>(new Set());
+
+    useEffect(()=>{
+        const checkboxEl = checkbox.current;
+        checkboxEl.indeterminate = !!childrenSelected.size;
+    }, [childrenSelected])
+
     return <>
         <li id={node.id}>
             <label>
                 <input type="checkbox"
                     defaultChecked={node.data.selected}
+                    ref={checkbox}
                     onChange={(e)=>{
                         const selected = e.target.checked;
                         onChange && onChange({selected, node});
@@ -35,6 +43,12 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onChange
                 node={node} 
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onChange && onChange(nodeSelection);
+                    if(nodeSelection.selected) {
+                        childrenSelected.add(nodeSelection.node.id);
+                    } else {
+                        childrenSelected.delete(nodeSelection.node.id);
+                    }
+                    setChildrenSelected(new Set(childrenSelected));
                 }}
                 onRequestNodeGrowth={(node, value)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, value);}}
                 onRequestNodeRemove={(node)=>onRequestNodeRemove && onRequestNodeRemove(node)}
