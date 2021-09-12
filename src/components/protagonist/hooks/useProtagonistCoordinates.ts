@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-export default function useProtagonistMovement(protagonistRef){
+export default function useProtagonistCoordinates(protagonistRef){
     
     const [left, setLeft] = useState<number>(0);
     const [top, setTop] = useState<number>(0);

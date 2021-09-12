@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import ConstantsEnum from '../../models/enum.constants';
 import './Protagonist.scss';
-import useProtagonistMovement from './hooks/useProtagonistMovement';
+import useProtagonistCoordinates from './hooks/useProtagonistCoordinates';
 
 export type IProtagonistProps = {
     arena: HTMLElement;
@@ -11,7 +11,7 @@ const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena}) => {
 
     const protagonistRef = useRef(null);
 
-    const coordinates = useProtagonistMovement(protagonistRef);
+    const coordinates = useProtagonistCoordinates(protagonistRef);
 
     return <div 
         ref={protagonistRef}
