@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.scss';
 import Tree from './components/treeDisplay/models/tree';
 import NodeSelection from './components/treeDisplay/models/interface/nodeSelection';

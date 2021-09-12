@@ -5,6 +5,8 @@ function useIntermediateCheckbox(checkbox){
 
     const [childrenSelected, setChildrenSelected] = useState<Set<string>>(new Set());
 
+    const foo = "foo"
+    
     useEffect(()=>{
         requestAnimationFrame(()=>{
 
@@ -27,7 +29,7 @@ function useIntermediateCheckbox(checkbox){
             childrenSelected.delete(nodeSelection.node.id);
 
         }
-        
+
         setChildrenSelected(new Set(childrenSelected));
     };
 }
