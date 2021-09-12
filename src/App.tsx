@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
-import Background from './components/treeDisplay/components/backgroujnd/Background';
+import Background from './components/backgroujnd/Background';
+import EnumConstants from './models/constants';
 import AppContext from './models/context';
 
 function App() {
@@ -8,10 +9,11 @@ function App() {
     return (
         <AppContext.Provider value={null}>
 
-            <div className="sis">
+            <div id={EnumConstants.ARENA_ID} className="sis">
                 <Background/>
 
             </div>
+            
         </AppContext.Provider>
     );
 }
