@@ -1,0 +1,10 @@
+.sis-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url(./assets/space-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover
+}

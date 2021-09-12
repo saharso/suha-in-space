@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.scss';
+import Background from './components/treeDisplay/components/backgroujnd/Background';
 import AppContext from './models/context';
 
 function App() {
@@ -7,8 +8,8 @@ function App() {
     return (
         <AppContext.Provider value={null}>
 
-            <div className="App">
-
+            <div className="sis">
+                <Background/>
 
             </div>
         </AppContext.Provider>
