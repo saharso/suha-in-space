@@ -1,10 +1,11 @@
 
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import NodeSelection from '../../models/interface/nodeSelection';
 import Node from '../../models/node';
 import AddItem from '../ui/addItem/addItem';
 import ChildrenDisplay from '../childrenDisplay/childrenDisplay';
 import useIntermediateCheckbox from '../../hooks/useIntermediateCheckbox';
+import useCheckAll from '../../hooks/useCheckAll';
 
 export type INodeDisplayProps = {
     node: Node;
@@ -18,6 +19,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onNodeSe
     const checkbox = useRef(null);
 
     const setIntermediate = useIntermediateCheckbox(checkbox);
+    const checkAll = useCheckAll(node, checkbox);
 
     return <>
         <li id={node.id}>
@@ -41,6 +43,7 @@ const NodeDisplay: React.FunctionComponent<INodeDisplayProps> = ({node, onNodeSe
                 node={node} 
                 onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
                     onNodeSelectionEdit && onNodeSelectionEdit(nodeSelection);
+                    checkAll(nodeSelection);
                     setIntermediate(nodeSelection);
                 }}
                 onRequestNodeGrowth={(node, value)=>{onRequestNodeGrowth && onRequestNodeGrowth(node, value);}}
