@@ -1,4 +1,4 @@
-import {useEffect, useState}  from 'react';
+import {useEffect, useState} from 'react';
 import NodeSelection from '../models/interface/nodeSelection';
 import Node from '../models/node';
 

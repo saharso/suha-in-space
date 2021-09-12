@@ -1,12 +1,10 @@
-import {useEffect, useState}  from 'react';
+import {useEffect, useState} from 'react';
 import NodeSelection from '../models/interface/nodeSelection';
 
 function useIntermediateCheckbox(checkbox){
 
     const [childrenSelected, setChildrenSelected] = useState<Set<string>>(new Set());
 
-    const foo = "foo"
-    
     useEffect(()=>{
         requestAnimationFrame(()=>{
 

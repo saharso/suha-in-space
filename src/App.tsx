@@ -11,30 +11,30 @@ import * as list1 from './mocks/list1.json';
 const listMock = Tree.treeFromSchema(list1['default'], {data: 'label', children: 'items'}) as any;
 
 function App() {
-  const appTree = new Tree(listMock);
-  const treeApi = useTree(appTree);
+    const appTree = new Tree(listMock);
+    const treeApi = useTree(appTree);
+  
+    return (
+        <AppContext.Provider value={treeApi}>
 
-  return (
-    <AppContext.Provider value={treeApi}>
+            <div className="App">
+                <header>
+                    <TreeController/>
 
-      <div className="App">
-        <header>
-          <TreeController/>
+                </header>
 
-        </header>
+                <TreeDisplay 
+                    tree={appTree}
+                    onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
+                    }}
+                    onTreeUpdate={(tree)=>{
+                        console.log(tree);
+                    }}
+                ></TreeDisplay>
 
-        <TreeDisplay 
-          tree={appTree}
-          onNodeSelectionEdit={(nodeSelection: NodeSelection)=>{
-          }}
-          onTreeUpdate={(tree)=>{
-            console.log(tree);
-          }}
-        ></TreeDisplay>
-
-      </div>
-    </AppContext.Provider>
-  );
+            </div>
+        </AppContext.Provider>
+    );
 }
 
 export default App;
