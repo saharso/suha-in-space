@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import useBulletFireCoordinates from '../../hooks/useBulletFireCoordinates';
+import useFiringRate from '../../hooks/useFiringRate';
 import ICoordinates from '../../models/iCoordinates';
 import ProtagonistContext from '../../models/protagonistContext';
 import './DefaultBullet.scss';
@@ -30,29 +31,18 @@ const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coor
             transition: `top ${config.trajectorySpeed}ms ease-out`,
         }}
         className="sis-singleDefaultBullet"></div>;
+
 };
+
 const DefaultBullets: React.FunctionComponent<IDefaultBulletsProps> = ({coordinates}) => {
 
-    const config = useContext(ProtagonistContext);
-    
-    const [bullets, setBullets] = useState([]);
-
-    useEffect(()=>{
-
-        const interval = setInterval(()=>{
-            setBullets(prev => {prev.push(null); return [...prev];});
-        }, config.firingRage);
-
-        return function(){
-            clearInterval(interval);
-        };
-    }, []);
+    const firingRate = useFiringRate(); 
 
     return <div className="sis-defaultBullets">
-        {bullets.map((item, index) => {
+        {firingRate.bullets.map((item, index) => {
             return <SingleDefaultBullet 
                 onLeaveScreen={()=>{
-                    setBullets(prev => {prev = prev.splice(index, 1); return [...prev];});
+                    firingRate.setBullets(prev => {prev = prev.splice(index, 1); return [...prev];});
                 }}
                 key={index} 
                 coordinates={coordinates} 
