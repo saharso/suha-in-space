@@ -12,6 +12,7 @@ type IDefaultBulletProps = {
 }
 
 const trajectorySpeed = 500;
+const firingRage = 100;
 
 const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coordinates, onLeaveScreen}) => {
 
@@ -48,7 +49,7 @@ const DefaultBullets: React.FunctionComponent<IDefaultBulletsProps> = ({coordina
 
         const interval = setInterval(()=>{
             setBullets(prev => {prev.push(null); return [...prev];});
-        }, 100);
+        }, firingRage);
 
         return function(){
             clearInterval(interval);
