@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import useBulletFireCoordinates from '../../hooks/useBulletFireCoordinates';
 import ICoordinates from '../../models/iCoordinates';
+import ProtagonistContext from '../../models/protagonistContext';
 import './DefaultBullet.scss';
 
 export type IDefaultBulletsProps = {
@@ -11,45 +13,35 @@ type IDefaultBulletProps = {
     onLeaveScreen: Function;
 }
 
-const trajectorySpeed = 500;
-const firingRage = 100;
-
 const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coordinates, onLeaveScreen}) => {
 
-    const [top, setTop] = useState(coordinates.top);
+    const config = useContext(ProtagonistContext);
+
+    const firingRage = useBulletFireCoordinates(coordinates);
 
     useEffect(()=>{
-        let fireTimeout = setTimeout(()=>{
-            setTop(-20);
-        }, 10);
-
-        let afterLeavingScreenTimeout = setTimeout(()=>{
-            onLeaveScreen();
-        }, trajectorySpeed);
-
-        return function(){
-            clearTimeout(fireTimeout);
-            clearTimeout(afterLeavingScreenTimeout);
-        };
-    }, []);
+        firingRage.screenLeaveFlag && onLeaveScreen();
+    }, [firingRage.screenLeaveFlag]);
 
     return <div 
         style={{
-            top: `${top}px`,
+            top: `${firingRage.top}px`,
             left: `${coordinates.protagonistCenter}px`,
-            transition: `top ${trajectorySpeed}ms ease-out`,
+            transition: `top ${config.trajectorySpeed}ms ease-out`,
         }}
         className="sis-singleDefaultBullet"></div>;
 };
 const DefaultBullets: React.FunctionComponent<IDefaultBulletsProps> = ({coordinates}) => {
 
+    const config = useContext(ProtagonistContext);
+    
     const [bullets, setBullets] = useState([]);
 
     useEffect(()=>{
 
         const interval = setInterval(()=>{
             setBullets(prev => {prev.push(null); return [...prev];});
-        }, firingRage);
+        }, config.firingRage);
 
         return function(){
             clearInterval(interval);
