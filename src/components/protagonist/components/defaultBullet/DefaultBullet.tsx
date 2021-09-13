@@ -42,7 +42,7 @@ const DefaultBullets: React.FunctionComponent<IDefaultBulletsProps> = ({coordina
         {firingRate.bullets.map((item, index) => {
             return <SingleDefaultBullet 
                 onLeaveScreen={()=>{
-                    firingRate.setBullets(prev => {prev = prev.splice(index, 1); return [...prev];});
+                    firingRate.remove(index);
                 }}
                 key={index} 
                 coordinates={coordinates} 

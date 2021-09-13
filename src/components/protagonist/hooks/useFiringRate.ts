@@ -1,10 +1,14 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import ProtagonistContext from '../models/protagonistContext';
 
 export default function useFiringRate() {
     const config = useContext(ProtagonistContext);
 
     const [bullets, setBullets] = useState([]);
+    
+    const remove = useCallback((index)=>{
+        setBullets(prev => {prev = prev.splice(index, 1); return [...prev];});
+    }, []);
 
     useEffect(()=>{
 
@@ -12,11 +16,12 @@ export default function useFiringRate() {
             setBullets(prev => {prev.push(null); return [...prev];});
         }, config.firingRage);
 
+
         return function(){
             clearInterval(interval);
         };
         
     }, []);
 
-    return {bullets, setBullets};
+    return {bullets, remove};
 }
