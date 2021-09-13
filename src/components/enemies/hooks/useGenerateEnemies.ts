@@ -1,16 +1,20 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 
-const generationRate = 500;
+const rate = 500;
 
 export default function useFiringRate() {
 
-    const [bullets, setBullets] = useState([]);
+    const [amount, setAmount] = useState([]);
+    
+    const remove = useCallback((index)=>{
+        setAmount(prev => {prev = prev.splice(index, 1); return [...prev];});
+    }, []);
 
     useEffect(()=>{
 
         const interval = setInterval(()=>{
-            setBullets(prev => {prev.push(null); return [...prev];});
-        }, generationRate);
+            setAmount(prev => {prev.push(null); return [...prev];});
+        }, rate);
 
         return function(){
             clearInterval(interval);
@@ -18,5 +22,5 @@ export default function useFiringRate() {
         
     }, []);
 
-    return {bullets, setBullets};
+    return {amount, remove};
 }
