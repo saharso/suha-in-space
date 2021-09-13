@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 
-const rate = 500;
+const rate = 1000;
 
 export default function useFiringRate() {
 
@@ -12,7 +12,7 @@ export default function useFiringRate() {
 
     useEffect(()=>{
 
-        const interval = setInterval(()=>{
+        const interval = setInterval(() => {
             setAmount(prev => {prev.push(null); return [...prev];});
         }, rate);
 
