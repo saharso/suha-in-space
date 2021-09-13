@@ -8,29 +8,38 @@ import ProtagonistConfig from './models/config';
 
 export type IProtagonistProps = {
     arena: HTMLElement;
+    onProtagonistLoad?: (e: HTMLDivElement) => void;
 }
 
-const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena}) => {
+const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena, onProtagonistLoad}) => {
 
     const protagonistRef = useRef(null);
 
+    const protagonistWrapperRef = useRef(null);
+
     const coordinates = useProtagonistCoordinates(protagonistRef);
+
+    useEffect(()=>{
+        onProtagonistLoad && onProtagonistLoad(protagonistWrapperRef.current);
+    }, []);
 
     return <>
         <ProtagonistContext.Provider value={new ProtagonistConfig()}>
-            <DefaultBullets
-                coordinates={coordinates}
-            />
+            <div className="sis-protagonistWrapper" ref={protagonistWrapperRef}>
+                <DefaultBullets
+                    coordinates={coordinates}
+                />
         
-            <div 
-                ref={protagonistRef}
-                id={ConstantsEnum.PROTAGONIST_ID} 
-                className="sis-protagonist"
-                style={{
-                    top: `${coordinates.top}px`,
-                    left: `${coordinates.left}px`,
-                }}
-            ></div>
+                <div 
+                    ref={protagonistRef}
+                    id={ConstantsEnum.PROTAGONIST_ID} 
+                    className="sis-protagonist"
+                    style={{
+                        top: `${coordinates.top}px`,
+                        left: `${coordinates.left}px`,
+                    }}
+                ></div>
+            </div>
         </ProtagonistContext.Provider>
 
     </>;

@@ -4,11 +4,13 @@ import Background from './components/background/Background';
 import ConstantsEnum from './models/enum.constants';
 import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
+import PoopyShmoopy from './components/enemies/PoopyShmoopy/PoopyShmoopy';
 
 function App() {
     
     const sis = useRef(null);
     const [arena, setArena] = useState(null);
+    const [protagonistEl, setProtagonistEl] = useState(null);
     
     useEffect(()=>{
         setArena(sis.current);
@@ -18,9 +20,17 @@ function App() {
         <AppContext.Provider value={null}>
 
             <div ref={sis} id={ConstantsEnum.ARENA_ID} className="sis">
+                
                 <Background/>
 
-                <Protagonist arena={arena}/>
+                <PoopyShmoopy 
+                    protagonistEl={protagonistEl}
+                />
+
+                <Protagonist 
+                    onProtagonistLoad={protagonistEl => setProtagonistEl(protagonistEl)}    
+                    arena={arena}
+                />
 
             </div>
 
