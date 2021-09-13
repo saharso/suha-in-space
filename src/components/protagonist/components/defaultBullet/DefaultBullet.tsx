@@ -35,7 +35,7 @@ const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coor
     return <div 
         style={{
             top: `${top}px`,
-            left: `${coordinates.left}px`,
+            left: `${coordinates.protagonistCenter}px`,
             transition: `top ${trajectorySpeed}ms ease-out`,
         }}
         className="sis-singleDefaultBullet"></div>;

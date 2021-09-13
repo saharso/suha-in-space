@@ -5,6 +5,7 @@ export default function useProtagonistCoordinates(protagonistRef): ICoordinates 
     
     const [left, setLeft] = useState<number>(0);
     const [top, setTop] = useState<number>(0);
+    const [protagonistCenter, setProtagonistCenter] = useState<number>(0);
 
     function onMouseMove(e: MouseEvent) {
         if(!protagonistRef.current) return;
@@ -13,13 +14,17 @@ export default function useProtagonistCoordinates(protagonistRef): ICoordinates 
         
         const protagonistHeight = protagonistRef.current.clientWidth;   
         
-        const x = e.clientX - protagonistWidth / 2;
+        const left = e.clientX - protagonistWidth / 2;
         
-        const y = e.clientY - protagonistHeight / 2;
+        const top = e.clientY - protagonistHeight / 2;
+
+        const protagonistCenter = e.clientX;
         
-        setLeft(x);
+        setLeft(left);
         
-        setTop(y);
+        setTop(top);
+
+        setProtagonistCenter(protagonistCenter);
     }
 
     useEffect(()=>{
@@ -33,6 +38,6 @@ export default function useProtagonistCoordinates(protagonistRef): ICoordinates 
         
     }, []);
 
-    return {top, left};
+    return {top, left, protagonistCenter};
 
 }
