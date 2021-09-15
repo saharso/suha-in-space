@@ -48,62 +48,6 @@ function getRandomScreenXAxisPoint() {
     return Math.random() * window.innerWidth;
 }
   
-const timeEnemyOnScreen = 1900;
-
-type ISinglePoopyShmoopyProps = {
-    protagonistEl: HTMLElement;
-    onHit?: (string) => void;
-    onLeaveScreen: (string) => void;
-    id: string;
-}
-const SinglePoopyShmoopy: React.FunctionComponent<ISinglePoopyShmoopyProps> = ({protagonistEl, onHit, onLeaveScreen, id}) => {
-
-    const enemyRef = useRef(null);
-
-    const [enemyLocation, setEnemyLocation] = useState(null);
-    const [top, setTop] = useState(-50);
-
-    useEffect(()=>{
-        if(!protagonistEl) return;
-
-        const observer = observeEnemyBulletRelations(protagonistEl, enemyRef, ()=>{onHit(id);});
-
-        return ()=>{
-            observer.disconnect();
-        };
-
-    }, [protagonistEl]);
-
-    useEffect(()=>{
-
-        setEnemyLocation(getRandomScreenXAxisPoint());
-
-        const leaveTimeout = setTimeout(()=>{
-            onLeaveScreen(id);
-        }, timeEnemyOnScreen);
-
-        const animationTimeout = setTimeout(()=>{
-            setTop(window.innerHeight + 50);
-        }, 20);
-
-        return function() {
-
-            clearTimeout(leaveTimeout);
-            clearTimeout(animationTimeout);
-             
-        };
-    }, []);
-
-    return <div 
-        ref={enemyRef}
-        style={{
-            left: `${enemyLocation}px`,
-            top: `${top}px`,
-            transition: `top ${timeEnemyOnScreen}ms linear`,
-        }}
-        className="sis-enemy sis-enemy--poopyShmoopy"
-    >{id}</div>;
-};
 
 type IPoopyShmoopyProps = {
     protagonistEl: HTMLElement;
@@ -111,21 +55,12 @@ type IPoopyShmoopyProps = {
 
 const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({protagonistEl}) => {
 
-    const enemyGeneration = useGenerateEnemies();
-    console.log(enemyGeneration.amount);
-    return <div className="sis-enemyWrapper--poopyShmoopy">
-        {enemyGeneration.amount.map((item, index) => {
-            return (
-                <SinglePoopyShmoopy
-                    key={index}
-                    id={item}
-                    protagonistEl={protagonistEl}
-                    onLeaveScreen={(id)=>{
-                        enemyGeneration.remove(id);
-                    }}
-                />
-            );
-        })}
+    const enemiesHolderRef = useRef(null);
+
+    const enemyGeneration = useGenerateEnemies(enemiesHolderRef);
+    
+    return <div ref={enemiesHolderRef} className="sis-enemyWrapper--poopyShmoopy">
+
     </div>;
 };
 

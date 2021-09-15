@@ -2,8 +2,9 @@ import React, {useState, useEffect, useContext, useCallback} from 'react';
 
 const rate = 1000;
 
-export default function useFiringRate() {
+export default function useGenerateEnemies(ref) {
 
+    const [holder, setHolder] = useState(null);
     const [amount, setAmount] = useState([]);
     const [idCounter, setIdCounter] = useState(0);
     const [removalRequests, setRemovalRequests] = useState(new Set());
@@ -25,6 +26,17 @@ export default function useFiringRate() {
     };
 
     useEffect(()=>{
+        setHolder(ref.current);
+        console.log(holder);
+        const interval = setInterval(updateCounter, rate);
+
+        return function(){
+            clearInterval(interval);
+        };
+        
+    }, [ref.current]);
+
+    useEffect(()=>{
         add(idCounter);
     }, [idCounter]);
 
@@ -36,21 +48,6 @@ export default function useFiringRate() {
 
     }, [additionalRequest]);
 
-    useEffect(()=>{
-        console.log(amount);
-        
-    }, [amount]);
-
-
-    useEffect(()=>{
-
-        const interval = setInterval(updateCounter, rate);
-
-        return function(){
-            clearInterval(interval);
-        };
-        
-    }, []);
 
     return {amount, remove};
 }
