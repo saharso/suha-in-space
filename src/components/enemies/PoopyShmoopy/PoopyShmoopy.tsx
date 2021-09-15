@@ -2,11 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import useGenerateEnemies from '../hooks/useGenerateEnemies';
 import './PoopyShmoopy.scss';
 
-type ISinglePoopyShmoopyProps = {
-    protagonistEl: HTMLElement;
-    onHit: () => void
-}
-
 function wasHit(mutation, enemyRef){
     const activeBUllet: HTMLElement = mutation.target;
     const enemy: HTMLElement = enemyRef.current;
@@ -32,7 +27,7 @@ function observeEnemyBulletRelations(protagonistEl, enemyRef, callback: Function
                 try {
                     const hit = wasHit(mutation, enemyRef);
                     if(hit) {
-                        callback();
+                        // callback();
                         observer.disconnect();
                     }
                 } catch(e) {
@@ -55,7 +50,13 @@ function getRandomScreenXAxisPoint() {
   
 const timeEnemyOnScreen = 1900;
 
-const SinglePoopyShmoopy: React.FunctionComponent<ISinglePoopyShmoopyProps> = ({protagonistEl, onHit}) => {
+type ISinglePoopyShmoopyProps = {
+    protagonistEl: HTMLElement;
+    onHit?: (string) => void;
+    onLeaveScreen: (string) => void;
+    id: string;
+}
+const SinglePoopyShmoopy: React.FunctionComponent<ISinglePoopyShmoopyProps> = ({protagonistEl, onHit, onLeaveScreen, id}) => {
 
     const enemyRef = useRef(null);
 
@@ -65,7 +66,7 @@ const SinglePoopyShmoopy: React.FunctionComponent<ISinglePoopyShmoopyProps> = ({
     useEffect(()=>{
         if(!protagonistEl) return;
 
-        const observer = observeEnemyBulletRelations(protagonistEl, enemyRef, onHit);
+        const observer = observeEnemyBulletRelations(protagonistEl, enemyRef, ()=>{onHit(id);});
 
         return ()=>{
             observer.disconnect();
@@ -78,8 +79,8 @@ const SinglePoopyShmoopy: React.FunctionComponent<ISinglePoopyShmoopyProps> = ({
         setEnemyLocation(getRandomScreenXAxisPoint());
 
         const leaveTimeout = setTimeout(()=>{
-            onHit();
-        }, timeEnemyOnScreen * 2);
+            onLeaveScreen(id);
+        }, timeEnemyOnScreen);
 
         const animationTimeout = setTimeout(()=>{
             setTop(window.innerHeight + 50);
@@ -101,7 +102,7 @@ const SinglePoopyShmoopy: React.FunctionComponent<ISinglePoopyShmoopyProps> = ({
             transition: `top ${timeEnemyOnScreen}ms linear`,
         }}
         className="sis-enemy sis-enemy--poopyShmoopy"
-    ></div>;
+    >{id}</div>;
 };
 
 type IPoopyShmoopyProps = {
@@ -111,15 +112,16 @@ type IPoopyShmoopyProps = {
 const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({protagonistEl}) => {
 
     const enemyGeneration = useGenerateEnemies();
-
+    console.log(enemyGeneration.amount);
     return <div className="sis-enemyWrapper--poopyShmoopy">
         {enemyGeneration.amount.map((item, index) => {
             return (
                 <SinglePoopyShmoopy
                     key={index}
+                    id={item}
                     protagonistEl={protagonistEl}
-                    onHit={()=>{
-                        enemyGeneration.remove(index);
+                    onLeaveScreen={(id)=>{
+                        enemyGeneration.remove(id);
                     }}
                 />
             );
