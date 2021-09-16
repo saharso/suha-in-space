@@ -17,7 +17,7 @@ function App() {
     }, []);
 
     return (
-        <AppContext.Provider value={null}>
+        <AppContext.Provider value={{protagonistEl}}>
 
             <div ref={sis} id={ConstantsEnum.ARENA_ID} className="sis">
                 

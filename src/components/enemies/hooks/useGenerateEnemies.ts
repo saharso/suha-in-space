@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
+import { isConditionalExpression } from 'typescript';
+import AppContext from '../../../models/context';
 
 const rate = 1000;
 
@@ -6,26 +8,29 @@ function wasHit(mutation, enemyRef){
     const activeBUllet: HTMLElement = mutation.target;
     const enemy: HTMLElement = enemyRef;
     const bulletLeftPos = activeBUllet.getBoundingClientRect().left;
+    const bulletRightPos = activeBUllet.getBoundingClientRect().right;
     const enemyLeftPos = enemy.getBoundingClientRect().left;
     const enemyRightPos = enemy.getBoundingClientRect().right;
 
-    const hit = bulletLeftPos > enemyLeftPos && bulletLeftPos < enemyRightPos;
+    const hit = bulletRightPos > enemyLeftPos && bulletLeftPos < enemyRightPos;
 
     return hit;
 }
 
 function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Function){
-    
+
     const targetNode = protagonistEl;
 
     const config = { attributes: true, childList: true, subtree: true };
 
     const onMutation = function(mutationsList, observer) {
+
         for(const mutation of mutationsList) {
 
             if (mutation.type === 'attributes') {
 
                 const enemies = enemyRef.children;
+                console.log(enemies);
                 enemies && Array.from(enemies).forEach(enemyItem => {
                     if(wasHit(mutation, enemyItem)) {
                         removeElement(enemyItem);
@@ -37,7 +42,7 @@ function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Functio
     };
 
     const observer = new MutationObserver(onMutation);   
-    
+
     observer.observe(targetNode, config);
 
     return observer;
@@ -46,14 +51,12 @@ function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Functio
 function getRandomScreenXAxisPoint() {
     return Math.random() * window.innerWidth;
 }
-
-function buildBasicEnemy(leaveAfterMs){
-    const el = document.createElement('div');
-    el.classList.add('sis-enemy--poopyShmoopy');
-    el.style.top = '-100px';
-    el.style.transition = `top ${leaveAfterMs}ms linear`;
-    el.style.left = getRandomScreenXAxisPoint() + 'px';
-    return el;
+function buildBasicEnemy(enemy: HTMLElement, leaveAfterMs){
+    const enemyClone: HTMLElement = <HTMLElement>enemy.cloneNode(true);
+    enemyClone.style.top = '-100px';
+    enemyClone.style.transition = `top ${leaveAfterMs}ms linear`;
+    enemyClone.style.left = getRandomScreenXAxisPoint() + 'px';
+    return enemyClone;
 }
 
 function removeElement(el) {
@@ -72,34 +75,46 @@ function moveDownwards(enemy, leaveAfterMs){
         clearTimeout(timeout);
     }, leaveAfterMs);
 }
-const updateCounter = (holder) => {
-    const enemy = buildBasicEnemy(2000);
+function generateEnemies (holder, enemyOrigin) {
+    const enemy = buildBasicEnemy(enemyOrigin, 2000);
     holder.appendChild(enemy);
     moveDownwards(enemy, 2000);
 };
 
-export default function useGenerateEnemies(ref, protagonistEl) {
+let interval;
+let observer;
+let enemyOrigin;
+const virtualHolder = document.createElement('div');
+function init(el, protagonistEl){
+    enemyOrigin = el.firstChild;
+    virtualHolder.appendChild(enemyOrigin);
+    interval = setInterval(()=>{
+        generateEnemies(el, enemyOrigin);
+    }, rate);
+    observer = observeEnemyBulletRelations(protagonistEl, el);
+}
 
-    const [holder, setHolder] = useState(null);
-    const [amount, setAmount] = useState([]);
+function kill() {
+    clearInterval(interval);
+    observer.disconnect();
+}
+
+export default function useGenerateEnemies(ref) {
+    const appContext = useContext(AppContext);
     
     useEffect(()=>{
-        if(!(ref.current && protagonistEl)) return;
-
-        setHolder(ref.current);
-
-        const interval = setInterval(()=>{
-            updateCounter(ref.current);
-        }, rate);
-
-        const observer = observeEnemyBulletRelations(protagonistEl, ref.current);
+        if(!(ref.current && appContext.protagonistEl)) return;
         
+        const protagonistEl = appContext.protagonistEl;
+
+        init(ref.current, protagonistEl);
+
         return function(){
-            clearInterval(interval);
-            observer.disconnect();
+            
+            kill();
+            
         };        
 
-    }, [ref.current, protagonistEl]);
+    }, [ref.current, appContext.protagonistEl]);
 
-    return {amount};
 }

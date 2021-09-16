@@ -6,14 +6,14 @@ type IPoopyShmoopyProps = {
     protagonistEl: HTMLElement;
 }
 
-const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({protagonistEl}) => {
+const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = () => {
 
     const enemiesHolderRef = useRef(null);
 
-    useGenerateEnemies(enemiesHolderRef, protagonistEl);
+    useGenerateEnemies(enemiesHolderRef);
     
-    return <div ref={enemiesHolderRef} className="sis-enemyWrapper--poopyShmoopy">
-
+    return <div ref={enemiesHolderRef} className="sis-enemyList sis-poopyShmoopyList">
+        <div className="sis-poopyShmoopy"></div>
     </div>;
 };
 
