@@ -2,52 +2,104 @@ import React, {useState, useEffect, useContext, useCallback} from 'react';
 
 const rate = 1000;
 
-export default function useGenerateEnemies(ref) {
+function wasHit(mutation, enemyRef){
+    const activeBUllet: HTMLElement = mutation.target;
+    const enemy: HTMLElement = enemyRef;
+    const bulletLeftPos = activeBUllet.getBoundingClientRect().left;
+    const enemyLeftPos = enemy.getBoundingClientRect().left;
+    const enemyRightPos = enemy.getBoundingClientRect().right;
+
+    const hit = bulletLeftPos > enemyLeftPos && bulletLeftPos < enemyRightPos;
+
+    return hit;
+}
+
+function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Function){
+    
+    const targetNode = protagonistEl;
+
+    const config = { attributes: true, childList: true, subtree: true };
+
+    const onMutation = function(mutationsList, observer) {
+        for(const mutation of mutationsList) {
+
+            if (mutation.type === 'attributes') {
+
+                const enemies = enemyRef.children;
+                enemies && Array.from(enemies).forEach(enemyItem => {
+                    if(wasHit(mutation, enemyItem)) {
+                        removeElement(enemyItem);
+                    }
+                });
+
+            } else break;
+        }
+    };
+
+    const observer = new MutationObserver(onMutation);   
+    
+    observer.observe(targetNode, config);
+
+    return observer;
+}
+
+function getRandomScreenXAxisPoint() {
+    return Math.random() * window.innerWidth;
+}
+
+function buildBasicEnemy(leaveAfterMs){
+    const el = document.createElement('div');
+    el.classList.add('sis-enemy--poopyShmoopy');
+    el.style.top = '-100px';
+    el.style.transition = `top ${leaveAfterMs}ms linear`;
+    el.style.left = getRandomScreenXAxisPoint() + 'px';
+    return el;
+}
+
+function removeElement(el) {
+    if(!el) return;
+    el.parentNode?.removeChild(el);
+    el = null;
+}
+
+function moveDownwards(enemy, leaveAfterMs){
+    requestAnimationFrame(()=>{
+        enemy.style.top = '100%';
+    });
+    let timeout;
+    timeout = setTimeout(()=>{
+        removeElement(enemy);
+        clearTimeout(timeout);
+    }, leaveAfterMs);
+}
+const updateCounter = (holder) => {
+    const enemy = buildBasicEnemy(2000);
+    holder.appendChild(enemy);
+    moveDownwards(enemy, 2000);
+};
+
+export default function useGenerateEnemies(ref, protagonistEl) {
 
     const [holder, setHolder] = useState(null);
     const [amount, setAmount] = useState([]);
-    const [idCounter, setIdCounter] = useState(0);
-    const [removalRequests, setRemovalRequests] = useState(new Set());
-    const [additionalRequest, setAdditionalRequest] = useState(new Set());
     
-    const remove = useCallback((id)=>{
-        console.log(`${id} is at the bottom of the screen`);
-        console.log(additionalRequest.has(+id));
-        setAdditionalRequest(prev => {prev.delete(+id); return new Set(prev);});
-        setAdditionalRequest(new Set());
-    }, []);
-
-    const add = useCallback((idCounter) => {
-        setAdditionalRequest(prev => {prev.add(idCounter); return new Set(prev);});
-    }, []);
-
-    const updateCounter = ()=>{
-        setIdCounter(prev => prev + 1);
-    };
-
     useEffect(()=>{
-        setHolder(ref.current);
-        console.log(holder);
-        const interval = setInterval(updateCounter, rate);
+        if(!(ref.current && protagonistEl)) return;
 
+        setHolder(ref.current);
+
+        const interval = setInterval(()=>{
+            updateCounter(ref.current);
+        }, rate);
+
+        const observer = observeEnemyBulletRelations(protagonistEl, ref.current);
+        
         return function(){
             clearInterval(interval);
-        };
-        
-    }, [ref.current]);
+            observer.disconnect();
+        };        
 
-    useEffect(()=>{
-        add(idCounter);
-    }, [idCounter]);
+    }, [ref.current, protagonistEl]);
 
-    useEffect(()=>{
-        setAmount(()=>{
-            const filterRemoved = Array.from(additionalRequest);
-            return filterRemoved;
-        });
-
-    }, [additionalRequest]);
-
-
-    return {amount, remove};
+    return {amount};
 }
