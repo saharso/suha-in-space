@@ -99,6 +99,36 @@ function kill() {
     observer.disconnect();
 }
 
+interface IEnemyConfig {
+    firingRate: number;
+    speed: number;
+}
+class Enemy implements IEnemyConfig {
+    firingRate = 1000;
+    speed = 2000;
+    private interval;
+    private observer;
+    private enemyOrigin;
+    private virtualHolder = document.createElement('div');
+    private enemyWrapper;
+    private protagonistEl;
+    
+    constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<IEnemyConfig>) {
+        this.enemyWrapper = enemyWrapper;
+        this.protagonistEl = protagonistEl;
+        this.init();
+    }
+
+    private init() {
+        this.enemyOrigin = this.enemyWrapper.firstChild;
+        this.virtualHolder.appendChild(this.enemyOrigin);
+        this.interval = setInterval(()=>{
+            generateEnemies(this.enemyWrapper, this.enemyOrigin);
+        }, rate);
+        this.observer = observeEnemyBulletRelations(this.protagonistEl, this.enemyWrapper);
+    } 
+}
+
 export default function useGenerateEnemies(ref) {
     const appContext = useContext(AppContext);
     
@@ -107,7 +137,9 @@ export default function useGenerateEnemies(ref) {
         
         const protagonistEl = appContext.protagonistEl;
 
-        init(ref.current, protagonistEl);
+        // init(ref.current, protagonistEl);
+
+        new Enemy(ref.current, protagonistEl, {});
 
         return function(){
             
