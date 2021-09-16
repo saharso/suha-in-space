@@ -85,14 +85,6 @@ let interval;
 let observer;
 let enemyOrigin;
 const virtualHolder = document.createElement('div');
-function init(el, protagonistEl){
-    enemyOrigin = el.firstChild;
-    virtualHolder.appendChild(enemyOrigin);
-    interval = setInterval(()=>{
-        generateEnemies(el, enemyOrigin);
-    }, rate);
-    observer = observeEnemyBulletRelations(protagonistEl, el);
-}
 
 function kill() {
     clearInterval(interval);
@@ -126,7 +118,13 @@ class Enemy implements IEnemyConfig {
             generateEnemies(this.enemyWrapper, this.enemyOrigin);
         }, rate);
         this.observer = observeEnemyBulletRelations(this.protagonistEl, this.enemyWrapper);
-    } 
+    }
+
+    public kill(){
+        clearInterval(this.interval);
+        this.observer.disconnect();
+    
+    }
 }
 
 export default function useGenerateEnemies(ref) {
@@ -137,13 +135,11 @@ export default function useGenerateEnemies(ref) {
         
         const protagonistEl = appContext.protagonistEl;
 
-        // init(ref.current, protagonistEl);
-
-        new Enemy(ref.current, protagonistEl, {});
+        const enemy = new Enemy(ref.current, protagonistEl, {});
 
         return function(){
             
-            kill();
+            enemy.kill();
             
         };        
 
