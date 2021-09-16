@@ -1,10 +1,12 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 import { isConditionalExpression } from 'typescript';
 import AppContext from '../../../models/context';
+import ConstantsEnum from '../../../models/enum.constants';
 
 const rate = 1000;
 
 function wasHit(mutation, enemyRef){
+    if(mutation.target.id === ConstantsEnum.PROTAGONIST_ID) return;
     const activeBUllet: HTMLElement = mutation.target;
     const enemy: HTMLElement = enemyRef;
     const bulletLeftPos = activeBUllet.getBoundingClientRect().left;
@@ -30,7 +32,7 @@ function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Functio
             if (mutation.type === 'attributes') {
 
                 const enemies = enemyRef.children;
-                console.log(enemies);
+
                 enemies && Array.from(enemies).forEach(enemyItem => {
                     if(wasHit(mutation, enemyItem)) {
                         removeElement(enemyItem);
@@ -75,21 +77,6 @@ function moveDownwards(enemy, leaveAfterMs){
         clearTimeout(timeout);
     }, leaveAfterMs);
 }
-function generateEnemies (holder, enemyOrigin) {
-    const enemy = buildBasicEnemy(enemyOrigin, 2000);
-    holder.appendChild(enemy);
-    moveDownwards(enemy, 2000);
-};
-
-let interval;
-let observer;
-let enemyOrigin;
-const virtualHolder = document.createElement('div');
-
-function kill() {
-    clearInterval(interval);
-    observer.disconnect();
-}
 
 interface IEnemyConfig {
     firingRate: number;
@@ -108,6 +95,9 @@ class Enemy implements IEnemyConfig {
     constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<IEnemyConfig>) {
         this.enemyWrapper = enemyWrapper;
         this.protagonistEl = protagonistEl;
+        Object.keys(config).forEach((key)=>{
+            this[key] = config[key];
+        });
         this.init();
     }
 
@@ -115,7 +105,7 @@ class Enemy implements IEnemyConfig {
         this.enemyOrigin = this.enemyWrapper.firstChild;
         this.virtualHolder.appendChild(this.enemyOrigin);
         this.interval = setInterval(()=>{
-            generateEnemies(this.enemyWrapper, this.enemyOrigin);
+            this.generateEnemies(this.enemyWrapper, this.enemyOrigin);
         }, rate);
         this.observer = observeEnemyBulletRelations(this.protagonistEl, this.enemyWrapper);
     }
@@ -123,8 +113,13 @@ class Enemy implements IEnemyConfig {
     public kill(){
         clearInterval(this.interval);
         this.observer.disconnect();
-    
     }
+
+    private generateEnemies (holder, enemyOrigin) {
+        const enemy = buildBasicEnemy(enemyOrigin, this.speed);
+        holder.appendChild(enemy);
+        moveDownwards(enemy, this.speed);
+    };
 }
 
 export default function useGenerateEnemies(ref) {
@@ -135,7 +130,9 @@ export default function useGenerateEnemies(ref) {
         
         const protagonistEl = appContext.protagonistEl;
 
-        const enemy = new Enemy(ref.current, protagonistEl, {});
+        const enemy = new Enemy(ref.current, protagonistEl, {
+            speed: 2000,
+        });
 
         return function(){
             
