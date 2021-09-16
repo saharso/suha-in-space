@@ -26,7 +26,7 @@ function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Functio
 
     const targetNode = protagonistEl;
 
-    const config = { attributes: true, childList: true, subtree: true };
+    const config = { attributes: true, childList: false, subtree: true };
 
     const protagonist = getProtagonist();
 
