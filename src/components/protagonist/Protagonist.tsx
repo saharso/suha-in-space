@@ -4,14 +4,15 @@ import './Protagonist.scss';
 import useProtagonistCoordinates from './hooks/useProtagonistCoordinates';
 import DefaultBullets from './components/defaultBullet/DefaultBullet';
 import ProtagonistContext from './models/protagonistContext';
-import ProtagonistConfig from '../../models/config';
+import {ProtagonistConfig} from '../../models/config';
 
 export type IProtagonistProps = {
     arena: HTMLElement;
     onProtagonistLoad?: (e: HTMLDivElement) => void;
+    config: ProtagonistConfig;
 }
 
-const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena, onProtagonistLoad}) => {
+const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena, onProtagonistLoad, config}) => {
 
     const protagonistRef = useRef(null);
 
@@ -24,7 +25,7 @@ const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena, onProta
     }, []);
 
     return <>
-        <ProtagonistContext.Provider value={new ProtagonistConfig()}>
+        <ProtagonistContext.Provider value={config}>
             <div className="sis-protagonistWrapper" ref={protagonistWrapperRef}>
                 <DefaultBullets
                     coordinates={coordinates}

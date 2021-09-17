@@ -5,6 +5,9 @@ import ConstantsEnum from './models/enum.constants';
 import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
 import PoopyShmoopy from './components/enemies/PoopyShmoopy/PoopyShmoopy';
+import Config from './models/config';
+
+const config = new Config();
 
 function App() {
     
@@ -30,6 +33,7 @@ function App() {
                 <Protagonist 
                     onProtagonistLoad={protagonistEl => setProtagonistEl(protagonistEl)}    
                     arena={arena}
+                    config={config.protagonist}
                 />
 
             </div>
