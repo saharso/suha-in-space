@@ -18,15 +18,15 @@ const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coor
 
     const config = useContext(ProtagonistContext);
 
-    const firingRage = useBulletFireCoordinates(coordinates);
+    const firingRate = useBulletFireCoordinates(coordinates);
 
     useEffect(()=>{
-        firingRage.screenLeaveFlag && onLeaveScreen();
-    }, [firingRage.screenLeaveFlag]);
+        firingRate.screenLeaveFlag && onLeaveScreen();
+    }, [firingRate.screenLeaveFlag]);
 
     return <div 
         style={{
-            top: `${firingRage.top}px`,
+            top: `${firingRate.top}px`,
             left: `${coordinates.protagonistCenter}px`,
             transition: `top ${config.trajectorySpeed}ms ease-out`,
         }}

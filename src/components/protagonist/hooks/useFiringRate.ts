@@ -14,7 +14,7 @@ export default function useFiringRate() {
 
         const interval = setInterval(()=>{
             setBullets(prev => {prev.push(null); return [...prev];});
-        }, config.firingRage);
+        }, config.firingRate);
 
 
         return function(){
