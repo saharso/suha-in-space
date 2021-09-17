@@ -6,6 +6,7 @@ import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
 import PoopyShmoopy from './components/enemies/PoopyShmoopy/PoopyShmoopy';
 import Config from './models/config';
+import EnemiesIndex from './components/enemies/EnemiesIndex';
 
 const config = new Config();
 
@@ -20,6 +21,7 @@ function App() {
                 
                 <Background/>
 
+                <EnemiesIndex config={config} />
                 <PoopyShmoopy 
                     protagonistEl={protagonistEl}
                 />

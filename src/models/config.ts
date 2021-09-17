@@ -42,5 +42,3 @@ export default class Config {
         }),
     }
 }
-
-console.log(new Config());
