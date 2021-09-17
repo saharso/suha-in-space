@@ -1,6 +1,6 @@
 
 import React from 'react';
-import ProtagonistConfig from './config';
+import ProtagonistConfig from '../../../models/config';
 
 const ProtagonistContext = React.createContext<any>({config: new ProtagonistConfig()});
 

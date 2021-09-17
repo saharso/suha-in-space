@@ -4,7 +4,7 @@ import './Protagonist.scss';
 import useProtagonistCoordinates from './hooks/useProtagonistCoordinates';
 import DefaultBullets from './components/defaultBullet/DefaultBullet';
 import ProtagonistContext from './models/protagonistContext';
-import ProtagonistConfig from './models/config';
+import ProtagonistConfig from '../../models/config';
 
 export type IProtagonistProps = {
     arena: HTMLElement;
