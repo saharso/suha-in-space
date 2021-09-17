@@ -19,13 +19,13 @@ export class EnemyConfig {
 
     timeUntilGoesAway: number = 1000;
 
+    showOnScore: number = 0;
+
     generationRateMs: number = 2000;
 
     strength: number = 5;
 
     value: number = 100;
-
-    pendingScore: number = 0;
 
     constructor(override?: Partial<EnemyConfig>){
 
