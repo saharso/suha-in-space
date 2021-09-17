@@ -11,18 +11,12 @@ const config = new Config();
 
 function App() {
     
-    const sis = useRef(null);
-    const [arena, setArena] = useState(null);
     const [protagonistEl, setProtagonistEl] = useState(null);
     
-    useEffect(()=>{
-        setArena(sis.current);
-    }, []);
-
     return (
         <AppContext.Provider value={{protagonistEl}}>
 
-            <div ref={sis} id={ConstantsEnum.ARENA_ID} className="sis">
+            <div id={ConstantsEnum.ARENA_ID} className="sis">
                 
                 <Background/>
 
@@ -32,7 +26,6 @@ function App() {
 
                 <Protagonist 
                     onProtagonistLoad={protagonistEl => setProtagonistEl(protagonistEl)}    
-                    arena={arena}
                     config={config.protagonist}
                 />
 

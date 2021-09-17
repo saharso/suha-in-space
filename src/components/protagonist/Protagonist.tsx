@@ -7,12 +7,11 @@ import ProtagonistContext from './models/protagonistContext';
 import {ProtagonistConfig} from '../../models/config';
 
 export type IProtagonistProps = {
-    arena: HTMLElement;
     onProtagonistLoad?: (e: HTMLDivElement) => void;
     config: ProtagonistConfig;
 }
 
-const Protagonist: React.FunctionComponent<IProtagonistProps> = ({arena, onProtagonistLoad, config}) => {
+const Protagonist: React.FunctionComponent<IProtagonistProps> = ({onProtagonistLoad, config}) => {
 
     const protagonistRef = useRef(null);
 
