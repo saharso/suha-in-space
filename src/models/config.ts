@@ -1,5 +1,4 @@
-
-
+import pipeOverrideProps from "./pipes/pipeOverrideProps";
 
 export class ProtagonistConfig {
 
@@ -9,10 +8,7 @@ export class ProtagonistConfig {
 
     constructor(override?: Partial<ProtagonistConfig>){
 
-        override && Object.keys(override).forEach((key)=>{
-            this[key] = override[key];
-        });
-        
+        pipeOverrideProps.call(this, override);
     }
 };
 
