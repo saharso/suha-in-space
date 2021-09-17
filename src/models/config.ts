@@ -1,4 +1,4 @@
-import pipeOverrideProps from "./pipes/pipeOverrideProps";
+import pipeOverrideProps from './pipes/pipeOverrideProps';
 
 export class ProtagonistConfig {
 
@@ -9,9 +9,38 @@ export class ProtagonistConfig {
     constructor(override?: Partial<ProtagonistConfig>){
 
         pipeOverrideProps.call(this, override);
+
     }
-};
+}
+
+export class EnemyConfig {
+
+    name: string;
+
+    timeUntilGoesAway: number = 1000;
+
+    generationRateMs: number = 2000;
+
+    strength: number = 5;
+
+    value: number = 100;
+
+    pendingScore: number = 0;
+
+    constructor(override?: Partial<EnemyConfig>){
+
+        pipeOverrideProps.call(this, override);
+
+    }
+}
 
 export default class Config {
     protagonist = new ProtagonistConfig();
+    enemies = {
+        poopyShmoopy: new EnemyConfig({
+            name: 'poopyShmoopy',
+        }),
+    }
 }
+
+console.log(new Config());
