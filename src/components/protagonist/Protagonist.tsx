@@ -6,7 +6,7 @@ import DefaultBullets from './components/defaultBullet/DefaultBullet';
 import ProtagonistContext from './models/protagonistContext';
 import {ProtagonistConfig} from '../../models/config';
 
-export type IProtagonistProps = {
+type IProtagonistProps = {
     onProtagonistLoad?: (e: HTMLDivElement) => void;
     config: ProtagonistConfig;
 }
