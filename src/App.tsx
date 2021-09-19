@@ -21,10 +21,7 @@ function App() {
                 
                 <Background/>
 
-                <EnemiesIndex config={config} />
-                <PoopyShmoopy 
-                    protagonistEl={protagonistEl}
-                />
+                <EnemiesIndex config={config} protagonistEl={protagonistEl}/>
 
                 <Protagonist 
                     onProtagonistLoad={protagonistEl => setProtagonistEl(protagonistEl)}    

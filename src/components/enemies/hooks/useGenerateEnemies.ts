@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useCallback} from 'react';
 import { isConditionalExpression } from 'typescript';
 import AppContext from '../../../models/context';
 import ConstantsEnum from '../../../models/enum.constants';
+import {EnemyConfig} from '../../../models/config';
 
 function getProtagonist(){
     return document.getElementById(ConstantsEnum.PROTAGONIST_ID);
@@ -86,12 +87,8 @@ function moveDownwards(enemy, leaveAfterMs){
     }, leaveAfterMs);
 }
 
-interface IEnemyConfig {
-    firingRate: number;
-    speed: number;
-    onProtagonistHit: Function;
-}
-class Enemy implements IEnemyConfig {
+
+class Enemy extends EnemyConfig {
     firingRate = 1000;
     speed = 2000;
     onProtagonistHit: Function;
@@ -102,7 +99,8 @@ class Enemy implements IEnemyConfig {
     private enemyWrapper;
     private protagonistEl;
     
-    constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<IEnemyConfig>) {
+    constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EnemyConfig>) {
+        super();
         this.enemyWrapper = enemyWrapper;
         this.protagonistEl = protagonistEl;
         Object.keys(config).forEach((key)=>{
@@ -132,7 +130,7 @@ class Enemy implements IEnemyConfig {
     };
 }
 
-export default function useGenerateEnemies(ref) {
+export default function useGenerateEnemies(ref, config: EnemyConfig) {
     const appContext = useContext(AppContext);
     
     useEffect(()=>{
@@ -141,8 +139,7 @@ export default function useGenerateEnemies(ref) {
         const protagonistEl = appContext.protagonistEl;
 
         const enemy = new Enemy(ref.current, protagonistEl, {
-            speed: 2000,
-            firingRate: 3000,
+            ...config,
             onProtagonistHit: ()=>{
                 console.log('hit');
             }

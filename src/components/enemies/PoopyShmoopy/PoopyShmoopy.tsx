@@ -3,14 +3,14 @@ import useGenerateEnemies from '../hooks/useGenerateEnemies';
 import './PoopyShmoopy.scss';
 
 type IPoopyShmoopyProps = {
-    protagonistEl: HTMLElement;
+    config;
 }
 
-const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = () => {
+const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({config}) => {
 
     const enemiesHolderRef = useRef(null);
 
-    useGenerateEnemies(enemiesHolderRef);
+    useGenerateEnemies(enemiesHolderRef, config);
     
     return <div ref={enemiesHolderRef} className="sis-enemyList sis-poopyShmoopyList">
         <div className="sis-poopyShmoopy"></div>

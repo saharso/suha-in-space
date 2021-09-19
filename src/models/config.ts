@@ -27,6 +27,8 @@ export class EnemyConfig {
 
     value: number = 100;
 
+    onProtagonistHit: Function = ()=>{}
+
     constructor(override?: Partial<EnemyConfig>){
 
         pipeOverrideProps.call(this, override);
