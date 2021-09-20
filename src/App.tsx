@@ -4,7 +4,6 @@ import Background from './components/background/Background';
 import ConstantsEnum from './models/enum.constants';
 import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
-import PoopyShmoopy from './components/enemies/PoopyShmoopy/PoopyShmoopy';
 import Config from './models/config';
 import EnemiesIndex from './components/enemies/EnemiesIndex';
 

@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
-import { isConditionalExpression } from 'typescript';
 import AppContext from '../../../models/context';
 import ConstantsEnum from '../../../models/enum.constants';
 import {EnemyConfig} from '../../../models/config';
@@ -100,12 +99,9 @@ class Enemy extends EnemyConfig {
     private protagonistEl;
     
     constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EnemyConfig>) {
-        super();
+        super(config);
         this.enemyWrapper = enemyWrapper;
         this.protagonistEl = protagonistEl;
-        Object.keys(config).forEach((key)=>{
-            this[key] = config[key];
-        });
         this.init();
     }
 
