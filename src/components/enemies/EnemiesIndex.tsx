@@ -13,6 +13,7 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = ({config, prot
     return <>
         <PoopyShmoopy
             config={config.enemies.poopyShmoopy}
+            onHit={(e)=>{console.log(e);}}
         />
 
     </>;

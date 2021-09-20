@@ -90,7 +90,6 @@ function moveDownwards(enemy, leaveAfterMs){
 class Enemy extends EnemyConfig {
     firingRate = 1000;
     speed = 2000;
-    onProtagonistHit: Function;
     private interval;
     private observer;
     private enemyOrigin;
@@ -126,7 +125,7 @@ class Enemy extends EnemyConfig {
     };
 }
 
-export default function useGenerateEnemies(ref, config: EnemyConfig) {
+export default function useGenerateEnemies(ref, config: EnemyConfig, callback?: Function) {
     const appContext = useContext(AppContext);
     
     useEffect(()=>{
@@ -137,6 +136,7 @@ export default function useGenerateEnemies(ref, config: EnemyConfig) {
         const enemy = new Enemy(ref.current, protagonistEl, {
             ...config,
             onProtagonistHit: ()=>{
+                callback && callback(config);
                 console.log('hit');
             }
         });
