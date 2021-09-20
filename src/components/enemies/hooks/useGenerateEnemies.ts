@@ -22,42 +22,6 @@ function elementsOverlap(el1: HTMLElement, el2: HTMLElement): boolean {
     return overlap;
 }
 
-function observeEnemyBulletRelations(protagonistEl, enemyRef, callback?: Function){
-
-    const targetNode = protagonistEl;
-
-    const config = { attributes: true, childList: false, subtree: true };
-
-    const protagonist = getProtagonist();
-
-    const onMutation = function(mutationsList, observer) {
-
-        for(const mutation of mutationsList) {
-
-            if (mutation.type === 'attributes') {
-
-                const enemies: NodeList = enemyRef.children;
-
-                enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
-                    if(elementsOverlap(protagonist, enemyItem)){
-                        callback && callback();
-                    } 
-                    if (elementsOverlap(mutation.target, enemyItem)) {
-                        removeElement(enemyItem);
-                    }
-                });
-
-            } else break;
-        }
-    };
-
-    const observer = new MutationObserver(onMutation);   
-
-    observer.observe(targetNode, config);
-
-    return observer;
-}
-
 function getRandomScreenXAxisPoint() {
     return Math.random() * window.innerWidth;
 }
@@ -110,7 +74,7 @@ class Enemy extends EnemyConfig {
         this.interval = setInterval(()=>{
             this.generateEnemies(this.enemyWrapper, this.enemyOrigin);
         }, this.firingRate);
-        this.observer = observeEnemyBulletRelations(this.protagonistEl, this.enemyWrapper, this.onProtagonistHit);
+        this.observer = this.observeEnemyBulletRelations();
     }
 
     public kill(){
@@ -122,7 +86,42 @@ class Enemy extends EnemyConfig {
         const enemy = buildBasicEnemy(enemyOrigin, this.speed);
         holder.appendChild(enemy);
         moveDownwards(enemy, this.speed);
-    };
+    }
+
+    private observeEnemyBulletRelations(){
+
+        const config = { attributes: true, childList: false, subtree: true };
+
+        const protagonist = getProtagonist();
+
+        const onMutation = (mutationsList, observer) => {
+
+            for(const mutation of mutationsList) {
+
+                if (mutation.type === 'attributes') {
+
+                    const enemies: NodeList = this.enemyWrapper.children;
+
+                    enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
+                        if(elementsOverlap(protagonist, enemyItem)){
+                            this?.onProtagonistHit();
+                        }
+                        if (elementsOverlap(mutation.target, enemyItem)) {
+                            removeElement(enemyItem);
+                            this?.onEnemyHit();
+                        }
+                    });
+
+                } else break;
+            }
+        };
+
+        const observer = new MutationObserver(onMutation);
+
+        observer.observe(this.protagonistEl, config);
+
+        return observer;
+    }
 }
 
 export default function useGenerateEnemies(ref, config: EnemyConfig, callback?: Function) {
@@ -136,8 +135,11 @@ export default function useGenerateEnemies(ref, config: EnemyConfig, callback?: 
         const enemy = new Enemy(ref.current, protagonistEl, {
             ...config,
             onProtagonistHit: ()=>{
-                callback && callback(config);
                 console.log('hit');
+            },
+            onEnemyHit: ()=>{
+                callback && callback(config);
+                console.log('enemy hit');
             }
         });
 
