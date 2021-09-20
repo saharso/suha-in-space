@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PoopyShmoopy from './PoopyShmoopy/PoopyShmoopy';
 
 
@@ -9,11 +9,24 @@ type TEnemiesIndexProps = {
 
 const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = ({config, protagonistEl}) => {
 
-    console.log(config);
+    const [enemy, setEnemy] = useState(null);
+
+    useEffect(()=>{
+        if(!enemy) return;
+
+        enemy.onProtagonistHit = ()=>{
+            console.log('hit');
+        };
+        enemy.onEnemyHit = ()=>{
+            console.log(config);
+        };
+
+    }, [enemy]);
+
     return <>
         <PoopyShmoopy
             config={config.enemies.poopyShmoopy}
-            onHit={(e)=>{console.log(e);}}
+            onLoad={(enemy)=>{setEnemy(enemy);}}
         />
 
     </>;

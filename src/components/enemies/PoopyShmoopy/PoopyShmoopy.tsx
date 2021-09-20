@@ -4,14 +4,19 @@ import './PoopyShmoopy.scss';
 
 type IPoopyShmoopyProps = {
     config;
-    onHit?: Function;
+    onLoad?: Function;
 }
 
-const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({config, onHit}) => {
+const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({config, onLoad}) => {
 
     const enemiesHolderRef = useRef(null);
 
-    useGenerateEnemies(enemiesHolderRef, config, onHit);
+    const enemy = useGenerateEnemies(enemiesHolderRef, config);
+
+    useEffect(()=>{
+        if(!enemy) return;
+        onLoad && onLoad(enemy);
+    }, [enemy]);
     
     return <div ref={enemiesHolderRef} className="sis-enemyList sis-poopyShmoopyList">
         <div className="sis-poopyShmoopy"></div>

@@ -124,8 +124,10 @@ class Enemy extends EnemyConfig {
     }
 }
 
-export default function useGenerateEnemies(ref, config: EnemyConfig, callback?: Function) {
+export default function useGenerateEnemies(ref, config: EnemyConfig): Enemy {
     const appContext = useContext(AppContext);
+
+    const [enemy, setEnemy] = useState<Enemy>(null);
     
     useEffect(()=>{
         if(!(ref.current && appContext.protagonistEl)) return;
@@ -134,14 +136,10 @@ export default function useGenerateEnemies(ref, config: EnemyConfig, callback?: 
 
         const enemy = new Enemy(ref.current, protagonistEl, {
             ...config,
-            onProtagonistHit: ()=>{
-                console.log('hit');
-            },
-            onEnemyHit: ()=>{
-                callback && callback(config);
-                console.log('enemy hit');
-            }
+
         });
+
+        setEnemy(enemy);
 
         return function(){
             
@@ -150,5 +148,7 @@ export default function useGenerateEnemies(ref, config: EnemyConfig, callback?: 
         };        
 
     }, [ref.current, appContext.protagonistEl]);
+
+    return enemy;
 
 }
