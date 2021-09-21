@@ -24,13 +24,13 @@ const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coor
         firingRate.screenLeaveFlag && onLeaveScreen();
     }, [firingRate.screenLeaveFlag]);
 
-    return <div 
+    return <div
         style={{
             top: `${firingRate.top}px`,
             left: `${coordinates.protagonistCenter}px`,
             transition: `top ${config.trajectorySpeed}ms ease-out`,
         }}
-        className="sis-singleDefaultBullet"></div>;
+        className="sis-singleDefaultBullet"/>;
 
 };
 

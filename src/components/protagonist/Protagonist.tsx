@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import ConstantsEnum from '../../global/consts/constants.enum';
 import './Protagonist.scss';
 import useProtagonistCoordinates from './hooks/useProtagonistCoordinates';
@@ -30,15 +30,15 @@ const Protagonist: React.FunctionComponent<IProtagonistProps> = ({onProtagonistL
                     coordinates={coordinates}
                 />
         
-                <div 
+                <div
                     ref={protagonistRef}
-                    id={ConstantsEnum.PROTAGONIST_ID} 
+                    id={ConstantsEnum.PROTAGONIST_ID}
                     className="sis-protagonist"
                     style={{
                         top: `${coordinates.top}px`,
                         left: `${coordinates.left}px`,
                     }}
-                ></div>
+                />
             </div>
         </ProtagonistContext.Provider>
 
