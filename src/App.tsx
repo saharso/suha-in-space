@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './App.scss';
 import Background from './components/background/Background';
-import ConstantsEnum from './models/enum.constants';
+import ConstantsEnum from './global/consts/constants.enum';
 import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
 import Config from './models/config';

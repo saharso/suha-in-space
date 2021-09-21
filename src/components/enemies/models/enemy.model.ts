@@ -1,4 +1,4 @@
-import ConstantsEnum from '../../../models/enum.constants';
+import ConstantsEnum from '../../../global/consts/constants.enum';
 import EnemyConfig from './enemies.config';
 
 function getProtagonist(){

@@ -1,4 +1,4 @@
-import pipeOverrideProps from '../../../models/pipes/pipeOverrideProps';
+import overrideClassPropsTool from '../../../global/tools/overrideClassProps.tool';
 
 export default class EnemyConfig {
 
@@ -20,7 +20,7 @@ export default class EnemyConfig {
 
     constructor(override?: Partial<EnemyConfig>){
 
-        pipeOverrideProps.call(this, override);
+        overrideClassPropsTool.call(this, override);
 
     }
 }

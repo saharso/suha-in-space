@@ -1,9 +1,9 @@
-import pipeOverrideProps from './pipes/pipeOverrideProps';
+import overrideClassPropsTool from '../global/tools/overrideClassProps.tool';
 
 export default class ScoreBoardModel {
     lives: number;
     score: number;
     constructor(update?: Partial<ScoreBoardModel>) {
-        pipeOverrideProps.call(this, update);
+        overrideClassPropsTool.call(this, update);
     }
 }

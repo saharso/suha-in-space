@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import ConstantsEnum from '../../models/enum.constants';
+import ConstantsEnum from '../../global/consts/constants.enum';
 import './Protagonist.scss';
 import useProtagonistCoordinates from './hooks/useProtagonistCoordinates';
 import DefaultBullets from './components/defaultBullet/DefaultBullet';

@@ -1,4 +1,4 @@
-import pipeOverrideProps from './pipes/pipeOverrideProps';
+import overrideClassPropsTool from '../global/tools/overrideClassProps.tool';
 import EnemyConfig from '../components/enemies/models/enemies.config';
 
 export class ProtagonistConfig {
@@ -9,7 +9,7 @@ export class ProtagonistConfig {
 
     constructor(override?: Partial<ProtagonistConfig>){
 
-        pipeOverrideProps.call(this, override);
+        overrideClassPropsTool.call(this, override);
 
     }
 }
