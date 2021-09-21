@@ -6,13 +6,18 @@ import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
 import Config from './models/config';
 import EnemiesIndex from './components/enemies/EnemiesIndex';
+import ScoreBoard from './components/scoreBoard/ScoreBoard';
+import useScoreBoardCalculator from './components/scoreBoard/hooks/useScoreBoardCalculator';
+import ScoreBoardModel from './models/scoreBoard';
 
 const config = new Config();
 
 function App() {
     
     const [protagonistEl, setProtagonistEl] = useState(null);
-    
+
+    const [scoreUpdate, setScoreUpdate] = useState<ScoreBoardModel>(new ScoreBoardModel());
+
     return (
         <AppContext.Provider value={{protagonistEl}}>
 
@@ -20,7 +25,18 @@ function App() {
                 
                 <Background/>
 
-                <EnemiesIndex config={config} protagonistEl={protagonistEl}/>
+                <ScoreBoard update={scoreUpdate} />
+
+                <EnemiesIndex
+                    config={config}
+                    protagonistEl={protagonistEl}
+                    onEnemyHit={(data)=>{
+                        setScoreUpdate(new ScoreBoardModel({score: data.value}));
+                    }}
+                    onProtagonistHit={()=>{
+                        console.log('hit');
+                    }}
+                />
 
                 <Protagonist 
                     onProtagonistLoad={protagonistEl => setProtagonistEl(protagonistEl)}    

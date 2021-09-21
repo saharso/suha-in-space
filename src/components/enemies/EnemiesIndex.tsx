@@ -5,9 +5,18 @@ import PoopyShmoopy from './PoopyShmoopy/PoopyShmoopy';
 type TEnemiesIndexProps = {
     config: any;
     protagonistEl: HTMLElement;
+    onProtagonistHit: Function;
+    onEnemyHit: Function;
 };
 
-const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = ({config, protagonistEl}) => {
+const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
+    {
+        config,
+        protagonistEl,
+        onProtagonistHit,
+        onEnemyHit,
+    }
+) => {
 
     const [enemy, setEnemy] = useState(null);
 
@@ -15,10 +24,10 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = ({config, prot
         if(!enemy) return;
 
         enemy.onProtagonistHit = ()=>{
-            console.log('hit');
+            onProtagonistHit && onProtagonistHit();
         };
         enemy.onEnemyHit = ()=>{
-            console.log(config);
+            onEnemyHit && onEnemyHit(enemy);
         };
 
     }, [enemy]);
