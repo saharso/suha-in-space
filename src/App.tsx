@@ -18,6 +18,10 @@ function App() {
 
     const [scoreUpdate, setScoreUpdate] = useState<ScoreBoardModel>(new ScoreBoardModel());
 
+    useEffect(()=>{
+        console.log(scoreUpdate);
+    }, [scoreUpdate]);
+
     return (
         <AppContext.Provider value={{protagonistEl}}>
 
