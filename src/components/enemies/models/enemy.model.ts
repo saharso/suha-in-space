@@ -23,8 +23,8 @@ function elementsOverlap(el1: HTMLElement, el2: HTMLElement): boolean {
 function getRandomScreenXAxisPoint() {
     return Math.random() * window.innerWidth;
 }
-function buildBasicEnemy(enemy: HTMLElement, leaveAfterMs){
-    const enemyClone: HTMLElement = <HTMLElement>enemy.cloneNode(true);
+function buildBasicEnemy(enemyModel: HTMLElement, leaveAfterMs){
+    const enemyClone: HTMLElement = <HTMLElement>enemyModel.cloneNode(true);
     enemyClone.style.top = '-100px';
     enemyClone.style.transition = `top ${leaveAfterMs}ms linear`;
     enemyClone.style.left = getRandomScreenXAxisPoint() + 'px';
