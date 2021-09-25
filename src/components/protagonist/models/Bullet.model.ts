@@ -33,11 +33,11 @@ export default class BulletModel extends BulletConfig {
             });
         };
 
-        const clearBulletAfter = (msDelay: number) => {
+        const clearBullet = () => {
             setTimeout(()=>{
                 this.parentEl.removeChild(newBullet);
                 newBullet = null;
-            }, msDelay);
+            }, this.speed);
         };
 
         const moveBulletUpwards = () => {
@@ -50,7 +50,7 @@ export default class BulletModel extends BulletConfig {
         appendBulletToParent();
         updateBulletAttribute();
         moveBulletUpwards();
-        clearBulletAfter(this.speed);
+        clearBullet();
     }
 
     public shoot(){
