@@ -9,7 +9,7 @@ const config = new BulletConfig({
     speed: 1500,
 });
 
-export default function useFiringRate(parentRef, coordinates) {
+export default function useFiringManager(parentRef, coordinates) {
     
     const [bulletModel, setBulletModel] = useState(null);
 
@@ -26,7 +26,7 @@ export default function useFiringRate(parentRef, coordinates) {
     useEffect(()=>{
         if(!coordinates || !bulletModel) return;
 
-        bulletModel.set({coordinates});
+        bulletModel.override({coordinates});
 
     }, [coordinates, bulletModel]);
 
@@ -34,11 +34,12 @@ export default function useFiringRate(parentRef, coordinates) {
         
         if(!bulletModel) return;
 
-        bulletModel.set({parentEl: parentRef.current}).shoot();
+        bulletModel.override({parentEl: parentRef.current}).shoot();
 
         return function(){
             clearInterval(bulletModel.interval);
         };
+
         
     }, [bulletModel]);
 

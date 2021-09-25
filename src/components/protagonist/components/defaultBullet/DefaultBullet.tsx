@@ -1,6 +1,6 @@
 import React, {useEffect, useContext, useRef} from 'react';
 import useBulletFireCoordinates from '../../hooks/useBulletFireCoordinates';
-import useFiringRate from '../../hooks/useFiringRate';
+import useFiringManager from '../../hooks/useFiringManager';
 import ICoordinates from '../../models/iCoordinates';
 import ProtagonistContext from '../../models/protagonistContext';
 import './DefaultBullet.scss';
@@ -13,7 +13,7 @@ const DefaultBullets: React.FunctionComponent<IDefaultBulletsProps> = ({coordina
 
     const parentRef = useRef(null);
 
-    const firingRate = useFiringRate(parentRef, coordinates);
+    const firingRate = useFiringManager(parentRef, coordinates);
 
     return <div ref={parentRef} className="sis-defaultBullets"/>;
 };
