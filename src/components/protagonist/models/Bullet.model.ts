@@ -17,7 +17,7 @@ export default class BulletModel extends BulletConfig {
 
         const defineBulletInitialStyle = () => {
             newBullet.style.top = this.coordinates.top + 'px';
-            newBullet.style.left = this.coordinates.left + 'px';
+            newBullet.style.left = this.coordinates.protagonistCenter + 'px';
             newBullet.style.transition = `top ${this.speed}ms linear`;
         };
 
@@ -41,7 +41,7 @@ export default class BulletModel extends BulletConfig {
         };
 
         const moveBulletUpwards = () => {
-            requestAnimationFrame(()=>{
+            newBullet && requestAnimationFrame(()=>{
                 newBullet.style.top = `-${newBullet.offsetHeight}px`;
             });
         };
@@ -54,7 +54,6 @@ export default class BulletModel extends BulletConfig {
     }
 
     public shoot(){
-        console.log(this.parentEl);
         this.interval = setInterval(()=>{
             this.generateBullet();
         }, this.generationRate);
