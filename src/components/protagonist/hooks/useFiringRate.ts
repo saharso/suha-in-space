@@ -5,7 +5,8 @@ import BulletModel from '../models/Bullet.model';
 
 
 const config = new BulletConfig({
-    // generationRate: 500,
+    generationRate: 500,
+    speed: 1500,
 });
 
 export default function useFiringRate(parentRef, coordinates) {

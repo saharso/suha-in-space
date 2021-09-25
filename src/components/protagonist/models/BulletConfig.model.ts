@@ -7,7 +7,8 @@ export default class BulletConfig extends GlobalConfig {
     parentEl: HTMLElement;
     coordinates;
     constructor (config?: Partial<BulletConfig>){
-        super(config);
+        super();
+        this.set(config);
     }
 
 }
