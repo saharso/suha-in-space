@@ -1,15 +1,13 @@
 import overrideClassPropsTool from '../../../global/tools/overrideClassProps.tool';
+import GlobalConfig from '../../../global/models/MGlobalConfig';
 
-export default class BulletConfig {
+export default class BulletConfig extends GlobalConfig {
     speed: number = 300;
     generationRate: number = 40;
     parentEl: HTMLElement;
     coordinates;
     constructor (config?: Partial<BulletConfig>){
-        this.set(config);
+        super(config);
     }
-    set(config?: Partial<BulletConfig>){
-        overrideClassPropsTool.call(this, config);
-        return this;
-    }
+
 }
