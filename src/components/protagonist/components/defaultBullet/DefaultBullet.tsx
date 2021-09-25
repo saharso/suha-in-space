@@ -9,48 +9,13 @@ export type IDefaultBulletsProps = {
     coordinates: ICoordinates;
 }
 
-type IDefaultBulletProps = {
-    coordinates: ICoordinates;
-    onLeaveScreen: Function;
-}
-
-const SingleDefaultBullet: React.FunctionComponent<IDefaultBulletProps> = ({coordinates, onLeaveScreen}) => {
-
-    const config = useContext(ProtagonistContext);
-
-    const firingRate = useBulletFireCoordinates(coordinates);
-
-    useEffect(()=>{
-        firingRate.screenLeaveFlag && onLeaveScreen();
-    }, [firingRate.screenLeaveFlag]);
-
-    return <div
-        style={{
-            top: `${firingRate.top}px`,
-            left: `${coordinates.protagonistCenter}px`,
-            transition: `top ${config.trajectorySpeed}ms ease-out`,
-        }}
-        className="sis-singleDefaultBullet"/>;
-
-};
-
 const DefaultBullets: React.FunctionComponent<IDefaultBulletsProps> = ({coordinates}) => {
 
     const parentRef = useRef(null);
 
     const firingRate = useFiringRate(parentRef, coordinates);
 
-    return <div ref={parentRef} className="sis-defaultBullets">
-        {firingRate.bullets.map((item, index) => {
-            return <SingleDefaultBullet 
-                onLeaveScreen={()=>{
-                    firingRate.remove(index);
-                }}
-                key={index} 
-                coordinates={coordinates} 
-            />;
-        })}
-    </div>;
+    return <div ref={parentRef} className="sis-defaultBullets"/>;
 };
 
 export default DefaultBullets;

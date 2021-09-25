@@ -6,12 +6,9 @@ function getProtagonist(){
 }
 
 function elementsOverlap(el1: HTMLElement, el2: HTMLElement): boolean {
-
     const rect1 = el1.getBoundingClientRect();
     const rect2 = el2.getBoundingClientRect();
-
     const overlap = !(
-
         rect1.right < rect2.left ||
         rect1.left > rect2.right ||
         rect1.bottom < rect2.top ||
@@ -88,7 +85,7 @@ export default class Enemy extends EnemyConfig {
 
     private observeEnemyBulletRelations(){
 
-        const config = { attributes: true, childList: false, subtree: true };
+        const config = { attributes: true, childList: true, subtree: true };
 
         const protagonist = getProtagonist();
 
@@ -97,14 +94,12 @@ export default class Enemy extends EnemyConfig {
             for(const mutation of mutationsList) {
 
                 if (mutation.type === 'attributes') {
-
                     const enemies: NodeList = this.enemyWrapper.children;
-
                     enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
                         if(elementsOverlap(protagonist, enemyItem)){
                             this?.onProtagonistHit();
                         }
-                        if (elementsOverlap(mutation.target, enemyItem)) {
+                        if (mutation.target !== protagonist && elementsOverlap(mutation.target, enemyItem)) {
                             removeElement(enemyItem);
                             this?.onEnemyHit();
                         }
