@@ -129,10 +129,6 @@ export default class Enemy extends EnemyConfig {
         enemyModel.setAttribute('data-strength', '' + value);
     }
 
-    private isEnemy(el: HTMLElement) {
-        return el.hasAttribute('data-strength');
-    }
-
     private getEnemhyStrength(el: HTMLElement): number {
         return + el.getAttribute('data-strength');
     }
