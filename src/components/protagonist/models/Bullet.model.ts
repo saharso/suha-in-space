@@ -35,7 +35,7 @@ export default class BulletModel extends BulletConfig {
 
         const clearBullet = () => {
             setTimeout(()=>{
-                this.parentEl.removeChild(newBullet);
+                newBullet.parentNode?.removeChild(newBullet);
                 newBullet = null;
             }, this.speed);
         };

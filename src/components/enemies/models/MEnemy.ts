@@ -84,14 +84,7 @@ export default class Enemy extends EnemyConfig {
                             this.onProtagonistHit();
                         }
                         if (mutation.target !== protagonist && elementsOverlap(mutation.target, enemyItem)) {
-
-                            this.assignStrengthToEnemy(enemyItem, this.getEnemhyStrength(enemyItem) -1);
-
-                            if(this.getEnemhyStrength(enemyItem) <= 0) {
-                                removeElement(enemyItem);
-                                this.onEnemyHit();
-                                this.revert('strength');
-                            }
+                            this.onImpact(mutation.target, enemyItem);
                         }
                     });
 
@@ -104,6 +97,19 @@ export default class Enemy extends EnemyConfig {
         observer.observe(this.protagonistEl, config);
 
         return observer;
+    }
+
+    private onImpact(bullet: HTMLElement, enemy: HTMLElement) {
+        removeElement(bullet);
+
+        this.assignStrengthToEnemy(enemy, this.getEnemhyStrength(enemy) -1);
+
+        if(this.getEnemhyStrength(enemy) <= 0) {
+            removeElement(enemy);
+            this.onEnemyHit();
+            this.revert('strength');
+        }
+
     }
 
     private moveDownwards(enemy){

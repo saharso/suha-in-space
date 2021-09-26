@@ -10,7 +10,7 @@ export default class EnemyConfig extends GlobalConfig {
 
     generationRateMs: number = 2000;
 
-    strength: number = 10;
+    strength: number = 3;
 
     value: number = 100;
 
