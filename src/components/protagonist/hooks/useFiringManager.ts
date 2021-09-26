@@ -5,7 +5,7 @@ import BulletModel from '../models/Bullet.model';
 
 
 const config = new BulletConfig({
-    generationRate: 500,
+    generationRate: 200,
     speed: 1500,
 });
 

@@ -20,31 +20,11 @@ function elementsOverlap(el1: HTMLElement, el2: HTMLElement): boolean {
 function getRandomScreenXAxisPoint() {
     return Math.random() * window.innerWidth;
 }
-function buildBasicEnemy(enemyModel: HTMLElement, leaveAfterMs){
-    const enemyClone: HTMLElement = <HTMLElement>enemyModel.cloneNode(true);
-    enemyClone.style.top = '-100px';
-    enemyClone.style.transition = `top ${leaveAfterMs}ms linear`;
-    enemyClone.style.left = getRandomScreenXAxisPoint() + 'px';
-    return enemyClone;
-}
-
 function removeElement(el) {
     if(!el) return;
     el.parentNode?.removeChild(el);
     el = null;
 }
-
-function moveDownwards(enemy, leaveAfterMs){
-    requestAnimationFrame(()=>{
-        enemy.style.top = '100%';
-    });
-    let timeout;
-    timeout = setTimeout(()=>{
-        removeElement(enemy);
-        clearTimeout(timeout);
-    }, leaveAfterMs);
-}
-
 
 export default class Enemy extends EnemyConfig {
     firingRate = 1000;
@@ -77,10 +57,12 @@ export default class Enemy extends EnemyConfig {
         this.observer.disconnect();
     }
 
-    private generateEnemies (holder, enemyOrigin) {
-        const enemy = buildBasicEnemy(enemyOrigin, this.speed);
+    private generateEnemies(holder, enemyOrigin) {
+        const enemy = <HTMLElement>enemyOrigin.cloneNode(true);
+        this.buildBasicEnemy(enemy, this.speed);
+        this.assignStrengthToEnemy(enemy, this.strength);
         holder.appendChild(enemy);
-        moveDownwards(enemy, this.speed);
+        this.moveDownwards(enemy);
     }
 
     private observeEnemyBulletRelations(){
@@ -88,6 +70,8 @@ export default class Enemy extends EnemyConfig {
         const config = { attributes: true, childList: true, subtree: true };
 
         const protagonist = getProtagonist();
+
+        const originalStrength = this.strength;
 
         const onMutation = (mutationsList, observer) => {
 
@@ -97,11 +81,17 @@ export default class Enemy extends EnemyConfig {
                     const enemies: NodeList = this.enemyWrapper.children;
                     enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
                         if(elementsOverlap(protagonist, enemyItem)){
-                            this?.onProtagonistHit();
+                            this.onProtagonistHit();
                         }
                         if (mutation.target !== protagonist && elementsOverlap(mutation.target, enemyItem)) {
-                            removeElement(enemyItem);
-                            this?.onEnemyHit();
+
+                            this.assignStrengthToEnemy(enemyItem, this.getEnemhyStrength(enemyItem) -1);
+
+                            if(this.getEnemhyStrength(enemyItem) <= 0) {
+                                removeElement(enemyItem);
+                                this.onEnemyHit();
+                                this.revert('strength');
+                            }
                         }
                     });
 
@@ -114,5 +104,36 @@ export default class Enemy extends EnemyConfig {
         observer.observe(this.protagonistEl, config);
 
         return observer;
+    }
+
+    private moveDownwards(enemy){
+        requestAnimationFrame(()=>{
+            enemy.style.top = '100%';
+        });
+        let timeout;
+        timeout = setTimeout(()=>{
+            removeElement(enemy);
+            clearTimeout(timeout);
+            this.revert('strength');
+        }, this.speed);
+    }
+
+    private buildBasicEnemy(enemyModel: HTMLElement, leaveAfterMs){
+        enemyModel.style.top = '-100px';
+        enemyModel.style.transition = `top ${leaveAfterMs}ms linear`;
+        enemyModel.style.left = getRandomScreenXAxisPoint() + 'px';
+        return enemyModel;
+    }
+
+    private assignStrengthToEnemy(enemyModel: HTMLElement, value: number) {
+        enemyModel.setAttribute('data-strength', '' + value);
+    }
+
+    private isEnemy(el: HTMLElement) {
+        return el.hasAttribute('data-strength');
+    }
+
+    private getEnemhyStrength(el: HTMLElement): number {
+        return + el.getAttribute('data-strength');
     }
 }

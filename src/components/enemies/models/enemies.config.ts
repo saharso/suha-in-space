@@ -1,6 +1,6 @@
-import overrideClassPropsTool from '../../../global/tools/overrideClassProps.tool';
+import GlobalConfig from '../../../global/models/MGlobalConfig';
 
-export default class EnemyConfig {
+export default class EnemyConfig extends GlobalConfig {
 
     name: string;
 
@@ -10,7 +10,7 @@ export default class EnemyConfig {
 
     generationRateMs: number = 2000;
 
-    strength: number = 5;
+    strength: number = 10;
 
     value: number = 100;
 
@@ -19,8 +19,8 @@ export default class EnemyConfig {
     onEnemyHit: Function = ()=>{}
 
     constructor(override?: Partial<EnemyConfig>){
-
-        overrideClassPropsTool.call(this, override);
-
+        super();
+        this.setOriginal(override);
+        this.update(override);
     }
 }
