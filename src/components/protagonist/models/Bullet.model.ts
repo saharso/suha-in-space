@@ -17,7 +17,7 @@ export default class BulletModel extends BulletConfig {
 
         const defineBulletInitialStyle = () => {
             newBullet.style.top = this.coordinates.top + 'px';
-            newBullet.style.left = this.coordinates.protagonistCenter + 'px';
+            newBullet.style.left = this.coordinates.protagonistCenter - (newBullet.offsetWidth / 2) + 'px';
             newBullet.style.transition = `top ${this.speed}ms linear`;
         };
 

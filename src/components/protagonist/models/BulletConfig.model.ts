@@ -8,7 +8,7 @@ export default class BulletConfig extends GlobalConfig {
     coordinates;
     constructor (config?: Partial<BulletConfig>){
         super();
-        this.override(config);
+        this.update(config);
     }
 
 }

@@ -26,7 +26,7 @@ export default function useFiringManager(parentRef, coordinates) {
     useEffect(()=>{
         if(!coordinates || !bulletModel) return;
 
-        bulletModel.override({coordinates});
+        bulletModel.update({coordinates});
 
     }, [coordinates, bulletModel]);
 
@@ -34,7 +34,7 @@ export default function useFiringManager(parentRef, coordinates) {
         
         if(!bulletModel) return;
 
-        bulletModel.override({parentEl: parentRef.current}).shoot();
+        bulletModel.update({parentEl: parentRef.current}).shoot();
 
         return function(){
             clearInterval(bulletModel.interval);

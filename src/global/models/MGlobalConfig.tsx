@@ -3,7 +3,7 @@ import IPojo from './IPojo';
 
 export default class GlobalConfig {
 
-    override(config?: IPojo){
+    update(config?: IPojo){
         overrideClassPropsTool.call(this, config);
         return this;
     }
