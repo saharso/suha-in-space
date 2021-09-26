@@ -1,5 +1,5 @@
 import overrideClassPropsTool from '../../../global/tools/overrideClassProps.tool';
-import GlobalConfig from '../../../global/models/MGlobalConfig';
+import GlobalConfig from '../../../global/models/modelGlobalConfig';
 import ICoordinates from './iCoordinates';
 
 export default class BulletConfig extends GlobalConfig {

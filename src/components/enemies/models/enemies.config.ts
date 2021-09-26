@@ -1,4 +1,4 @@
-import GlobalConfig from '../../../global/models/MGlobalConfig';
+import GlobalConfig from '../../../global/models/modelGlobalConfig';
 
 export default class EnemyConfig extends GlobalConfig {
 
