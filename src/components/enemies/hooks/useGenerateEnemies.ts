@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 import AppContext from '../../../models/context';
 import EnemyConfig from '../models/enemies.config';
-import Enemy from '../models/enemy.model';
+import Enemy from '../models/MEnemy';
 
 
 export default function useGenerateEnemies(ref, config: EnemyConfig): Enemy {
