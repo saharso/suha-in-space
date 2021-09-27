@@ -10,13 +10,13 @@ export default class Enemy extends EnemyConfig {
     private enemyOrigin;
     private virtualHolder = document.createElement('div');
     private enemyWrapper;
-    private protagonistEl;
+    private protagonistWrapper;
     private allowProtagonistHit: boolean = true;
 
     constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EnemyConfig>) {
         super(config);
         this.enemyWrapper = enemyWrapper;
-        this.protagonistEl = protagonistEl;
+        this.protagonistWrapper = protagonistEl;
         this.init();
     }
 
@@ -46,11 +46,7 @@ export default class Enemy extends EnemyConfig {
 
         const config = { attributes: true, childList: true, subtree: true };
 
-        const protagonist = ElementsUtil.getProtagonist();
-
-        const originalStrength = this.strength;
-
-        const onMutation = (mutationsList, observer) => {
+        const onMutation = (mutationsList) => {
 
             for(const mutation of mutationsList) {
 
@@ -58,7 +54,7 @@ export default class Enemy extends EnemyConfig {
                     const enemies: NodeList = this.enemyWrapper.children;
                     enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
 
-                        if(this.shouldHitProtagonist(protagonist, enemyItem)) {
+                        if(this.shouldHitProtagonist(enemyItem)) {
                             this.onProtagonistImpact();
                         }
 
@@ -74,14 +70,14 @@ export default class Enemy extends EnemyConfig {
 
         const observer = new MutationObserver(onMutation);
 
-        observer.observe(this.protagonistEl, config);
+        observer.observe(this.protagonistWrapper, config);
 
         return observer;
     }
 
-    private shouldHitProtagonist(protagonist, enemyItem) {
+    private shouldHitProtagonist(enemyItem) {
         const conditions = [
-            ElementsUtil.isElementsOverlap(protagonist, enemyItem),
+            ElementsUtil.isElementsOverlap(ElementsUtil.getProtagonist(), enemyItem),
             !ElementsUtil.isElementLeaving(enemyItem),
         ];
 
