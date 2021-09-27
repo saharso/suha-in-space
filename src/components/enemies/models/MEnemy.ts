@@ -1,30 +1,6 @@
-import ConstantsEnum from '../../../global/consts/constants.enum';
+import ElementsUtil from '../../../global/models/modelElementsUtil';
 import EnemyConfig from './enemies.config';
 
-function getProtagonist(){
-    return document.getElementById(ConstantsEnum.PROTAGONIST_ID);
-}
-
-function elementsOverlap(el1: HTMLElement, el2: HTMLElement): boolean {
-    const rect1 = el1.getBoundingClientRect();
-    const rect2 = el2.getBoundingClientRect();
-    const overlap = !(
-        rect1.right < rect2.left ||
-        rect1.left > rect2.right ||
-        rect1.bottom < rect2.top ||
-        rect1.top > rect2.bottom
-    );
-    return overlap;
-}
-
-function getRandomScreenXAxisPoint() {
-    return Math.random() * window.innerWidth;
-}
-function removeElement(el) {
-    if(!el) return;
-    el.parentNode?.removeChild(el);
-    el = null;
-}
 
 export default class Enemy extends EnemyConfig {
     firingRate = 1000;
@@ -35,6 +11,7 @@ export default class Enemy extends EnemyConfig {
     private virtualHolder = document.createElement('div');
     private enemyWrapper;
     private protagonistEl;
+    private allowProtagonistHit: boolean = true;
 
     constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EnemyConfig>) {
         super(config);
@@ -69,7 +46,7 @@ export default class Enemy extends EnemyConfig {
 
         const config = { attributes: true, childList: true, subtree: true };
 
-        const protagonist = getProtagonist();
+        const protagonist = ElementsUtil.getProtagonist();
 
         const originalStrength = this.strength;
 
@@ -80,12 +57,15 @@ export default class Enemy extends EnemyConfig {
                 if (mutation.type === 'attributes') {
                     const enemies: NodeList = this.enemyWrapper.children;
                     enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
-                        if(elementsOverlap(protagonist, enemyItem)){
-                            this.onProtagonistHit();
+
+                        if(this.shouldHitProtagonist(protagonist, enemyItem)) {
+                            this.onProtagonistImpact();
                         }
-                        if (mutation.target !== protagonist && elementsOverlap(mutation.target, enemyItem)) {
-                            this.onImpact(mutation.target, enemyItem);
+
+                        if (this.shouldImpactEnemy(mutation.target, enemyItem)) {
+                            this.onEnemyImpact(mutation.target, enemyItem);
                         }
+
                     });
 
                 } else break;
@@ -99,17 +79,41 @@ export default class Enemy extends EnemyConfig {
         return observer;
     }
 
-    private onImpact(bullet: HTMLElement, enemy: HTMLElement) {
-        removeElement(bullet);
+    private shouldHitProtagonist(protagonist, enemyItem) {
+        const conditions = [
+            ElementsUtil.isElementsOverlap(protagonist, enemyItem),
+            !ElementsUtil.isElementLeaving(enemyItem),
+        ];
+
+        return conditions.every(e=>e);
+    }
+
+    private shouldImpactEnemy(bullet, enemy) {
+        const conditions = [
+            bullet !== ElementsUtil.getProtagonist(),
+            ElementsUtil.isElementsOverlap(bullet, enemy),
+        ];
+
+        return conditions.every(e=>e);
+    }
+
+    private onEnemyImpact(bullet: HTMLElement, enemy: HTMLElement) {
+        ElementsUtil.removeElement(bullet);
 
         this.assignStrengthToEnemy(enemy, this.getEnemhyStrength(enemy) -1);
-
         if(this.getEnemhyStrength(enemy) <= 0) {
-            removeElement(enemy);
+            ElementsUtil.removeElement(enemy, 500);
             this.onEnemyHit();
-            this.revert('strength');
+        }
+    }
+
+    private onProtagonistImpact(){
+        if(this.allowProtagonistHit) {
+            this.onProtagonistHit();
+            setTimeout(()=>{this.allowProtagonistHit = true;}, 700);
         }
 
+        this.allowProtagonistHit = false;
     }
 
     private moveDownwards(enemy){
@@ -118,7 +122,7 @@ export default class Enemy extends EnemyConfig {
         });
         let timeout;
         timeout = setTimeout(()=>{
-            removeElement(enemy);
+            ElementsUtil.removeElement(enemy);
             clearTimeout(timeout);
             this.revert('strength');
         }, this.speed);
@@ -127,7 +131,7 @@ export default class Enemy extends EnemyConfig {
     private buildBasicEnemy(enemyModel: HTMLElement, leaveAfterMs){
         enemyModel.style.top = '-100px';
         enemyModel.style.transition = `top ${leaveAfterMs}ms linear`;
-        enemyModel.style.left = getRandomScreenXAxisPoint() + 'px';
+        enemyModel.style.left = ElementsUtil.getRandomScreenXAxisPoint() + 'px';
         return enemyModel;
     }
 

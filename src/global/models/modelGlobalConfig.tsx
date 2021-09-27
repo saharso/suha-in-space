@@ -10,7 +10,6 @@ export default class GlobalConfig {
         return this;
     }
     revert(prop: string){
-        console.log(this.#_original);
         if(this[prop]) {
             this[prop] = this.#_original[prop];
         }
