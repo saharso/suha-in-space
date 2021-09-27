@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import ScoreBoardModel from '../../models/scoreBoard';
+import useScoreBoardCalculator from './hooks/useScoreBoardCalculator';
 
 const ScoreBoard: React.FunctionComponent<{[key: string]:ScoreBoardModel}> = ({update})=>{
 
-    const [score, setScore] = useState(0);
+    const scoreCalculator = useScoreBoardCalculator(update);
 
-    useEffect(()=>{
-        if(!update?.score) return;
-        setScore((prev)=> prev += update.score);
-    }, [update]);
+
 
     return <header className="sis-scoreBoard">
-        {score || 0}
+        {scoreCalculator.score || 0}
     </header>;
 };
 

@@ -1,18 +1,14 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import ScoreBoardModel from '../../../models/scoreBoard';
 import ScoreBoard from '../ScoreBoard';
 
-export default function useScoreBoardCalculator(){
-    const [score, _setScore] = useState<number>(0);
-    const [scoreBoard, setScoreBoard] = useState(new ScoreBoardModel());
+export default function useScoreBoardCalculator(update){
+    const [score, setScore] = useState(0);
 
-    const setScore = useCallback((update) => {
-        _setScore(prev => prev += update);
-        setScoreBoard(new ScoreBoardModel({score}));
-    }, []);
+    useEffect(()=>{
+        if(!update?.score) return;
+        setScore((prev)=> prev += update.score);
+    }, [update]);
 
-    return {
-        setScore,
-        getScoreBoard: scoreBoard,
-    };
+    return {score};
 }

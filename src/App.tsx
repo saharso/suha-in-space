@@ -7,7 +7,6 @@ import Protagonist from './components/protagonist/Protagonist';
 import Config from './models/config';
 import EnemiesIndex from './components/enemies/EnemiesIndex';
 import ScoreBoard from './components/scoreBoard/ScoreBoard';
-import useScoreBoardCalculator from './components/scoreBoard/hooks/useScoreBoardCalculator';
 import ScoreBoardModel from './models/scoreBoard';
 
 const config = new Config();
@@ -29,7 +28,7 @@ function App() {
 
                 <EnemiesIndex
                     config={config}
-                    protagonistEl={protagonistEl}
+                    score={config.scoreBoard.score}
                     onEnemyHit={(data)=>{
                         setScoreUpdate(new ScoreBoardModel({score: data.value}));
                     }}

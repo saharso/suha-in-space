@@ -1,9 +1,11 @@
 import overrideClassPropsTool from '../global/tools/overrideClassProps.tool';
+import GlobalConfig from '../global/models/modelGlobalConfig';
 
-export default class ScoreBoardModel {
+export default class ScoreBoardModel extends GlobalConfig {
     lives: number;
     score: number;
     constructor(update?: Partial<ScoreBoardModel>) {
-        overrideClassPropsTool.call(this, update);
+        super();
+        this.update(update);
     }
 }
