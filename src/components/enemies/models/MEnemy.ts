@@ -26,12 +26,26 @@ export default class Enemy extends EnemyConfig {
         this.interval = setInterval(()=>{
             this.generateEnemies(this.enemyWrapper, this.enemyOrigin);
         }, this.firingRate);
-        this.observer = this.observeEnemyBulletRelations();
+        this.observer = this.observe(
+            this.protagonistWrapper,
+            this.enemyWrapper.children,
+            this.onMutation.bind(this),
+        );
     }
 
     public kill(){
         clearInterval(this.interval);
         this.observer.disconnect();
+    }
+
+    private onMutation(mutation, enemyItem){
+        if(this.shouldHitProtagonist(enemyItem)) {
+            this.onProtagonistImpact();
+        }
+
+        if (this.shouldImpactEnemy(mutation.target, enemyItem)) {
+            this.onEnemyImpact(mutation.target, enemyItem);
+        }
     }
 
     private generateEnemies(holder, enemyOrigin) {
@@ -42,7 +56,7 @@ export default class Enemy extends EnemyConfig {
         this.moveDownwards(enemy);
     }
 
-    private observeEnemyBulletRelations(){
+    private observe(watch: HTMLElement, relativeTo: NodeList, callback: Function ){
 
         const config = { attributes: true, childList: true, subtree: true };
 
@@ -51,17 +65,8 @@ export default class Enemy extends EnemyConfig {
             for(const mutation of mutationsList) {
 
                 if (mutation.type === 'attributes') {
-                    const enemies: NodeList = this.enemyWrapper.children;
-                    enemies && Array.from(enemies).forEach((enemyItem: HTMLElement) => {
-
-                        if(this.shouldHitProtagonist(enemyItem)) {
-                            this.onProtagonistImpact();
-                        }
-
-                        if (this.shouldImpactEnemy(mutation.target, enemyItem)) {
-                            this.onEnemyImpact(mutation.target, enemyItem);
-                        }
-
+                    relativeTo && Array.from(relativeTo).forEach((el: HTMLElement) => {
+                        callback(mutation, el);
                     });
 
                 } else break;
@@ -70,7 +75,7 @@ export default class Enemy extends EnemyConfig {
 
         const observer = new MutationObserver(onMutation);
 
-        observer.observe(this.protagonistWrapper, config);
+        observer.observe(watch, config);
 
         return observer;
     }
