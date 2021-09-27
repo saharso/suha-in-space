@@ -41,4 +41,28 @@ export default class ElementsUtil {
 
     }
 
+    static observe(watch: HTMLElement, relativeTo: NodeList, callback: Function ){
+
+        const config = { attributes: true, childList: true, subtree: true };
+
+        const onMutation = (mutationsList) => {
+
+            for(const mutation of mutationsList) {
+
+                if (mutation.type === 'attributes') {
+                    relativeTo && Array.from(relativeTo).forEach((el: HTMLElement) => {
+                        callback(mutation, el);
+                    });
+
+                } else break;
+            }
+        };
+
+        const observer = new MutationObserver(onMutation);
+
+        observer.observe(watch, config);
+
+        return observer;
+    }
+
 }

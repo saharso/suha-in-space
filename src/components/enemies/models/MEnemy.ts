@@ -26,7 +26,7 @@ export default class Enemy extends EnemyConfig {
         this.interval = setInterval(()=>{
             this.generateEnemies(this.enemyWrapper, this.enemyOrigin);
         }, this.firingRate);
-        this.observer = this.observe(
+        this.observer = ElementsUtil.observe(
             this.protagonistWrapper,
             this.enemyWrapper.children,
             this.onMutation.bind(this),
@@ -54,30 +54,6 @@ export default class Enemy extends EnemyConfig {
         this.assignStrengthToEnemy(enemy, this.strength);
         holder.appendChild(enemy);
         this.moveDownwards(enemy);
-    }
-
-    private observe(watch: HTMLElement, relativeTo: NodeList, callback: Function ){
-
-        const config = { attributes: true, childList: true, subtree: true };
-
-        const onMutation = (mutationsList) => {
-
-            for(const mutation of mutationsList) {
-
-                if (mutation.type === 'attributes') {
-                    relativeTo && Array.from(relativeTo).forEach((el: HTMLElement) => {
-                        callback(mutation, el);
-                    });
-
-                } else break;
-            }
-        };
-
-        const observer = new MutationObserver(onMutation);
-
-        observer.observe(watch, config);
-
-        return observer;
     }
 
     private shouldHitProtagonist(enemyItem) {
