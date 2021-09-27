@@ -2,13 +2,12 @@ import React, {useState, useCallback, useEffect} from 'react';
 import ScoreBoardModel from '../../../models/scoreBoard';
 import ScoreBoard from '../ScoreBoard';
 
-export default function useScoreBoardCalculator(update){
+export default function useScoreBoardCalculator(value: number){
     const [score, setScore] = useState(0);
 
     useEffect(()=>{
-        if(!update?.score) return;
-        setScore((prev)=> prev += update.score);
-    }, [update]);
+        setScore((prev)=> prev += value);
+    }, [value]);
 
     return {score};
 }
