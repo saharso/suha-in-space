@@ -16,6 +16,8 @@ function App() {
 
     const [scoreUpdate, setScoreUpdate] = useState<number>(0);
 
+    const [score, setScore] = useState<number>(0);
+
     return (
         <AppContext.Provider value={{protagonistEl}}>
 
@@ -25,11 +27,14 @@ function App() {
 
                 <ScoreBoard
                     scoreIncrement={scoreUpdate}
+                    onScoreBoardUpdate={(updatedScore)=>{
+                        setScore(updatedScore);
+                    }}
                 />
 
                 <EnemiesIndex
                     config={config}
-                    score={config.scoreBoard.score}
+                    score={score}
                     onEnemyHit={(data)=>{
                         setScoreUpdate(0);
                         setScoreUpdate(data.value);
