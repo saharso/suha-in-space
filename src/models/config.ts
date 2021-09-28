@@ -15,12 +15,30 @@ export class ProtagonistConfig extends GlobalConfig {
     }
 }
 
+export class ScriptConfig extends GlobalConfig {
+    [whenScoreEqualsOrLargerThan: number]: EnemyConfig;
+    constructor(override?: Partial<ScriptConfig>){
+        super();
+        this.update(override);
+    }
+}
+
 export default class Config extends GlobalConfig {
     protagonist = new ProtagonistConfig();
     scoreBoard = new ScoreBoardConfig();
     enemies = {
         poopyShmoopy: new EnemyConfig({
             name: 'poopyShmoopy',
+            strength: 1,
+        }),
+        kamikaze: new EnemyConfig({
+            name: 'kamikaze',
         }),
     }
+    script: ScriptConfig[] = [
+        new ScriptConfig({
+            0: this.enemies.poopyShmoopy,
+        })
+    ]
+
 }
