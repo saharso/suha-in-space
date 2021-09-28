@@ -56,10 +56,10 @@ export default class Enemy extends EnemyConfig {
         this.moveDownwards(enemy);
     }
 
-    private shouldHitProtagonist(enemyItem) {
+    private shouldHitProtagonist(enemy) {
         const conditions = [
-            ElementsUtil.isElementsOverlap(ElementsUtil.getProtagonist(), enemyItem),
-            !ElementsUtil.isElementLeaving(enemyItem),
+            ElementsUtil.isElementsOverlap(ElementsUtil.getProtagonist(), enemy),
+            !ElementsUtil.isElementLeaving(enemy),
         ];
 
         return conditions.every(e=>e);
@@ -69,6 +69,7 @@ export default class Enemy extends EnemyConfig {
         const conditions = [
             bullet !== ElementsUtil.getProtagonist(),
             ElementsUtil.isElementsOverlap(bullet, enemy),
+            !ElementsUtil.isElementLeaving(enemy),
         ];
 
         return conditions.every(e=>e);
