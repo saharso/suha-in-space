@@ -1,13 +1,15 @@
-.sis-poopyShmoopy {
+.sis-enemy {
     position: absolute;
+    display: flex;
     width: 3em;
     height: 3em;
-    left: 40%;
-    top: 0;
-    background-color: yellow;
     color: black;
     line-height: 3em;
     text-align: center;
+
+}
+.sis-poopyShmoopy {
+    background-color: yellow;
     &.is-leaving {
         background-color: pink;
     }
