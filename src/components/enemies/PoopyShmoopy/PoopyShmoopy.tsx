@@ -19,7 +19,6 @@ const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({config, onLo
     }, [enemy]);
     
     return <div ref={enemiesHolderRef} className="sis-enemyList sis-poopyShmoopyList">
-        <div className="sis-poopyShmoopy"></div>
     </div>;
 };
 

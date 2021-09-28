@@ -16,7 +16,6 @@ export default function useGenerateEnemies(ref, config: EnemyConfig): Enemy {
 
         const enemy = new Enemy(ref.current, protagonistEl, {
             ...config,
-
         });
 
         setEnemy(enemy);

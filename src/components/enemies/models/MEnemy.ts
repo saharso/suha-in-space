@@ -7,8 +7,7 @@ export default class Enemy extends EnemyConfig {
     speed = 2000;
     private interval;
     private observer;
-    private enemyOrigin;
-    private virtualHolder = document.createElement('div');
+    private enemyModel = document.createElement('div');
     private enemyWrapper;
     private protagonistWrapper;
     private allowProtagonistHit: boolean = true;
@@ -21,10 +20,9 @@ export default class Enemy extends EnemyConfig {
     }
 
     private init() {
-        this.enemyOrigin = this.enemyWrapper.firstChild;
-        this.virtualHolder.appendChild(this.enemyOrigin);
+        this.enemyModel.className = `sis-enemy sis-${this.name}`;
         this.interval = setInterval(()=>{
-            this.generateEnemies(this.enemyWrapper, this.enemyOrigin);
+            this.generateEnemies(this.enemyWrapper, this.enemyModel);
         }, this.firingRate);
         this.observer = ElementsUtil.observe(
             this.protagonistWrapper,
