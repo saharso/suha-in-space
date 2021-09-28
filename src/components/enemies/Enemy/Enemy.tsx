@@ -1,13 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import useGenerateEnemies from '../hooks/useGenerateEnemies';
-import './PoopyShmoopy.scss';
+import './Enemy.scss';
 
-type IPoopyShmoopyProps = {
+type TEnemyProps = {
     config;
     onLoad?: Function;
 }
 
-const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({config, onLoad}) => {
+const Enemy: React.FunctionComponent<TEnemyProps> = ({config, onLoad}) => {
 
     const enemiesHolderRef = useRef(null);
 
@@ -18,8 +18,8 @@ const PoopyShmoopy: React.FunctionComponent<IPoopyShmoopyProps> = ({config, onLo
         onLoad && onLoad(enemy);
     }, [enemy]);
     
-    return <div ref={enemiesHolderRef} className="sis-enemyList sis-poopyShmoopyList">
+    return <div ref={enemiesHolderRef} className={`sis-enemyList sis-${config.name}List`}>
     </div>;
 };
 
-export default PoopyShmoopy;
+export default Enemy;

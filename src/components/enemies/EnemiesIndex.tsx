@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PoopyShmoopy from './PoopyShmoopy/PoopyShmoopy';
+import Enemy from './Enemy/Enemy';
 
 
 type TEnemiesIndexProps = {
@@ -37,7 +37,7 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
     }, [score]);
 
     return <>
-        <PoopyShmoopy
+        <Enemy
             config={config.enemies.poopyShmoopy}
             onLoad={(enemy)=>{setEnemy(enemy);}}
         />
