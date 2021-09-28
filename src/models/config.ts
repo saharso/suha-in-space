@@ -14,14 +14,8 @@ export class ProtagonistConfig extends GlobalConfig {
         this.update(override);
     }
 }
-
-export class ScriptConfig extends GlobalConfig {
-    [whenScoreEqualsOrLargerThan: number]: EnemyConfig;
-    constructor(override?: Partial<ScriptConfig>){
-        super();
-        this.update(override);
-    }
-}
+type enemyShouldAppearOnScoreRange = [number,number]
+export type ScriptMap = Array<[enemyShouldAppearOnScoreRange, EnemyConfig]>;
 
 export default class Config extends GlobalConfig {
     protagonist = new ProtagonistConfig();
@@ -35,10 +29,10 @@ export default class Config extends GlobalConfig {
             name: 'kamikaze',
         }),
     }
-    script: ScriptConfig[] = [
-        new ScriptConfig({
-            0: this.enemies.poopyShmoopy,
-        })
+    script: ScriptMap = [
+        [[0, Infinity], this.enemies.poopyShmoopy],
+        [[300, Infinity], this.enemies.kamikaze],
     ]
+
 
 }
