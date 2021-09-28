@@ -36,6 +36,7 @@ function App() {
                     config={config}
                     score={score}
                     onEnemyHit={(data)=>{
+                        // fire an event although data.value may be the same
                         setScoreUpdate(0);
                         setScoreUpdate(data.value);
                     }}
