@@ -14,3 +14,9 @@
         background-color: pink;
     }
 }
+.sis-kamikaze {
+     background-color: lavender;
+     &.is-leaving {
+         background-color: white;
+     }
+ }
