@@ -18,7 +18,7 @@ const Enemy: React.FunctionComponent<TEnemyProps> = ({config, onLoad}) => {
         onLoad && onLoad(enemy);
     }, [enemy]);
     
-    return <div ref={enemiesHolderRef} className={`sis-enemyList sis-${config.name}List`}>
+    return <div ref={enemiesHolderRef} className={`sis-enemyList sis-${config.name}__list`}>
     </div>;
 };
 
