@@ -20,6 +20,8 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
     const [enemy, setEnemy] = useState(null);
 
+    const [enemyList, setEnemyList] = useState([]);
+
     useEffect(()=>{
         if(!enemy) return;
 
@@ -33,7 +35,12 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
     }, [enemy]);
 
     useEffect(()=>{
+        const _enemyList = [];
+        config.script.filter((item)=>{
+
+        });
         console.log(score);
+        console.log(config.script);
     }, [score]);
 
     return <>

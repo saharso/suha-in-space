@@ -14,7 +14,7 @@ function App() {
     
     const [protagonistEl, setProtagonistEl] = useState(null);
 
-    const [scoreUpdate, setScoreUpdate] = useState<number>(0);
+    const [incrementScoreBy, setIncrementScoreBy] = useState<number>(0);
 
     const [score, setScore] = useState<number>(0);
 
@@ -26,7 +26,7 @@ function App() {
                 <Background/>
 
                 <ScoreBoard
-                    scoreIncrement={scoreUpdate}
+                    scoreIncrement={incrementScoreBy}
                     onScoreBoardUpdate={(updatedScore)=>{
                         setScore(updatedScore);
                     }}
@@ -37,8 +37,8 @@ function App() {
                     score={score}
                     onEnemyHit={(data)=>{
                         // fire an event although data.value may be the same
-                        setScoreUpdate(0);
-                        setScoreUpdate(data.value);
+                        setIncrementScoreBy(0);
+                        setIncrementScoreBy(data.value);
                     }}
                     onProtagonistHit={()=>{
                         console.log('hit');

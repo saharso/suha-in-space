@@ -15,7 +15,8 @@ export class ProtagonistConfig extends GlobalConfig {
     }
 }
 type enemyShouldAppearOnScoreRange = [number,number]
-export type ScriptMap = Array<[enemyShouldAppearOnScoreRange, EnemyConfig]>;
+export type TScene = [enemyShouldAppearOnScoreRange, EnemyConfig];
+export type TScriptMap = Array<TScene>;
 
 export default class Config extends GlobalConfig {
     protagonist = new ProtagonistConfig();
@@ -29,7 +30,7 @@ export default class Config extends GlobalConfig {
             name: 'kamikaze',
         }),
     }
-    script: ScriptMap = [
+    script: TScriptMap = [
         [[0, Infinity], this.enemies.poopyShmoopy],
         [[300, Infinity], this.enemies.kamikaze],
     ]
