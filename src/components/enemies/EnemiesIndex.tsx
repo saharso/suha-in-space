@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Enemy from './Enemy/Enemy';
 import {IScene} from '../../models/config';
 import EnemyConfig from './models/enemies.config';
+import useUpdateEnemyListByScore from './hooks/useUpdateEnemyListByScore';
 
 
 type TEnemiesIndexProps = {
@@ -22,7 +23,7 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
     const [enemy, setEnemy] = useState(null);
 
-    const [enemyList, setEnemyList] = useState<EnemyConfig[]>([]);
+    const enemyList = useUpdateEnemyListByScore(score, config);
 
     useEffect(()=>{
         if(!enemy) return;
@@ -36,18 +37,6 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
     }, [enemy]);
 
-    useEffect(()=>{
-        const _enemyList = config.script.filter((item: IScene)=>{
-            const fromScore = item.scoreRange[0];
-            const toScore = item.scoreRange[1];
-            const isScoreInRange = score >= fromScore && score <= toScore;
-
-            return isScoreInRange;
-        }).map((item: IScene) => item.enemyConfig);
-        console.log(score);
-        console.log(_enemyList);
-        setEnemyList(_enemyList);
-    }, [score]);
 
     return <>
         {enemyList.map((config: EnemyConfig)=>{
