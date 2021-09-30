@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {IScene} from '../../../models/config';
-import EnemyConfig from '../models/enemies.config';
+import EnemyConfig from '../models/MEnemyConfig';
 
 export default function useUpdateEnemyListByScore(score, config){
 

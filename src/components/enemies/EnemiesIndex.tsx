@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Enemy from './Enemy/Enemy';
 import {IScene} from '../../models/config';
-import EnemyConfig from './models/enemies.config';
+import EnemyConfig from './models/MEnemyConfig';
 import useUpdateEnemyListByScore from './hooks/useUpdateEnemyListByScore';
 
 

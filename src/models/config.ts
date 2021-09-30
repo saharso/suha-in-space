@@ -1,5 +1,5 @@
 import overrideClassPropsTool from '../global/tools/overrideClassProps.tool';
-import EnemyConfig from '../components/enemies/models/enemies.config';
+import EnemyConfig from '../components/enemies/models/MEnemyConfig';
 import ScoreBoardConfig from './scoreBoard';
 import GlobalConfig from '../global/models/modelGlobalConfig';
 

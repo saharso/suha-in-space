@@ -1,5 +1,5 @@
 import ElementsUtil from '../../../global/models/modelElementsUtil';
-import EnemyConfig from './enemies.config';
+import EnemyConfig from './MEnemyConfig';
 
 
 export default class Enemy extends EnemyConfig {
