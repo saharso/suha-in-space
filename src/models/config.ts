@@ -24,19 +24,25 @@ export default class Config extends GlobalConfig {
     enemies = {
         poopyShmoopy: new EnemyConfig({
             name: 'poopyShmoopy',
-            strength: 1,
+            strength: 3,
             aim: 'down',
+            speed: 1500,
         }),
         kamikaze: new EnemyConfig({
             name: 'kamikaze',
-            strength: 15,
+            strength: 1,
             aim: 'toProtagonist',
-            timeUntilGoesAway: 2000,
+        }),
+        rainOfTerror: new EnemyConfig({
+            name: 'rainOfTerror',
+            strength: 1,
+            generationRateMs: 150,
         }),
     }
     script: TScriptMap = [
         {scoreRange: [0, Infinity], enemyConfig: this.enemies.poopyShmoopy},
-        {scoreRange: [0, Infinity], enemyConfig: this.enemies.kamikaze},
+        {scoreRange: [500, Infinity], enemyConfig: this.enemies.kamikaze},
+        {scoreRange: [1000, Infinity], enemyConfig: this.enemies.rainOfTerror},
     ]
 
 

@@ -121,7 +121,7 @@ export default class Enemy extends EnemyConfig {
         timeout = setTimeout(()=>{
             ElementsUtil.removeElement(enemy);
             clearTimeout(timeout);
-        }, this.timeUntilGoesAway);
+        }, this.speed);
     }
     private buildBasicEnemy(enemyModel: HTMLElement){
         enemyModel.style.top = '-100px';

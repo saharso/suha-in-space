@@ -6,8 +6,6 @@ export default class EnemyConfig extends GlobalConfig {
 
     name: string;
 
-    timeUntilGoesAway: number = 2000;
-
     speed: number = 1000;
 
     showOnScore: number = 0;
