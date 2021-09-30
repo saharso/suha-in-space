@@ -15,7 +15,7 @@
     border-radius: 50%;
     border: .3em solid lime;
     transform: rotateY(0deg);
-    perspective: 50px;
+    perspective: 0;
     animation-name: threeDRotate;
     animation-duration: 1s;
     animation-iteration-count: infinite;

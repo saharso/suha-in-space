@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Enemy from './enemy/Enemy';
-import {IScene} from '../../../../models/config';
-import EntityConfig from '../../models/MEntityConfig';
+import EnemyConfig from '../../models/MEnemyConfig';
 import useUpdateEnemyListByScore from './hooks/useUpdateEnemyListByScore';
 
 
@@ -39,7 +38,7 @@ const EnemiesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
 
     return <>
-        {enemyList.map((config: EntityConfig)=>{
+        {enemyList.map((config: EnemyConfig)=>{
             return <Enemy
                 key={config.name}
                 config={config}

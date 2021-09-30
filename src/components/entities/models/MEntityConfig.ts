@@ -6,15 +6,11 @@ export default class EntityConfig extends GlobalConfig {
 
     name: string;
 
-    speed: number = 1000;
-
-    showOnScore: number = 0;
-
     generationRateMs: number = 2000;
 
-    strength: number = 3;
+    speed: number = 1000;
 
-    value: number = 100;
+    strength: number = 3;
 
     aim: TAim = 'down';
 
@@ -24,7 +20,6 @@ export default class EntityConfig extends GlobalConfig {
 
     constructor(override?: Partial<EntityConfig>){
         super();
-        this.setOriginal(override);
         this.update(override);
     }
 }

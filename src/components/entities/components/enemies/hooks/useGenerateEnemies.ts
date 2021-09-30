@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 import AppContext from '../../../../../models/context';
-import EntityConfig from '../../../models/MEntityConfig';
+import EnemyConfig from '../../../models/MEnemyConfig';
 import Entity from '../../../models/MEntity';
 
 
-export default function useGenerateEnemies(ref, config: EntityConfig): Entity {
+export default function useGenerateEnemies(ref, config: EnemyConfig): Entity {
     const appContext = useContext(AppContext);
 
     const [enemy, setEnemy] = useState<Entity>(null);

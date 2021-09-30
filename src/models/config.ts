@@ -1,3 +1,4 @@
+import EnemyConfig from '../components/entities/models/MEnemyConfig';
 import EntityConfig from '../components/entities/models/MEntityConfig';
 import ScoreBoardConfig from './scoreBoard';
 import GlobalConfig from '../global/models/modelGlobalConfig';
@@ -14,25 +15,25 @@ export class ProtagonistConfig extends GlobalConfig {
     }
 }
 type enemyShouldAppearOnScoreRange = [number,number]
-export interface IScene {scoreRange: enemyShouldAppearOnScoreRange, enemyConfig: EntityConfig};
+export interface IScene {scoreRange: enemyShouldAppearOnScoreRange, enemyConfig: EnemyConfig};
 export type TScriptMap = Array<IScene>;
 
 export default class Config extends GlobalConfig {
     protagonist = new ProtagonistConfig();
     scoreBoard = new ScoreBoardConfig();
     enemies = {
-        poopyShmoopy: new EntityConfig({
+        poopyShmoopy: new EnemyConfig({
             name: 'poopyShmoopy',
             strength: 3,
             aim: 'down',
             speed: 1500,
         }),
-        kamikaze: new EntityConfig({
+        kamikaze: new EnemyConfig({
             name: 'kamikaze',
             strength: 1,
             aim: 'toProtagonist',
         }),
-        rainOfTerror: new EntityConfig({
+        rainOfTerror: new EnemyConfig({
             name: 'rainOfTerror',
             strength: 1,
             generationRateMs: 150,
@@ -41,7 +42,10 @@ export default class Config extends GlobalConfig {
     prizes = {
         addLive: new EntityConfig({
             name: 'addLive',
-        })
+        }),
+        rapidFire: new EntityConfig({
+            name: 'rapidFire',
+        }),
     }
     script: TScriptMap = [
         {scoreRange: [0, Infinity], enemyConfig: this.enemies.poopyShmoopy},
