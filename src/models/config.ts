@@ -39,6 +39,11 @@ export default class Config extends GlobalConfig {
             generationRateMs: 150,
         }),
     }
+    prizes = {
+        addLive: new EntityConfig({
+            name: 'addLive',
+        })
+    }
     script: TScriptMap = [
         {scoreRange: [0, Infinity], enemyConfig: this.enemies.poopyShmoopy},
         {scoreRange: [500, Infinity], enemyConfig: this.enemies.kamikaze},
