@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
+import Prize from './prize/Prize';
 // import useUpdateEnemyListByScore from './hooks/useUpdateEnemyListByScore';
 
-
 type TEnemiesIndexProps = {
-    config: any;
-    score: number;
+    config;
     onProtagonistHit: Function;
-    onEnemyHit: Function;
 };
 
 const PrizesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
     {
         config,
-        score,
         onProtagonistHit,
-        onEnemyHit,
     }
 ) => {
 
@@ -34,7 +30,7 @@ const PrizesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
     return <>
 
-
+        <Prize config={config.prizes.addLive} />
     </>;
 };
 

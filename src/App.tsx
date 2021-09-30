@@ -7,6 +7,7 @@ import Protagonist from './components/protagonist/Protagonist';
 import Config from './models/config';
 import EnemiesIndex from './components/entities/components/enemies/EnemiesIndex';
 import ScoreBoard from './components/scoreBoard/ScoreBoard';
+import PrizesIndex from './components/entities/components/prizes/PrizesIndex';
 
 const config = new Config();
 
@@ -42,6 +43,13 @@ function App() {
                     }}
                     onProtagonistHit={()=>{
                         console.log('hit');
+                    }}
+                />
+
+                <PrizesIndex
+                    config={config}
+                    onProtagonistHit={()=>{
+                        console.log('score hit');
                     }}
                 />
 

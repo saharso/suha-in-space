@@ -42,6 +42,7 @@ export default class BulletModel extends BulletConfig {
 
         const moveBulletUpwards = () => {
             newBullet && requestAnimationFrame(()=>{
+                if(!newBullet) return;
                 newBullet.style.top = `-${newBullet.offsetHeight}px`;
             });
         };
