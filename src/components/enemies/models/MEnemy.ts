@@ -1,5 +1,6 @@
 import ElementsUtil from '../../../global/models/modelElementsUtil';
 import EnemyConfig, {TAim} from './MEnemyConfig';
+import EnemyMovement from './MenemyMovement';
 
 
 export default class Enemy extends EnemyConfig {
@@ -49,7 +50,7 @@ export default class Enemy extends EnemyConfig {
         this.buildBasicEnemy(enemy);
         this.assignStrengthToEnemy(enemy, this.strength);
         holder.appendChild(enemy);
-        this.moveEnmy(enemy);
+        new EnemyMovement(this, enemy);
     }
 
     private shouldHitProtagonist(enemy) {
@@ -90,39 +91,6 @@ export default class Enemy extends EnemyConfig {
         this.allowProtagonistHit = false;
     }
 
-    private moveEnmy(enemy){
-        type Aim = { [key in TAim]: any; };
-
-        const aimIndex: Aim = {
-            down: ()=>this.moveDownwards(enemy),
-            toProtagonist: ()=>this.moveToProtagonist(enemy)
-        };
-        return aimIndex[this.aim]();
-    }
-
-    private moveDownwards(enemy){
-        requestAnimationFrame(()=>{
-            enemy.style.top = '100%';
-        });
-        this.removeEnemy(enemy);
-    }
-
-    private moveToProtagonist(enemy){
-        const protagonistRect = ElementsUtil.getProtagonist().getBoundingClientRect();
-        requestAnimationFrame(()=>{
-            enemy.style.top = '100%';
-            enemy.style.left = protagonistRect.left + 'px';
-        });
-        this.removeEnemy(enemy);
-    }
-
-    private removeEnemy(enemy){
-        let timeout;
-        timeout = setTimeout(()=>{
-            ElementsUtil.removeElement(enemy);
-            clearTimeout(timeout);
-        }, this.speed);
-    }
     private buildBasicEnemy(enemyModel: HTMLElement){
         enemyModel.style.top = '-100px';
         enemyModel.style.transition = `top ${this.speed}ms linear, left ${this.speed}ms linear`;
