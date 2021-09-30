@@ -1,13 +1,13 @@
 import ElementsUtil from '../../../global/models/modelElementsUtil';
-import EnemyConfig from './MEnemyConfig';
+import EntityConfig from './MEntityConfig';
 
-export default class EnemyBuilderUtil {
+export default class EntityBuilderUtil {
 
-    static buildBasicEnemy(config: EnemyConfig, enemy: HTMLElement){
+    static buildBasicEnemy(config: EntityConfig, enemy: HTMLElement){
         enemy.style.top = '-100px';
         enemy.style.transition = `top ${config.speed}ms linear, left ${config.speed}ms linear`;
         enemy.style.left = ElementsUtil.getRandomScreenXAxisPoint() + 'px';
-        EnemyBuilderUtil.assignStrengthToEnemy(enemy, config.strength);
+        EntityBuilderUtil.assignStrengthToEnemy(enemy, config.strength);
         return enemy;
     }
 

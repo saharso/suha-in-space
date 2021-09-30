@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
-import {IScene} from '../../../models/config';
-import EnemyConfig from '../models/MEnemyConfig';
+import {IScene} from '../../../../../models/config';
+import EntityConfig from '../../../models/MEntityConfig';
 
 export default function useUpdateEnemyListByScore(score, config){
 
-    const [enemyList, setEnemyList] = useState<EnemyConfig[]>([]);
+    const [enemyList, setEnemyList] = useState<EntityConfig[]>([]);
 
     function shouldEnemyAppear(item: IScene): boolean {
         const fromScore = item.scoreRange[0];
@@ -17,7 +17,7 @@ export default function useUpdateEnemyListByScore(score, config){
     useEffect(()=>{
         const _enemyList = config.script
             .filter(shouldEnemyAppear)
-            .map((item: IScene): EnemyConfig => item.enemyConfig);
+            .map((item: IScene): EntityConfig => item.enemyConfig);
 
         setEnemyList(_enemyList);
     }, [score]);

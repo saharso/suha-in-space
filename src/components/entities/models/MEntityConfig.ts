@@ -2,7 +2,7 @@ import GlobalConfig from '../../../global/models/modelGlobalConfig';
 
 export type TAim = 'down' | 'toProtagonist';
 
-export default class EnemyConfig extends GlobalConfig {
+export default class EntityConfig extends GlobalConfig {
 
     name: string;
 
@@ -22,7 +22,7 @@ export default class EnemyConfig extends GlobalConfig {
 
     onEnemyHit: Function = ()=>{}
 
-    constructor(override?: Partial<EnemyConfig>){
+    constructor(override?: Partial<EntityConfig>){
         super();
         this.setOriginal(override);
         this.update(override);

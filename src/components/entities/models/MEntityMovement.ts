@@ -1,8 +1,8 @@
-import EnemyConfig, {TAim} from './MEnemyConfig';
+import EntityConfig, {TAim} from './MEntityConfig';
 import ElementsUtil from '../../../global/models/modelElementsUtil';
 
-export default class EnemyMovement extends EnemyConfig {
-    constructor(config: EnemyConfig, enemy: HTMLElement) {
+export default class EntityMovement extends EntityConfig {
+    constructor(config: EntityConfig, enemy: HTMLElement) {
         super();
         this.update(config);
         this.moveEnmy(enemy);

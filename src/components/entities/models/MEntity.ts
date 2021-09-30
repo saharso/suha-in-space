@@ -1,10 +1,10 @@
 import ElementsUtil from '../../../global/models/modelElementsUtil';
-import EnemyConfig, {TAim} from './MEnemyConfig';
-import EnemyMovement from './MenemyMovement';
-import EnemyBuilderUtil from './MEnemyBuilderUtil';
+import EntityConfig, {TAim} from './MEntityConfig';
+import EntityMovement from './MEntityMovement';
+import EntityBuilderUtil from './MEntityBuilderUtil';
 
 
-export default class Enemy extends EnemyConfig {
+export default class Entity extends EntityConfig {
     private interval;
     private observer;
     private enemyModel = document.createElement('div');
@@ -12,7 +12,7 @@ export default class Enemy extends EnemyConfig {
     private protagonistWrapper;
     private allowProtagonistHit: boolean = true;
 
-    constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EnemyConfig>) {
+    constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EntityConfig>) {
         super(config);
         this.enemyWrapper = enemyWrapper;
         this.protagonistWrapper = protagonistEl;
@@ -50,9 +50,9 @@ export default class Enemy extends EnemyConfig {
 
     private generateEnemies(holder, enemyOrigin) {
         const enemyClone = <HTMLElement>enemyOrigin.cloneNode(true);
-        const enemy = EnemyBuilderUtil.buildBasicEnemy(this, enemyClone);
+        const enemy = EntityBuilderUtil.buildBasicEnemy(this, enemyClone);
         holder.appendChild(enemy);
-        new EnemyMovement(this, enemy);
+        new EntityMovement(this, enemy);
     }
 
     private shouldHitProtagonist(enemy) {
@@ -77,8 +77,8 @@ export default class Enemy extends EnemyConfig {
     private onEnemyImpact(bullet: HTMLElement, enemy: HTMLElement) {
         ElementsUtil.removeElement(bullet);
 
-        EnemyBuilderUtil.assignStrengthToEnemy(enemy, EnemyBuilderUtil.getEnemyStrength(enemy) -1);
-        if(EnemyBuilderUtil.getEnemyStrength(enemy) <= 0) {
+        EntityBuilderUtil.assignStrengthToEnemy(enemy, EntityBuilderUtil.getEnemyStrength(enemy) -1);
+        if(EntityBuilderUtil.getEnemyStrength(enemy) <= 0) {
             ElementsUtil.removeElement(enemy, 500);
             this.onEnemyHit();
         }

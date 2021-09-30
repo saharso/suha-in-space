@@ -1,5 +1,5 @@
 import overrideClassPropsTool from '../global/tools/overrideClassProps.tool';
-import EnemyConfig from '../components/enemies/models/MEnemyConfig';
+import EntityConfig from '../components/entities/models/MEntityConfig';
 import ScoreBoardConfig from './scoreBoard';
 import GlobalConfig from '../global/models/modelGlobalConfig';
 
@@ -15,25 +15,25 @@ export class ProtagonistConfig extends GlobalConfig {
     }
 }
 type enemyShouldAppearOnScoreRange = [number,number]
-export interface IScene {scoreRange: enemyShouldAppearOnScoreRange, enemyConfig: EnemyConfig};
+export interface IScene {scoreRange: enemyShouldAppearOnScoreRange, enemyConfig: EntityConfig};
 export type TScriptMap = Array<IScene>;
 
 export default class Config extends GlobalConfig {
     protagonist = new ProtagonistConfig();
     scoreBoard = new ScoreBoardConfig();
     enemies = {
-        poopyShmoopy: new EnemyConfig({
+        poopyShmoopy: new EntityConfig({
             name: 'poopyShmoopy',
             strength: 3,
             aim: 'down',
             speed: 1500,
         }),
-        kamikaze: new EnemyConfig({
+        kamikaze: new EntityConfig({
             name: 'kamikaze',
             strength: 1,
             aim: 'toProtagonist',
         }),
-        rainOfTerror: new EnemyConfig({
+        rainOfTerror: new EntityConfig({
             name: 'rainOfTerror',
             strength: 1,
             generationRateMs: 150,

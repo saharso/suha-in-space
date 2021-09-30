@@ -5,7 +5,7 @@ import ConstantsEnum from './global/consts/constants.enum';
 import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
 import Config from './models/config';
-import EnemiesIndex from './components/enemies/EnemiesIndex';
+import EnemiesIndex from './components/entities/components/enemies/EnemiesIndex';
 import ScoreBoard from './components/scoreBoard/ScoreBoard';
 
 const config = new Config();
