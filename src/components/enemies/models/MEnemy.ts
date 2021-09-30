@@ -1,6 +1,7 @@
 import ElementsUtil from '../../../global/models/modelElementsUtil';
 import EnemyConfig, {TAim} from './MEnemyConfig';
 import EnemyMovement from './MenemyMovement';
+import EnemyBuilderUtil from './MEnemyBuilderUtil';
 
 
 export default class Enemy extends EnemyConfig {
@@ -47,8 +48,8 @@ export default class Enemy extends EnemyConfig {
 
     private generateEnemies(holder, enemyOrigin) {
         const enemy = <HTMLElement>enemyOrigin.cloneNode(true);
-        this.buildBasicEnemy(enemy);
-        this.assignStrengthToEnemy(enemy, this.strength);
+        EnemyBuilderUtil.buildBasicEnemy(enemy, this.speed);
+        EnemyBuilderUtil.assignStrengthToEnemy(enemy, this.strength);
         holder.appendChild(enemy);
         new EnemyMovement(this, enemy);
     }
@@ -75,8 +76,8 @@ export default class Enemy extends EnemyConfig {
     private onEnemyImpact(bullet: HTMLElement, enemy: HTMLElement) {
         ElementsUtil.removeElement(bullet);
 
-        this.assignStrengthToEnemy(enemy, this.getEnemhyStrength(enemy) -1);
-        if(this.getEnemhyStrength(enemy) <= 0) {
+        EnemyBuilderUtil.assignStrengthToEnemy(enemy, EnemyBuilderUtil.getEnemyStrength(enemy) -1);
+        if(EnemyBuilderUtil.getEnemyStrength(enemy) <= 0) {
             ElementsUtil.removeElement(enemy, 500);
             this.onEnemyHit();
         }
@@ -91,18 +92,4 @@ export default class Enemy extends EnemyConfig {
         this.allowProtagonistHit = false;
     }
 
-    private buildBasicEnemy(enemyModel: HTMLElement){
-        enemyModel.style.top = '-100px';
-        enemyModel.style.transition = `top ${this.speed}ms linear, left ${this.speed}ms linear`;
-        enemyModel.style.left = ElementsUtil.getRandomScreenXAxisPoint() + 'px';
-        return enemyModel;
-    }
-
-    private assignStrengthToEnemy(enemyModel: HTMLElement, value: number) {
-        enemyModel.setAttribute('data-strength', '' + value);
-    }
-
-    private getEnemhyStrength(el: HTMLElement): number {
-        return + el.getAttribute('data-strength');
-    }
 }
