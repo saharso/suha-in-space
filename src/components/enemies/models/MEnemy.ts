@@ -21,9 +21,11 @@ export default class Enemy extends EnemyConfig {
 
     private init() {
         this.enemyModel.className = `sis-enemy sis-${this.name}`;
+
         this.interval = setInterval(()=>{
             this.generateEnemies(this.enemyWrapper, this.enemyModel);
         }, this.generationRateMs);
+
         this.observer = ElementsUtil.observe(
             this.protagonistWrapper,
             this.enemyWrapper.children,
@@ -47,9 +49,8 @@ export default class Enemy extends EnemyConfig {
     }
 
     private generateEnemies(holder, enemyOrigin) {
-        const enemy = <HTMLElement>enemyOrigin.cloneNode(true);
-        EnemyBuilderUtil.buildBasicEnemy(enemy, this.speed);
-        EnemyBuilderUtil.assignStrengthToEnemy(enemy, this.strength);
+        const enemyClone = <HTMLElement>enemyOrigin.cloneNode(true);
+        const enemy = EnemyBuilderUtil.buildBasicEnemy(this, enemyClone);
         holder.appendChild(enemy);
         new EnemyMovement(this, enemy);
     }
