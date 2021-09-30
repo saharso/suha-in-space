@@ -1,10 +1,14 @@
 import GlobalConfig from '../../../global/models/modelGlobalConfig';
 
+export type TAim = 'down' | 'toProtagonist';
+
 export default class EnemyConfig extends GlobalConfig {
 
     name: string;
 
-    timeUntilGoesAway: number = 1000;
+    timeUntilGoesAway: number = 2000;
+
+    speed: number = 1000;
 
     showOnScore: number = 0;
 
@@ -13,6 +17,8 @@ export default class EnemyConfig extends GlobalConfig {
     strength: number = 3;
 
     value: number = 100;
+
+    aim: TAim = 'down';
 
     onProtagonistHit: Function = ()=>{}
 

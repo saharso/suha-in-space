@@ -1,10 +1,8 @@
 import ElementsUtil from '../../../global/models/modelElementsUtil';
-import EnemyConfig from './MEnemyConfig';
+import EnemyConfig, {TAim} from './MEnemyConfig';
 
 
 export default class Enemy extends EnemyConfig {
-    firingRate = 1000;
-    speed = 2000;
     private interval;
     private observer;
     private enemyModel = document.createElement('div');
@@ -23,7 +21,7 @@ export default class Enemy extends EnemyConfig {
         this.enemyModel.className = `sis-enemy sis-${this.name}`;
         this.interval = setInterval(()=>{
             this.generateEnemies(this.enemyWrapper, this.enemyModel);
-        }, this.firingRate);
+        }, this.generationRateMs);
         this.observer = ElementsUtil.observe(
             this.protagonistWrapper,
             this.enemyWrapper.children,
@@ -48,10 +46,10 @@ export default class Enemy extends EnemyConfig {
 
     private generateEnemies(holder, enemyOrigin) {
         const enemy = <HTMLElement>enemyOrigin.cloneNode(true);
-        this.buildBasicEnemy(enemy, this.speed);
+        this.buildBasicEnemy(enemy);
         this.assignStrengthToEnemy(enemy, this.strength);
         holder.appendChild(enemy);
-        this.moveDownwards(enemy);
+        this.moveEnmy(enemy);
     }
 
     private shouldHitProtagonist(enemy) {
@@ -92,21 +90,42 @@ export default class Enemy extends EnemyConfig {
         this.allowProtagonistHit = false;
     }
 
+    private moveEnmy(enemy){
+        type Aim = { [key in TAim]: any; };
+
+        const aimIndex: Aim = {
+            down: ()=>this.moveDownwards(enemy),
+            toProtagonist: ()=>this.moveToProtagonist(enemy)
+        };
+        return aimIndex[this.aim]();
+    }
+
     private moveDownwards(enemy){
         requestAnimationFrame(()=>{
             enemy.style.top = '100%';
         });
+        this.removeEnemy(enemy);
+    }
+
+    private moveToProtagonist(enemy){
+        const protagonistRect = ElementsUtil.getProtagonist().getBoundingClientRect();
+        requestAnimationFrame(()=>{
+            enemy.style.top = '100%';
+            enemy.style.left = protagonistRect.left + 'px';
+        });
+        this.removeEnemy(enemy);
+    }
+
+    private removeEnemy(enemy){
         let timeout;
         timeout = setTimeout(()=>{
             ElementsUtil.removeElement(enemy);
             clearTimeout(timeout);
-            this.revert('strength');
-        }, this.speed);
+        }, this.timeUntilGoesAway);
     }
-
-    private buildBasicEnemy(enemyModel: HTMLElement, leaveAfterMs){
+    private buildBasicEnemy(enemyModel: HTMLElement){
         enemyModel.style.top = '-100px';
-        enemyModel.style.transition = `top ${leaveAfterMs}ms linear`;
+        enemyModel.style.transition = `top ${this.speed}ms linear, left ${this.speed}ms linear`;
         enemyModel.style.left = ElementsUtil.getRandomScreenXAxisPoint() + 'px';
         return enemyModel;
     }
