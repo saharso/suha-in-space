@@ -1,4 +1,3 @@
-import overrideClassPropsTool from '../global/tools/overrideClassProps.tool';
 import EntityConfig from '../components/entities/models/MEntityConfig';
 import ScoreBoardConfig from './scoreBoard';
 import GlobalConfig from '../global/models/modelGlobalConfig';
