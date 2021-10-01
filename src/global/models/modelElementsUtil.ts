@@ -6,6 +6,10 @@ export default class ElementsUtil {
         return document.getElementById(ConstantsEnum.PROTAGONIST_ID);
     }
 
+    static getProtagonistWrapper(){
+        return document.getElementById(ConstantsEnum.PROTAGONIST_WRAPPER);
+    }
+
     static isElementsOverlap(el1: HTMLElement, el2: HTMLElement): boolean {
         const rect1 = el1.getBoundingClientRect();
         const rect2 = el2.getBoundingClientRect();

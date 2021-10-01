@@ -25,7 +25,7 @@ const Protagonist: React.FunctionComponent<IProtagonistProps> = ({onProtagonistL
 
     return <>
         <ProtagonistContext.Provider value={config}>
-            <div className="sis-protagonistWrapper" ref={protagonistWrapperRef}>
+            <div id={ConstantsEnum.PROTAGONIST_WRAPPER} className="sis-protagonistWrapper" ref={protagonistWrapperRef}>
                 <DefaultBullets
                     coordinates={coordinates}
                 />

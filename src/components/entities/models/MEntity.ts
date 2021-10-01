@@ -8,27 +8,25 @@ export default class Entity extends EntityConfig {
     private interval;
     private observer;
     private enemyModel = document.createElement('div');
-    private enemyWrapper;
-    private protagonistWrapper;
+    private wrapper;
     private allowProtagonistHit: boolean = true;
 
-    constructor(enemyWrapper: HTMLElement, protagonistEl: HTMLElement, config?: Partial<EntityConfig>) {
+    constructor(wrapper: HTMLElement, config?: Partial<EntityConfig>) {
         super(config);
-        this.enemyWrapper = enemyWrapper;
-        this.protagonistWrapper = protagonistEl;
+        this.wrapper = wrapper;
         this.init();
     }
 
     private init() {
-        this.enemyModel.className = `sis-enemy sis-${this.name}`;
+        this.enemyModel.className = `sis-${this.type} sis-${this.type}--${this.name}`;
 
         this.interval = setInterval(()=>{
-            this.generateEnemies(this.enemyWrapper, this.enemyModel);
+            this.generateEnemies(this.wrapper, this.enemyModel);
         }, this.generationRateMs);
 
         this.observer = ElementsUtil.observe(
-            this.protagonistWrapper,
-            this.enemyWrapper.children,
+            ElementsUtil.getProtagonistWrapper(),
+            this.wrapper.children,
             this.onMutation.bind(this),
         );
     }

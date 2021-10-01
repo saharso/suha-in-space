@@ -12,9 +12,7 @@ export default function useGenerateEnemies(ref, config: EnemyConfig): Entity {
     useEffect(()=>{
         if(!(ref.current && appContext.protagonistEl)) return;
 
-        const protagonistEl = appContext.protagonistEl;
-
-        const enemy = new Entity(ref.current, protagonistEl, {
+        const enemy = new Entity(ref.current, {
             ...config,
         });
 

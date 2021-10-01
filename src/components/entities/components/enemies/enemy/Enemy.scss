@@ -8,13 +8,13 @@
     text-align: center;
 
 }
-.sis-poopyShmoopy {
+.sis-enemy--poopyShmoopy {
     background-color: yellow;
     &.is-leaving {
         background-color: pink;
     }
 }
-.sis-kamikaze {
+.sis-enemy--kamikaze {
      background-color: lavender;
      &.is-leaving {
          background-color: white;
@@ -22,7 +22,7 @@
      }
  }
 
-.sis-rainOfTerror {
+.sis-enemy--rainOfTerror {
   background-color: cyan;
   &.is-leaving {
     background-color: cornflowerblue;

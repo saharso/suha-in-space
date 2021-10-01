@@ -11,5 +11,6 @@ export default class EnemyConfig extends EntityConfig {
     constructor(override?: Partial<EnemyConfig>){
         super();
         this.update(override);
+        this.type = 'enemy';
     }
 }

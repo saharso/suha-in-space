@@ -2,6 +2,8 @@ import GlobalConfig from '../../../global/models/modelGlobalConfig';
 
 export type TAim = 'down' | 'toProtagonist';
 
+export type TType = 'enemy' | 'prize';
+
 export default class EntityConfig extends GlobalConfig {
 
     name: string;
@@ -13,6 +15,8 @@ export default class EntityConfig extends GlobalConfig {
     strength: number = 3;
 
     aim: TAim = 'down';
+
+    type: TType;
 
     onProtagonistHit: Function = ()=>{}
 

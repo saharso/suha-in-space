@@ -2,6 +2,7 @@ import EnemyConfig from '../components/entities/models/MEnemyConfig';
 import EntityConfig from '../components/entities/models/MEntityConfig';
 import ScoreBoardConfig from './scoreBoard';
 import GlobalConfig from '../global/models/modelGlobalConfig';
+import PrizeConfig from '../components/entities/models/MPrizeConfig';
 
 export class ProtagonistConfig extends GlobalConfig {
 
@@ -39,19 +40,20 @@ export default class Config extends GlobalConfig {
             generationRateMs: 150,
         }),
     }
-    prizes = {
-        addLive: new EntityConfig({
+    prizes = [
+        new PrizeConfig({
             name: 'addLive',
+            content: '+',
         }),
-        rapidFire: new EntityConfig({
+        new PrizeConfig({
             name: 'rapidFire',
+            content: 'R',
         }),
-    }
+    ]
     script: TScriptMap = [
         {scoreRange: [0, Infinity], enemyConfig: this.enemies.poopyShmoopy},
         {scoreRange: [500, Infinity], enemyConfig: this.enemies.kamikaze},
         {scoreRange: [1000, Infinity], enemyConfig: this.enemies.rainOfTerror},
     ]
-
 
 }
