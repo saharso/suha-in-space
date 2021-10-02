@@ -18,6 +18,8 @@ export default class EntityConfig extends GlobalConfig {
 
     type: TType;
 
+    content?: string;
+
     onProtagonistHit: Function = ()=>{}
 
     onEnemyHit: Function = ()=>{}

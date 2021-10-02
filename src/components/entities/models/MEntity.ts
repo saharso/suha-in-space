@@ -18,11 +18,9 @@ export default class Entity extends EntityConfig {
     }
 
     private init() {
-        this.enemyModel.className = `sis-${this.type} sis-${this.type}--${this.name}`;
+        this.enemyModel.className = `sis-entity sis-${this.type} sis-${this.type}--${this.name}`;
 
-        this.interval = setInterval(()=>{
-            this.generateEnemies(this.wrapper, this.enemyModel);
-        }, this.generationRateMs);
+        this.generateEntities();
 
         this.observer = ElementsUtil.observe(
             ElementsUtil.getProtagonistWrapper(),
@@ -36,6 +34,17 @@ export default class Entity extends EntityConfig {
         this.observer.disconnect();
     }
 
+    private generateEntities() {
+        if(this.generationRateMs){
+            this.interval = setInterval(()=>{
+                this.generateSingleEntity(this.wrapper, this.enemyModel);
+            }, this.generationRateMs);
+        } else {
+            this.generateSingleEntity(this.wrapper, this.enemyModel);
+        }
+
+    }
+
     private onMutation(mutation, enemyItem){
         if(this.shouldHitProtagonist(enemyItem)) {
             this.onProtagonistImpact();
@@ -46,7 +55,7 @@ export default class Entity extends EntityConfig {
         }
     }
 
-    private generateEnemies(holder, enemyOrigin) {
+    private generateSingleEntity(holder, enemyOrigin) {
         const enemyClone = <HTMLElement>enemyOrigin.cloneNode(true);
         const enemy = EntityBuilderUtil.buildBasicEnemy(this, enemyClone);
         holder.appendChild(enemy);
@@ -85,6 +94,7 @@ export default class Entity extends EntityConfig {
     private onProtagonistImpact(){
         if(this.allowProtagonistHit) {
             this.onProtagonistHit();
+            console.log('foo');
             setTimeout(()=>{this.allowProtagonistHit = true;}, 700);
         }
 

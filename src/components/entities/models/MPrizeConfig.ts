@@ -6,5 +6,6 @@ export default class PrizeConfig extends EntityConfig {
         super();
         this.update(config);
         this.type = 'prize';
+        this.generationRateMs = null;
     }
 }

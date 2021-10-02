@@ -1,14 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import Prize from './prize/Prize';
 import useGeneratePrizes from './hooks/useGeneratePrizes';
-// import useUpdateEnemyListByScore from './hooks/useUpdateEnemyListByScore';
+import './Prizes.scss';
 
 type TEnemiesIndexProps = {
     config;
     onProtagonistHit: Function;
 };
 
-const PrizesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
+const Prizes: React.FunctionComponent<TEnemiesIndexProps> = (
     {
         config,
         onProtagonistHit,
@@ -19,7 +18,7 @@ const PrizesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
     const prizeListRef = useRef(null);
 
-    const prizes = useGeneratePrizes(prizeListRef, config.prizes);
+    const prizes = useGeneratePrizes(prizeListRef.current, config.prizes);
 
     useEffect(()=>{
         if(!prize) return;
@@ -33,8 +32,7 @@ const PrizesIndex: React.FunctionComponent<TEnemiesIndexProps> = (
 
     return <div ref={prizeListRef} className="sis-prizeList">
 
-        <Prize config={config.prizes[0]} />
     </div>;
 };
 
-export default PrizesIndex;
+export default Prizes;
