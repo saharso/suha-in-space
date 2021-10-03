@@ -1,8 +1,8 @@
-import ElementsUtil from '../../../global/models/modelElementsUtil';
+import ElementsUtil from '../../../global/models/MElementsUtil';
 import EntityConfig, {TAim} from './MEntityConfig';
 import EntityMovement from './MEntityMovement';
 import EntityBuilderUtil from './MEntityBuilderUtil';
-
+import intervalWorker from '../../../global/workers/intervalWorker';
 
 export default class Entity extends EntityConfig {
     private interval;
@@ -10,6 +10,7 @@ export default class Entity extends EntityConfig {
     private enemyModel = document.createElement('div');
     private wrapper;
     private allowProtagonistHit: boolean = true;
+    private intervalWorker
 
     constructor(wrapper: HTMLElement, config?: Partial<EntityConfig>) {
         super(config);
@@ -19,9 +20,18 @@ export default class Entity extends EntityConfig {
 
     private init() {
         this.enemyModel.className = `sis-entity sis-${this.type} sis-${this.type}--${this.name}`;
-
+        this.initIntervalWorker();
         this.generateEntities();
+        this.initObserver();
+    }
 
+    private initIntervalWorker(){
+        if(!this.generationRateMs) return;
+        this.intervalWorker = new Worker(intervalWorker);
+        this.intervalWorker.postMessage(this.generationRateMs);
+    }
+
+    private initObserver(){
         this.observer = ElementsUtil.observe(
             ElementsUtil.getProtagonistWrapper(),
             this.wrapper.children,
@@ -36,9 +46,10 @@ export default class Entity extends EntityConfig {
 
     private generateEntities() {
         if(this.generationRateMs){
-            this.interval = setInterval(()=>{
+            this.intervalWorker.onmessage =()=>{
+                console.log('hi');
                 this.generateSingleEntity(this.wrapper, this.enemyModel);
-            }, this.generationRateMs);
+            };
         } else {
             this.generateSingleEntity(this.wrapper, this.enemyModel);
         }

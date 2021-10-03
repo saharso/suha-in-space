@@ -1,7 +1,7 @@
 import EnemyConfig from '../components/entities/models/MEnemyConfig';
 import EntityConfig from '../components/entities/models/MEntityConfig';
 import ScoreBoardConfig from './scoreBoard';
-import GlobalConfig from '../global/models/modelGlobalConfig';
+import GlobalConfig from '../global/models/MGlobalConfig';
 import PrizeConfig from '../components/entities/models/MPrizeConfig';
 
 export class ProtagonistConfig extends GlobalConfig {

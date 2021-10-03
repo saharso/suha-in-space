@@ -1,4 +1,4 @@
-import ElementsUtil from '../../../global/models/modelElementsUtil';
+import ElementsUtil from '../../../global/models/MElementsUtil';
 import EntityConfig from './MEntityConfig';
 
 export default class EntityBuilderUtil {

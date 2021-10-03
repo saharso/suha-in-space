@@ -1,4 +1,4 @@
-import GlobalConfig from '../../../global/models/modelGlobalConfig';
+import GlobalConfig from '../../../global/models/MGlobalConfig';
 
 export type TAim = 'down' | 'toProtagonist';
 

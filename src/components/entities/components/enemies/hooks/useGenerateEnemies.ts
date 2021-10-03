@@ -10,7 +10,8 @@ export default function useGenerateEnemies(ref, config: EnemyConfig): Entity {
     const [enemy, setEnemy] = useState<Entity>(null);
     
     useEffect(()=>{
-        if(!(ref.current && appContext.protagonistEl)) return;
+        if(!ref.current) return;
+        console.log(ref.current);
 
         const enemy = new Entity(ref.current, {
             ...config,
@@ -24,7 +25,7 @@ export default function useGenerateEnemies(ref, config: EnemyConfig): Entity {
             
         };        
 
-    }, [ref.current, appContext.protagonistEl]);
+    }, [ref]);
 
     return enemy;
 

@@ -1,5 +1,5 @@
 import EntityConfig, {TAim} from './MEntityConfig';
-import ElementsUtil from '../../../global/models/modelElementsUtil';
+import ElementsUtil from '../../../global/models/MElementsUtil';
 
 export default class EntityMovement extends EntityConfig {
     constructor(config: EntityConfig, enemy: HTMLElement) {
