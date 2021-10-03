@@ -41,8 +41,8 @@ export default class Entity extends EntityConfig {
             }, this.generationRateMs);
         } else {
             this.generateSingleEntity(this.wrapper, this.enemyModel);
+            console.log('generate');
         }
-
     }
 
     private onMutation(mutation, enemyItem){

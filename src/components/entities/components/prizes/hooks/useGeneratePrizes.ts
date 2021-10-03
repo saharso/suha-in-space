@@ -1,24 +1,24 @@
 import Entity from '../../../models/MEntity';
 import {useEffect} from 'react';
+import randomIndexWorker from './WorkerRandomNumber.js';
+
 
 export default function useGeneratePrizes(prizesHolder: HTMLElement, prizes){
 
     useEffect(()=>{
         if(!prizesHolder || !prizes) return;
 
-        let randomPrizesIndex = Math.floor(Math.random() * prizes.length);
+        const randomIndex = new Worker(randomIndexWorker);
 
-        const prize = prizes[randomPrizesIndex];
-        // prize.onProtagonistHit = ()=>{
-        //     console.log('prize hit');
-        // };
-        setInterval(()=>{
-            randomPrizesIndex = Math.floor(Math.random() * prizes.length);
-        }, 200);
+        randomIndex.postMessage(prizes.length);
 
-        setInterval(()=>{
-            new Entity(prizesHolder, prizes[randomPrizesIndex]);
-        },1000);
+        let prize = prizes[0];
+
+        randomIndex.onmessage = (e) => {
+            prize = prizes[e.data];
+            new Entity(prizesHolder, prize);
+        };
+
     }, [prizesHolder]);
     
     return true;
