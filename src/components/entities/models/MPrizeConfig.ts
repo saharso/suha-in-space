@@ -7,5 +7,6 @@ export default class PrizeConfig extends EntityConfig {
         this.update(config);
         this.type = 'prize';
         this.generationRateMs = null;
+        this.speed = 3000;
     }
 }

@@ -29,7 +29,7 @@ export default class Entity extends EntityConfig {
         );
     }
 
-    public kill(){
+    public destroy(){
         clearInterval(this.interval);
         this.observer.disconnect();
     }
@@ -46,7 +46,7 @@ export default class Entity extends EntityConfig {
 
     private onMutation(mutation, enemyItem){
         if(this.shouldHitProtagonist(enemyItem)) {
-            this.onProtagonistImpact();
+            this.onProtagonistImpact(enemyItem);
         }
 
         if (this.shouldImpactEnemy(mutation.target, enemyItem)) {
@@ -90,9 +90,10 @@ export default class Entity extends EntityConfig {
         }
     }
 
-    private onProtagonistImpact(){
+    private onProtagonistImpact(enemy){
         if(this.allowProtagonistHit) {
-            this.onProtagonistHit();
+            this.onProtagonistHit(this);
+            this.destroyOnImpact && ElementsUtil.removeElement(enemy);
             setTimeout(()=>{this.allowProtagonistHit = true;}, 700);
         }
 

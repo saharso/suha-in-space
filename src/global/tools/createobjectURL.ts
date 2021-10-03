@@ -6,5 +6,3 @@ export default function createObjectURL(workercode){
     const randomIndexWorker = URL.createObjectURL(blob);
     return randomIndexWorker;
 }
-
-// module.export = createObjectURL;

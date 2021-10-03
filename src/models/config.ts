@@ -25,7 +25,7 @@ export default class Config extends GlobalConfig {
     enemies = {
         poopyShmoopy: new EnemyConfig({
             name: 'poopyShmoopy',
-            strength: 3,
+            strength: 1,
             aim: 'down',
             speed: 1500,
         }),

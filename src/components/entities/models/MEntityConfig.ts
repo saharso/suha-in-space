@@ -18,6 +18,8 @@ export default class EntityConfig extends GlobalConfig {
 
     type: TType;
 
+    destroyOnImpact: boolean = true;
+
     content?: string;
 
     onProtagonistHit: Function = ()=>{}

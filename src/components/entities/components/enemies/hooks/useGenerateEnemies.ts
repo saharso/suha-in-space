@@ -20,7 +20,7 @@ export default function useGenerateEnemies(ref, config: EnemyConfig): Entity {
 
         return function(){
             
-            enemy.kill();
+            enemy.destroy();
             
         };        
 

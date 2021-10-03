@@ -1,6 +1,6 @@
 
 // spurce https://codesandbox.io/s/web-worker-reactjs-2sswe?file=/src/myClass.js:303-421
-createObjectURL = require('../../../../../global/tools/createobjectURL.js');
+createObjectURL = require('../../../../../global/tools/createobjectURL.ts');
 
 const workercode = () => {
     self.onmessage = function(e) {
@@ -9,8 +9,8 @@ const workercode = () => {
 
         const maxNumber = e.data;
 
-        const maxRandomTick = 20000;
-        const minRandomTick = 5000;
+        const maxRandomTick = 4000;
+        const minRandomTick = Math.floor(maxRandomTick / 4);
 
         let interval;
 

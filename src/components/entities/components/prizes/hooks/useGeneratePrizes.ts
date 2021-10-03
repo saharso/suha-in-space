@@ -10,6 +10,14 @@ export default function useGeneratePrizes(prizesHolder: HTMLElement, prizes){
 
         const randomIndex = new Worker(randomIndexWorker);
 
+        function onProtagonistHit(data){
+            console.log('hit', data);
+        }
+
+        prizes.forEach((prize)=>{
+            prize.onProtagonistHit = onProtagonistHit;
+        });
+
         randomIndex.postMessage(prizes.length);
 
         let prize = prizes[0];
