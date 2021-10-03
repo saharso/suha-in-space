@@ -41,7 +41,6 @@ export default class Entity extends EntityConfig {
             }, this.generationRateMs);
         } else {
             this.generateSingleEntity(this.wrapper, this.enemyModel);
-            console.log('generate');
         }
     }
 
@@ -94,7 +93,6 @@ export default class Entity extends EntityConfig {
     private onProtagonistImpact(){
         if(this.allowProtagonistHit) {
             this.onProtagonistHit();
-            console.log('foo');
             setTimeout(()=>{this.allowProtagonistHit = true;}, 700);
         }
 

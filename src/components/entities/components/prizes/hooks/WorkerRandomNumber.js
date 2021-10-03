@@ -9,10 +9,16 @@ const workercode = () => {
 
         const maxNumber = e.data;
 
+        const maxRandomTick = 20000;
+        const minRandomTick = 5000;
+
         let interval;
+
+        let randomTick = maxRandomTick;
 
         const postRandomNumber = ()=>{
             const randomPrizesIndex = Math.floor(Math.random() * maxNumber);
+            randomTick = Math.floor(minRandomTick + Math.random() * maxNumber);
             self.postMessage(randomPrizesIndex);
         };
 
@@ -20,7 +26,7 @@ const workercode = () => {
 
         interval = setInterval(()=>{
             postRandomNumber();
-        }, 1000);
+        }, randomTick);
 
 
     };
