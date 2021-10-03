@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import ScoreBoardModel from '../../../models/scoreBoard';
+import ScoreBoardConfig from '../../../models/scoreBoard';
 import ScoreBoard from '../ScoreBoard';
 
 export default function useScoreBoardCalculator(value: number){

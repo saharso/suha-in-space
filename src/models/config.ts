@@ -19,9 +19,17 @@ type enemyShouldAppearOnScoreRange = [number,number]
 export interface IScene {scoreRange: enemyShouldAppearOnScoreRange, enemyConfig: EnemyConfig};
 export type TScriptMap = Array<IScene>;
 
+export enum PrizesEnum {
+    ADD_LIVES = 'addLive',
+    RAPID_FIRE = 'rapidFire'
+}
+
 export default class Config extends GlobalConfig {
     protagonist = new ProtagonistConfig();
-    scoreBoard = new ScoreBoardConfig();
+    scoreBoard = new ScoreBoardConfig({
+        lives: 3,
+        score: 0,
+    });
     enemies = {
         poopyShmoopy: new EnemyConfig({
             name: 'poopyShmoopy',
@@ -42,11 +50,11 @@ export default class Config extends GlobalConfig {
     }
     prizes = [
         new PrizeConfig({
-            name: 'addLive',
+            name: PrizesEnum.ADD_LIVES,
             content: '+',
         }),
         new PrizeConfig({
-            name: 'rapidFire',
+            name: PrizesEnum.RAPID_FIRE,
             content: 'R',
         }),
     ]

@@ -20,6 +20,8 @@ export default class Entity extends EntityConfig {
 
     private init() {
         this.enemyModel.className = `sis-entity sis-${this.type} sis-${this.type}--${this.name}`;
+        this.enemyModel.setAttribute('data-type', this.type);
+        this.enemyModel.setAttribute('data-name', this.name);
         this.initIntervalWorker();
         this.generateEntities();
         this.initObserver();
@@ -47,7 +49,6 @@ export default class Entity extends EntityConfig {
     private generateEntities() {
         if(this.generationRateMs){
             this.intervalWorker.onmessage =()=>{
-                console.log('hi');
                 this.generateSingleEntity(this.wrapper, this.enemyModel);
             };
         } else {
@@ -103,7 +104,7 @@ export default class Entity extends EntityConfig {
 
     private onProtagonistImpact(enemy){
         if(this.allowProtagonistHit) {
-            this.onProtagonistHit(this);
+            this.onProtagonistHit(enemy.dataset);
             this.destroyOnImpact && ElementsUtil.removeElement(enemy);
             setTimeout(()=>{this.allowProtagonistHit = true;}, 700);
         }

@@ -4,10 +4,12 @@ import Background from './components/background/Background';
 import ConstantsEnum from './global/consts/constants.enum';
 import AppContext from './models/context';
 import Protagonist from './components/protagonist/Protagonist';
-import Config from './models/config';
+import Config, {PrizesEnum} from './models/config';
 import EnemiesIndex from './components/entities/components/enemies/EnemiesIndex';
 import ScoreBoard from './components/scoreBoard/ScoreBoard';
 import Prizes from './components/entities/components/prizes/Prizes';
+import PrizeConfig from './components/entities/models/MPrizeConfig';
+import ScoreBoardConfig from './models/scoreBoard';
 
 const config = new Config();
 
@@ -19,6 +21,15 @@ function App() {
 
     const [score, setScore] = useState<number>(0);
 
+    const [scoreBoard, setScoreBoard] = useState<ScoreBoardConfig>(config.scoreBoard);
+
+    function updateScoreBoardLives(prev, value: -1 | 1){
+        return new ScoreBoardConfig({
+            ...config.scoreBoard,
+            lives: prev.lives + value
+        });
+    }
+
     return (
         <AppContext.Provider value={{protagonistEl}}>
 
@@ -27,6 +38,7 @@ function App() {
                 <Background/>
 
                 <ScoreBoard
+                    config={scoreBoard}
                     scoreIncrement={incrementScoreBy}
                     onScoreBoardUpdate={(updatedScore)=>{
                         setScore(updatedScore);
@@ -42,14 +54,24 @@ function App() {
                         setIncrementScoreBy(data.value);
                     }}
                     onProtagonistHit={()=>{
-                        console.log('hit');
+                        setScoreBoard(
+                            (prev) => {
+                                return updateScoreBoardLives(prev, -1);
+                            }
+                        );
                     }}
                 />
 
                 <Prizes
                     config={config}
-                    onProtagonistHit={()=>{
-                        console.log('score hit');
+                    onProtagonistHit={(data)=>{
+                        if (data.name === PrizesEnum.ADD_LIVES) {
+                            setScoreBoard(
+                                (prev) => {
+                                    return updateScoreBoardLives(prev, 1);
+                                }
+                            );
+                        }
                     }}
                 />
 

@@ -14,18 +14,14 @@ const Prizes: React.FunctionComponent<TEnemiesIndexProps> = (
     }
 ) => {
 
-    const [prize, setPrize] = useState(null);
-
     const prizeListRef = useRef(null);
 
-    const prizes = useGeneratePrizes(prizeListRef.current, config.prizes);
+    const prize = useGeneratePrizes(prizeListRef.current, config.prizes);
 
     useEffect(()=>{
         if(!prize) return;
 
-        prize.onProtagonistHit = ()=>{
-            onProtagonistHit && onProtagonistHit();
-        };
+        onProtagonistHit(prize);
 
     }, [prize]);
 

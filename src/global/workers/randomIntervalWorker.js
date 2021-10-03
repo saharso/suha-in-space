@@ -1,6 +1,6 @@
 
 // spurce https://codesandbox.io/s/web-worker-reactjs-2sswe?file=/src/myClass.js:303-421
-createObjectURL = require('../../../../../global/tools/createobjectURL.ts');
+createObjectURL = require('../tools/createobjectURL.ts');
 
 const workercode = () => {
     self.onmessage = function(e) {
