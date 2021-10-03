@@ -1,16 +1,26 @@
 import BulletConfig from './BulletConfig.model';
+import intervalWorker from '../../../global/workers/intervalWorker';
 
 export default class BulletModel extends BulletConfig {
     private bulletModel = document.createElement('div');
     public interval;
+    private intervalWorker;
     constructor(config?: Partial<BulletConfig>) {
         super(config);
+        this.initIntervalWorker();
         this.buildBulletModel();
     }
 
     private buildBulletModel () {
         this.bulletModel.className = 'sis-singleDefaultBullet';
     }
+
+    private initIntervalWorker(){
+        if(!this.generationRate) return;
+        this.intervalWorker = new Worker(intervalWorker);
+        this.intervalWorker.postMessage(this.generationRate);
+    }
+
 
     private generateBullet () {
         let newBullet: HTMLElement = this.bulletModel.cloneNode(true) as HTMLElement;
@@ -55,9 +65,7 @@ export default class BulletModel extends BulletConfig {
     }
 
     public shoot(){
-        this.interval = setInterval(()=>{
-            this.generateBullet();
-        }, this.generationRate);
+        this.intervalWorker.onmessage = ()=>{this.generateBullet();};
     }
 
 }
